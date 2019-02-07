@@ -1,6 +1,6 @@
 # SeekMyTeam
 
-SeekMyTeam is a node.js powered webapp that allows for Purdue students to seek projects they can work on or for existing teams to find new qualified students to best further their ideas. This can be used as an incubator to facilitate growth of new startups at Purdue.
+SeekMyTeam is a Node.js powered webapp that allows for Purdue students to seek projects they can work on or for existing teams to find new qualified students to best further their ideas. This can be used as an incubator to facilitate growth of new startups at Purdue.
 
 ## Directory Structure
 
