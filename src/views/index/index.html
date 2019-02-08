@@ -8,12 +8,6 @@
 
     <title>A New Startup: Sign Up Today!</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="<%= static_path + "/bootstrap/css/theme/" + theme + "/bootstrap.css" %>" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="<%= static_path + "/bootstrap/css/jumbotron-narrow.css" %>" rel="stylesheet">
-
   </head>
 
   <body>
@@ -28,11 +22,9 @@
         </ul>
         <h3 class="text-muted">A New Startup</h3>
       </div>
-	  <% if (flask_debug === 'true') { %>
       <div class="alert alert-danger">
       	Flask is in debug mode. This is not safe for production.
       </div>
-      <% } %>
       <div id="signupSuccess" class="alert alert-success" style="display:none">
         <p id="signupSuccessText">Thanks for signing up! You'll be among the first to know when we launch.</p>
       </div>
@@ -81,7 +73,7 @@
                  </div>
              </div>
              <div class="modal-footer">
-               <button id="signup" type="button" class="btn btn-primary">Sign Up!</button>
+               <button id="signup" type="button" class="btn btn-primary" onclick="handleSignup()">Sign Up!</button>
              </div>
            </div><!-- /.modal-content -->
          </div><!-- /.modal-dialog -->
@@ -89,30 +81,7 @@
 
     </div> <!-- /container -->
 
-    <script src="<%= static_path + "/jquery/jquery-1.11.3.min.js" %>"></script>
-    <script src="<%= static_path + "/bootstrap/js/bootstrap.min.js" %>"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-      $("#signup").click(function() {
-        $.post( "/signup", $("#signupForm").serialize(),
-                function(data) {
-                  $("#signupSuccess").show();
-                }
-              )
-              .error(function(xhr) {
-                switch(xhr.status) {
-                  case 409:
-                    $("#signupDuplicate").show();
-                    break;
-                  default:
-                    $("#signupError").show();
-                }
-              })
-              .always(function() {
-                $("#signupModal").modal('hide');
-              });
-      })
-    })
-    </script>
+    <script src="index.js"></script>
+
   </body>
 </html>

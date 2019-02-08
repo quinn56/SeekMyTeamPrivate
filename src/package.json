@@ -1,12 +1,12 @@
 {
-  "name": "Elastic-Beanstalk-Sample-App",
+  "name": "SeekMyTeam",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "ejs": "latest",
     "aws-sdk": "latest",
-    "express": "latest",
-    "body-parser": "latest"
+    "body-parser": "^1.18.3",
+    "ejs": "latest",
+    "express": "^4.16.4"
   },
   "scripts": {
     "start": "node app.js"
