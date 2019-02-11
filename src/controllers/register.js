@@ -1,9 +1,10 @@
-const routes =  require('express').Router();
+var express = require("express");
+var router = express.Router();
 
 var userid = 0;
-var ddb = require('../app').database;
+var database = require('../app').database;
 
-routes.post('/signup', function(req, res) {
+router.post('/', function(req, res) {
     var item = {
         'UserID' : {'S': '001'+userid},
         'email': {'S': req.body.email},
@@ -11,9 +12,10 @@ routes.post('/signup', function(req, res) {
         'password' : {'S': salthash(req.body.password)}
     };
     userid++;
+    console.log("posting item: " + item);
 
-    ddb.putItem({
-        'TableName': UsersTable,
+    database.putItem({
+        'TableName': "Users",
         'Item': item,
         'Expected': { UserID: { Exists: false } }
     }, function(err, data) {
@@ -47,7 +49,7 @@ routes.post('/signup', function(req, res) {
 });
 
 function salthash(password) {
-    return password;
+    return password+"abc";
 }
 
-module.exports = routes;
+module.exports = router;

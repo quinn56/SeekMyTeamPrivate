@@ -6,7 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>A New Startup: Sign Up Today!</title>
+    <title>Seek My Team</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
   </head>
 
@@ -65,23 +66,34 @@
                    <input type="email" class="form-control" id="email" name="email" placeholder="Your email address">
                  </div>
                  <div class="form-group">
-                   <label for="previewAccess">Interested in Preview Access?</label>
-                   <select class="form-control" name="previewAccess">
-                     <option>Yes</option>
-                     <option>No</option>
-                   </select>
-                 </div>
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Your password">
+                </div>
              </div>
              <div class="modal-footer">
-               <button id="signup" type="button" class="btn btn-primary" onclick="handleSignup()">Sign Up!</button>
+               <button id="signup" type="button" class="btn btn-primary" onclick='handleRegister()'>Sign Up!</button>
              </div>
            </div><!-- /.modal-content -->
          </div><!-- /.modal-dialog -->
        </div><!-- /.modal -->
 
     </div> <!-- /container -->
+    <script type ="text/javascript">
+      function handleRegister() {
+        var name = document.getElementById('name');
+        var email = document.getElementById('email');
+        var password = document.getElementById('password');
 
-    <script src="index.js"></script>
+        $.post('/register', {
+          name: name.value,
+          email: email.value,
+          password: password.value
+        }, (err) => {
+          if (err)
+            console.log("database error");
+        });
+      }
+    </script>
 
   </body>
 </html>
