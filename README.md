@@ -5,3 +5,5 @@ SeekMyTeam is a Node.js powered webapp that allows for Purdue students to seek p
 ## Directory Structure
 
 `/documents` contains the LaTeX source files and compiled PDFs for the project
+
+`/src` contains the source code for the project
