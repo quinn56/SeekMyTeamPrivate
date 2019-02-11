@@ -1,6 +1,7 @@
-# Don't track content of these folders
+# Don't track content of these folders and files
 node_modules/
 someOtherfoler/
+bash.exe.stackdump
 
 
 # Compiled source #
@@ -11,7 +12,6 @@ someOtherfoler/
 *.exe
 *.o
 *.so
-
 *.so
 
 # Packages #

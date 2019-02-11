@@ -6,7 +6,8 @@
     "aws-sdk": "latest",
     "body-parser": "^1.18.3",
     "ejs": "latest",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mailgun-js": "^0.22.0"
   },
   "scripts": {
     "start": "node app.js"

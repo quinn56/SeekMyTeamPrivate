@@ -2,9 +2,22 @@ var AWS = require('aws-sdk');
 
 AWS.config.region = process.env.REGION
 
+const mailgun = require("mailgun-js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+
+/*
+    Here we are configuring our SMTP Server details.
+    STMP is mail server which is responsible for sending and recieving email.
+*/
+const api_key = '8d54b48db11d88a60c874686ce476d00-1b65790d-c59b878c';
+const DOMAIN = 'sandboxe1aea5edfa8f4904b65d4facc650f8c2.mailgun.org';
+const mg = mailgun({apiKey: api_key, domain: DOMAIN});
+module.exports.mg = mg;
+
+const crypto = require("crypto");
+module.exports.crypto = crypto;
 
 var app = express();
 module.exports.app = app;

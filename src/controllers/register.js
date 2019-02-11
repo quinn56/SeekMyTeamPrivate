@@ -1,24 +1,34 @@
+var crypto = require("../helpers/crypto");
+var mailer = require("../helpers/mailer");
 var express = require("express");
 var router = express.Router();
 
-var userid = 0;
 var database = require('../app').database;
 
-router.post('/', function(req, res) {
-    var item = {
-        'UserID' : {'S': '001'+userid},
-        'email': {'S': req.body.email},
-        'name': {'S': req.body.name},
-        'password' : {'S': salthash(req.body.password)}
-    };
-    userid++;
-    console.log("posting item: " + item);
+router.post('/start', function(req, res) {
+    var passObj = saltHashPassword(req.body.password);
 
-    database.putItem({
+    var confirmationCode = generateConfirmationCode();
+
+    // New item to represent a user
+    // should update with blank fields in the future for 
+    // desc and other stuff
+    var item = {
+        'Email': {'S': req.body.email},
+        'Name': {'S': req.body.name},
+        'Password' : {'S': passObj.passwordHash}, 
+        'Salt' : {'S': passObj.salt},
+        'Confirmed' : {'BOOL' : false},
+        'Code' : {'S' : confirmationCode}
+    };
+
+    var params = { 
         'TableName': "Users",
         'Item': item,
-        'Expected': { UserID: { Exists: false } }
-    }, function(err, data) {
+        'ConditionExpression': 'attribute_not_exists(Email)'
+    };
+
+    database.putItem(params, function(err, data) {
         if (err) {
             var returnStatus = 500;
 
@@ -29,27 +39,50 @@ router.post('/', function(req, res) {
             res.status(returnStatus).end();
             console.log('DDB Error: ' + err);
         } else {
-            /*sns.publish({
-                'Message': 'Name: ' + req.body.name + "\r\nEmail: " + req.body.email
-                                    + "\r\nPreviewAccess: " + req.body.previewAccess
-                                    + "\r\nTheme: " + req.body.theme,
-                'Subject': 'New user sign up!!!',
-                'TopicArn': snsTopic
-            }, function(err, data) {
-                if (err) {
-                    res.status(500).end();
-                    console.log('SNS Error: ' + err);
-                } else {
-                    res.status(201).end();
-                }
-            });*/
-            console.log("use cognito to verify");
+            mailer.sendCode(req.body.email, confirmationCode);
+            res.status(200).end();
         }
     });
 });
 
-function salthash(password) {
-    return password+"abc";
+router.post('/commit', function(req, res) {
+    /* Verify email here */
+    var email = req.body.email;
+
+    var params = {
+        TableName: "Users",
+        UpdateExpression: "set Confirmed = :true",
+        ConditionExpression: "Code = :code",
+        ExpressionAttributeValues:{
+            ":true": true,
+            ":code": req.body.code
+        }
+    };
+
+    console.log("Attempting confirmation of user...");
+    database.putItem(params, function(err, data) {
+        if (err) {
+            var returnStatus = 500;
+
+            if (err.code === 'ConditionalCheckFailedException') {
+                returnStatus = 409;
+            }
+
+            res.status(returnStatus).end();
+            console.log('DDB Error: ' + err);
+        } else {
+          res.status(200).end();
+        }
+    });   
+});
+
+function saltHashPassword(password) {
+    var salt = crypto.genRandomString(16); /** Gives us salt of length 16 */
+    return crypto.sha512(password, salt);
+}
+
+function generateConfirmationCode() {
+    return crypto.genRandomString(5);
 }
 
 module.exports = router;
