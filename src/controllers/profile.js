@@ -8,16 +8,16 @@ router.post('/delete', function(req, res) {
         TableName : "Posts",
         KeyConditionExpression: "Email = :email",
         ExpressionAttributeValues: {
-            ":email": email
+            ":email": req.body.email
         }
     };
+
     var itemsArray = [];
-    
     
     /* Query for all posts matching users email */
     database.query(queryParams, function(err, data) {
         if (err) {
-            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+            console.error("Unable to query. Error:", JSON.stringify(err));
         } else {
             console.log("Query succeeded.");
             data.Items.forEach(function(item) {
@@ -30,14 +30,14 @@ router.post('/delete', function(req, res) {
                 };
                 itemsArray.push(item);
             });
-            deleteParams = {
+            var deleteParams = {
                 RequestItems : {
                     'Post' : itemsArray
                 }
             };
             
             /* Delete all posts associated with user */
-            database.batchWrite(params, function(err, data) {
+            database.batchWrite(deleteParams, function(err, data) {
                 if (err) {
                     console.log('Batch delete unsuccessful ...');
                     console.log(err, err.stack); // an error occurred

@@ -8,10 +8,13 @@ router.post('/', function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
 
+    var retrievedPass, salt, confirmed;
+
     var params = {
         AttributesToGet: [
           'Password',
-          'Salt'
+          'Salt', 
+          'Confirmed'
         ],
         TableName : 'Users',
         Key : { 
@@ -32,18 +35,24 @@ router.post('/', function(req, res) {
         else {
             retrievedPass = data.Item.Password;
             salt = data.Item.Salt;
+            confirmed = data.Item.Confirmed; 
         }
     });
+
+    // User needs to confirm account
+    if (!confirmed) {
+        res.status(401).end();
+    }
 
     var hashedPassword = crypto.sha512(password, salt);
    
     // Successful login, gonna have to do a loooot more here 
     if (retrievedPass === hashedPassword) {
+        
         res.status(200).end();
-   
     } else {
         // Passwords did not match
-        res.status(401).end();
+        res.status(402).end();
     }
 });
 

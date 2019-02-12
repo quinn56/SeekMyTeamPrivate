@@ -6,6 +6,7 @@ const mailgun = require("mailgun-js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var session = require('express-session');
 
 /*
     Here we are configuring our SMTP Server details.
@@ -32,7 +33,14 @@ module.exports.database = database;
 var snsTopic =  process.env.NEW_SIGNUP_TOPIC;
 
 app.set('views', __dirname + '/views/');
+
 app.use(bodyParser.urlencoded({extended:false}));
+
+app.use(
+    session({
+        secret: 'zmalfkoitpsivbfaas'
+    })
+);
 
 // Hookup controllers for endpoints
 app.use(require('./controllers'));
