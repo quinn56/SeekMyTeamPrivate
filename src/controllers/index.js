@@ -4,6 +4,8 @@ var router = express.Router();
 
 router.use('/register', require('./register'));
 router.use('/login', require('./login'));
+router.use('/home', require('./home'));
+router.use('/profile', require('./profile'));
 
 router.get('/', function(req, res) {
     res.sendFile(path.resolve(__dirname + '/../index.html'));

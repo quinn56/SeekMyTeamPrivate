@@ -19,6 +19,9 @@ module.exports.mg = mg;
 const crypto = require("crypto");
 module.exports.crypto = crypto;
 
+const uuid = require("node-uuid");
+module.exports.uuid = uuid;
+
 var app = express();
 module.exports.app = app;
 
