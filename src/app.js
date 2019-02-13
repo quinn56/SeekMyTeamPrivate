@@ -42,6 +42,18 @@ app.use(
     })
 );
 
+app.use(function(req, res, next) {
+    if (req.url === '/login' || req.url === '/register') {
+        next();
+    } else {
+        if (!req.session && !req.session.user) {
+            res.redirect('/login');
+        } else {
+            next();
+        }
+    }
+});
+
 // Hookup controllers for endpoints
 app.use(require('./controllers'));
 

@@ -3,6 +3,19 @@ var router = express.Router();
 
 var database = require('../app').database;
 
+router.get('/logout', function(req, res, next) {
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+            if (err) {
+                return next(err);
+            } else {
+                return res.redirect('/login');
+            }
+        });
+    }
+});
+
 router.post('/delete', function(req, res) {
     var queryParams = {
         TableName : "Posts",
@@ -56,7 +69,7 @@ router.post('/delete', function(req, res) {
                         if (err) {
                             res.status(402).end();
                         } else {
-                            res.status(200).end();
+                            res.status(200).redirect('/login');
                         }
                     });
                 }

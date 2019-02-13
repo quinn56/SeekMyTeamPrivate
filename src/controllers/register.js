@@ -5,7 +5,7 @@ var router = express.Router();
 
 var database = require('../app').database;
 
-router.post('/start', function(req, res) {
+router.post('/', function(req, res) {
     var passObj = saltHashPassword(req.body.password);
 
     var confirmationCode = generateConfirmationCode();
@@ -16,6 +16,7 @@ router.post('/start', function(req, res) {
     var item = {
         'Email': {'S': req.body.email},
         'Name': {'S': req.body.name},
+        'Description' : {'S' : ''},
         'Password' : {'S': passObj.passwordHash}, 
         'Salt' : {'S': passObj.salt},
         'Confirmed' : {'BOOL' : false},
@@ -33,7 +34,7 @@ router.post('/start', function(req, res) {
             var returnStatus = 500;
 
             if (err.code === 'ConditionalCheckFailedException') {
-                returnStatus = 409;
+                returnStatus = 401;
             }
 
             res.status(returnStatus).end();
@@ -45,12 +46,15 @@ router.post('/start', function(req, res) {
     });
 });
 
-router.post('/commit', function(req, res) {
-    /* Verify email here */
+router.post('/confirm', function(req, res) {
+    /* Verifying email here */
     var email = req.body.email;
 
     var params = {
         TableName: "Users",
+        Key : {
+            'Email': email
+        },
         UpdateExpression: "set Confirmed = :true",
         ConditionExpression: "Code = :code",
         ExpressionAttributeValues:{
@@ -65,7 +69,7 @@ router.post('/commit', function(req, res) {
             var returnStatus = 500;
 
             if (err.code === 'ConditionalCheckFailedException') {
-                returnStatus = 409;
+                returnStatus = 401;
             }
 
             res.status(returnStatus).end();
@@ -74,6 +78,30 @@ router.post('/commit', function(req, res) {
           res.status(200).end();
         }
     });   
+});
+
+router.post('/resendCode', function(req, res) {
+    var code = generateConfirmationCode();
+
+    var params = {
+        TableName: "Users",
+        Key: {
+            'Email' : req.body.email
+        },
+        UpdateExpression: "set Code = :code",
+        ExpressionAttributeValues:{
+            ":code": code
+        }
+    };
+    
+    database.updateItem(params, function(err, data) {
+        if (err) {
+            res.status(500).end();    
+        } else {
+            mailer.sendCode(req.body.email, confirmationCode);
+            res.status(200).end();
+        }
+    });
 });
 
 function saltHashPassword(password) {

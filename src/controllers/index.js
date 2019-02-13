@@ -4,6 +4,7 @@ var router = express.Router();
 
 router.use('/register', require('./register'));
 router.use('/login', require('./login'));
+router.use('/logout', require('./logout'));
 router.use('/profile', require('./profile'));
 
 router.get('/', function(req, res) {
