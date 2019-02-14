@@ -6,7 +6,7 @@ const mailgun = require("mailgun-js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
-var session = require('express-session');
+var session = require('cookie-session');
 
 /*
     Here we are configuring our SMTP Server details.
@@ -20,7 +20,7 @@ module.exports.mg = mg;
 const crypto = require("crypto");
 module.exports.crypto = crypto;
 
-const uuid = require("node-uuid");
+const uuid = require("uuid");
 module.exports.uuid = uuid;
 
 var app = express();
@@ -38,7 +38,8 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(
     session({
-        secret: 'zmalfkoitpsivbfaas'
+        secret: 'zmalfkoitpsivbfaas',
+        signed: true
     })
 );
 
