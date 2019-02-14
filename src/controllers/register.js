@@ -41,7 +41,7 @@ router.post('/', function(req, res) {
             console.log('DDB Error: ' + err);
         } else {
             mailer.sendCode(req.body.email, confirmationCode);
-            res.status(200).end();
+            res.status(200).redirect('/register/confirm');
         }
     });
 });
