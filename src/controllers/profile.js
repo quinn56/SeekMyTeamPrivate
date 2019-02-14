@@ -1,19 +1,20 @@
 var express = require("express");
 var router = express.Router();
+var path = require("path");
 
+var User = require("../models/User");
 var database = require('../app').database;
 
+
+router.get('/:email', function(req, res) {
+    var user = User.summarize(User.getByEmail(req.params.email));
+    /* send file with user details here */
+});
+
 router.get('/logout', function(req, res, next) {
-    if (req.session) {
-        // delete session object
-        req.session.destroy(function(err) {
-            if (err) {
-                return next(err);
-            } else {
-                return res.redirect('/login');
-            }
-        });
-    }
+    /* Delete session object */
+    req.session = null;
+    return res.redirect('/login');
 });
 
 router.post('/delete', function(req, res) {

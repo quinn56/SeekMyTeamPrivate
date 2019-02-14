@@ -1,0 +1,35 @@
+ <!-- Modal -->
+ <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Please confirm your account first!</h4>
+        </div>
+        <div class="modal-body">
+          <form id="signupForm" role="form">
+            <input type="hidden" id="theme" name="theme" value="<%= theme %>"/>
+            <div class="form-group">
+              <label for="code">Code:</label>
+              <input type="code" class="form-control" id="code" name="code" placeholder="Your code">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button id="signup" type="button" class="btn btn-primary" onclick='handleConfirm()'>Confirm</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+</div> <!-- /container -->
+<script type ="text/javascript">
+ function handleConfirm() {
+   var code = document.getElementById('code');
+   $.post('/register/confirm', {
+     code: code.value
+   }, (err) => {
+     if (err)
+       console.log("database error");
+   });
+ }
+</script>

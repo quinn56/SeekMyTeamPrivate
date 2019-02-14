@@ -48,7 +48,12 @@ router.post('/', function(req, res) {
 
 router.post('/confirm', function(req, res) {
     /* Verifying email here */
-    var email = req.body.email;
+    var email;
+    if (req.session && req.session.email) {
+        email = req.session.email;
+    } else {
+        email = req.body.email;
+    }
 
     var params = {
         TableName: "Users",
@@ -78,6 +83,9 @@ router.post('/confirm', function(req, res) {
           res.status(200).end();
         }
     });   
+}).get('/confirm', function(req, res) {
+    req.session.email = req.query.email;
+    res.sendFile(path.resolve(__dirname + '../views/confirm.html'));
 });
 
 router.post('/resendCode', function(req, res) {
