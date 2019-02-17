@@ -16,7 +16,7 @@ router.post('/', function(req, res) {
     var item = {
         'Email': {'S': req.body.email},
         'Name': {'S': req.body.name},
-        'Description' : {'S' : ''},
+        'Description' : {'S' : ' '},
         'Password' : {'S': passObj.passwordHash}, 
         'Salt' : {'S': passObj.salt},
         'Confirmed' : {'BOOL' : false},
@@ -85,7 +85,7 @@ router.post('/confirm', function(req, res) {
     });   
 }).get('/confirm', function(req, res) {
     req.session.email = req.query.email;
-    res.sendFile(path.resolve(__dirname + '../views/confirm.html'));
+    res.sendFile(path.resolve(__dirname + '/../views/confirm.html'));
 });
 
 router.post('/resendCode', function(req, res) {
