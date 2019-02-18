@@ -49,11 +49,11 @@ app.use(
 /* Remove register check if necessary since both will  */
 /* be on login page?                                   */
 app.use(function(req, res, next) {
-    if (req.url === '/login' || req.url === '/register') {
+    if (req.url === '/login' || req.url === '/register/confirm' || req.url === '/register') {
         next();
     } else {
         if (!req.session && !req.session.user) {
-            res.redirect('/login');
+            res.status(400).end();
         } else {
             next();
         }

@@ -1,8 +1,9 @@
 var crypto = require("../helpers/crypto");
 var mailer = require("../helpers/mailer");
 var express = require("express");
-var router = express.Router();
+var path = require('path');
 
+var router = express.Router();
 var database = require('../app').database;
 
 router.post('/', function(req, res) {
@@ -40,10 +41,18 @@ router.post('/', function(req, res) {
             res.status(returnStatus).end();
             console.log('DDB Error: ' + err);
         } else {
-            mailer.sendCode(req.body.email, confirmationCode);
-            res.status(200).redirect('/register/confirm');
+            //mailer.sendCode(req.body.email, confirmationCode);
+            res.status(200).end();
         }
     });
+});
+
+router.get('/confirm', function(req, res) {
+    if (req.session) {
+        req.session.email = req.query.email;
+    }
+        
+    res.sendFile(path.resolve(__dirname + '/../views/confirm.html'));
 });
 
 router.post('/confirm', function(req, res) {
@@ -54,38 +63,54 @@ router.post('/confirm', function(req, res) {
     } else {
         email = req.body.email;
     }
-
     var params = {
-        TableName: "Users",
-        Key : {
-            'Email': email
-        },
-        UpdateExpression: "set Confirmed = :true",
-        ConditionExpression: "Code = :code",
-        ExpressionAttributeValues:{
-            ":true": true,
-            ":code": req.body.code
+        TableName : 'Users',
+        Key : { 
+          "Email" : {'S' : email}
         }
     };
-
-    console.log("Attempting confirmation of user...");
-    database.putItem(params, function(err, data) {
+    
+    database.getItem(params, function(err, data) {
         if (err) {
-            var returnStatus = 500;
+           /* No user with that email found */ 
+           res.status(401).end(); 
+        } else {
+            var retrievedCode = data.Item.Code.S;
+            console.log(retrievedCode);
+            console.log(req.body.code);
 
-            if (err.code === 'ConditionalCheckFailedException') {
-                returnStatus = 401;
+            if (retrievedCode !== req.body.code) {
+                /* Invalid code */
+                res.status(403).end();
             }
 
-            res.status(returnStatus).end();
-            console.log('DDB Error: ' + err);
-        } else {
-          res.status(200).end();
+            var params = {
+                ExpressionAttributeNames: {
+                 "#C": "Confirmed"
+                }, 
+                ExpressionAttributeValues: {
+                 ":c": {
+                   'BOOL': true
+                  }
+                }, 
+                Key: {
+                 "Email": {
+                   'S': email
+                  }
+                }, 
+                TableName: "Users", 
+                UpdateExpression: "SET #C = :c"
+               };
+        
+            database.updateItem(params, function(err, data) {
+                if (err) {
+                    res.status(500).end();
+                } else {
+                  res.status(200).end();
+                }
+            });   
         }
-    });   
-}).get('/confirm', function(req, res) {
-    req.session.email = req.query.email;
-    res.sendFile(path.resolve(__dirname + '/../views/confirm.html'));
+    });
 });
 
 router.post('/resendCode', function(req, res) {

@@ -1,10 +1,17 @@
 var crypto = require("../helpers/crypto");
 var express = require("express");
+var path = require('path');
+
 var router = express.Router();
 
 var User = require("../models/User");
 
 var database = require('../app').database;
+
+router.get('/', function(req, res) {
+    res.sendFile(path.resolve(__dirname + '/../views/login.html'));
+});
+
 
 router.post('/', function(req, res) {
     var email = req.body.email;
@@ -23,7 +30,7 @@ router.post('/', function(req, res) {
     if (retrievedUser.Password === hashedPassword) {
         /* User still needs to confirm account */
         if (!retrievedUser.Confirmed) {
-            res.redirect('/register/confirm?email=' + email);
+            res.status(401).end();
         } else {
             console.log("succesful login");
             var user = User.summarize(retrievedUser);
@@ -34,8 +41,7 @@ router.post('/', function(req, res) {
         // Passwords did not match
         res.status(402).end();
     }
-}).get('/', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '/../views/login.html'));
 });
+
 
 module.exports = router;

@@ -89,8 +89,11 @@
           email: email.value,
           password: password.value
         }, (err) => {
-          if (err)
+          if (err) {
             console.log("database error");
+          } else {
+            window.location.replace("http://seekmyteam.us-east-2.elasticbeanstalk.com/register/confirm?email=" + email.value);
+          }
         });
       }
     </script>
