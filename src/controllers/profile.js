@@ -7,7 +7,9 @@ var database = require('../app').database;
 
 
 router.get('/:email', function(req, res) {
-    var user = User.summarize(User.getByEmail(req.params.email));
+    var email = req.params.email;
+    
+    res.send(email).end();
     /* send file with user details here */
 });
 

@@ -25,7 +25,7 @@ module.exports.uuid = uuid;
 var app = express();
 
 /* Disable xpowered header, security++ */
-app.disable('x-powered-by') 
+//app.disable('x-powered-by') 
 module.exports.app = app;
 
 /* Connect database */
@@ -53,7 +53,7 @@ app.use(function(req, res, next) {
         next();
     } else {
         if (!req.session && !req.session.user) {
-            res.status(400).end();
+            res.status(400).send('unauthorized').end();
         } else {
             next();
         }

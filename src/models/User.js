@@ -8,6 +8,7 @@ function User(email, name) {
     //this.picture = picture; use in future
 }
 
+/* TRASH DELETE DELETE DELETE */
 User.prototype.updateDescription = function(description) {
     this.description = description;
 
@@ -28,24 +29,7 @@ User.prototype.updateDescription = function(description) {
     });
 }
 
-User.getByEmail = function (email) {
-    var params = {
-        TableName : 'Users',
-        Key : { 
-          "Email" : {'S' : email}
-        }
-    };
-    
-    database.getItem(params, function(err, data) {
-        if (err) {
-           return null;
-        } else {
-            return data.Item;
-        }
-    });
-}
-
-User.summarize = function(item) {
+function summarize(item) {
     return {
         'email': item.Email,
         'name': item.Name,
@@ -53,6 +37,5 @@ User.summarize = function(item) {
     };
 }
 
-
-
 module.exports = User;
+module.exports.summarize = summarize;

@@ -76,8 +76,6 @@ router.post('/confirm', function(req, res) {
            res.status(401).end(); 
         } else {
             var retrievedCode = data.Item.Code.S;
-            console.log(retrievedCode);
-            console.log(req.body.code);
 
             if (retrievedCode !== req.body.code) {
                 /* Invalid code */
