@@ -85,6 +85,10 @@ router.post('/delete', function(req, res) {
             });
         }
     });
+
+    router.post('/upload', function(req, res, next) {
+        var email = req.session.user.email;
+    });
 });
 
 module.exports = router;
