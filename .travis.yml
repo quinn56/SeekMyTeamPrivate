@@ -4,7 +4,6 @@ node_js:
 before_install: cd src
 deploy:
   provider: elasticbeanstalk
-  zip_file: 'seekmyteam.zip'
   access_key_id: $access_key_id
   secret_access_key: $secret_access_key
   region: us-east-2
