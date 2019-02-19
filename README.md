@@ -8,5 +8,5 @@ SeekMyTeam is a Node.js powered webapp that allows for Purdue students to seek p
 
 `/src` contains the source code for the project
 
-## --> Angular Link
+## Angular Link
 https://www.youtube.com/watch?v=k5E2AVpwsko
