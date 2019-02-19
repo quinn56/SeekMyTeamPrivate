@@ -1,114 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Seek My Team</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
-</head>
-<body>
-	
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="login100-form-title" style="background-image: url(images/bg-01.jpg);">
-					<span class="login100-form-title-1">
-						Sign In
-					</span>
-				</div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-				<form class="login100-form validate-form">
-					<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
-						<span class="label-input100">Email-ID</span>
-						<input class="input100" type="text" name="email" placeholder="Enter email address">
-						<span class="focus-input100"></span>
-					</div>
+    <title>Seek My Team</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
-						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="pass" placeholder="Enter password">
-						<span class="focus-input100"></span>
-					</div>
+  </head>
 
-					<!-- <div class="flex-sb-m w-full p-b-30">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								Remember me
-							</label>
-						</div>
+  <body>      
+    <!-- Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Please login</h4>
+            </div>
+            <div class="modal-body">
+              <form id="signupForm" role="form">
+                <input type="hidden" id="theme" name="theme" value="<%= theme %>"/>
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Your email address">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Your password">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="signup" type="button" class="btn btn-primary" onclick='handleLogin()'>Login</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
 
-						<div>
-							<a href="#" class="txt1">
-								Forgot Password?
-							</a>
-						</div>
-					</div> -->
+    </div> <!-- /container -->
+    <script type ="text/javascript">
+      function handleLogin() {
+        var email = document.getElementById('email');
+        var password = document.getElementById('password');
 
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
-
-	<script type ="text/javascript">
-		function handleLogin() {
-		  var email = document.getElementById('email');
-		  var password = document.getElementById('password');
-  
-		  $.post('/login', {
-			email: email.value,
-			password: password.value
-		  }, (err) => {
-			if (err) {
-			  console.log("database error");
-			} else {
-			  console.log('yay');
-			}
-		  });
-		}
-		</script>
-</body>
+        $.post('/login', {
+          email: email.value,
+          password: password.value
+        }, (err) => {
+          if (err) {
+            console.log("database error");
+          } else {
+            console.log('yay');
+          }
+        });
+      }
+    </script>
+  </body>
 </html>
