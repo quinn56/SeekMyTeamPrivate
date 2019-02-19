@@ -3,6 +3,8 @@ language: node_js
 node_js:
   - "10.15.0"
 
+before_install: cd src
+
 deploy:
   provider: elasticbeanstalk
   access_key_id: AKIAJ56NH5AFBK34P3HQ
