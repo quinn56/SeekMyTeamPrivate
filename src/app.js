@@ -24,15 +24,17 @@ module.exports.uuid = uuid;
 
 var app = express();
 
+/* Set the static files location, for use with angular */
+//app.use(express.static(__dirname + '/public'));
+
 /* Disable xpowered header, security++ */
-//app.disable('x-powered-by') 
+app.disable('x-powered-by') 
+
 module.exports.app = app;
 
 /* Connect database */
 var database = new AWS.DynamoDB(); 
 module.exports.database = database;
-
-app.set('views', __dirname + '/views/');
 
 app.use(bodyParser.urlencoded({extended:false}));
 
@@ -65,8 +67,17 @@ app.use(function(req, res, next) {
     }
 });
 
-/* Hookup controllers for endpoints */
+/* Hookup controllers for endpoints w/ angular */
+//app.use('/api', require('./controllers'));
+
+/* Hookup controllers for endpoints w/o angular */
 app.use(require('./controllers'));
+
+
+/* Angular hookup */
+/*app.use('*', function(req, res) {
+    res.sendfile('./public/index.html');
+})*/
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
