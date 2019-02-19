@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
 
     // New item to represent a user
     // should update with blank fields in the future for 
-    // desc and other stuff
+    // skills and other stuff
     var item = {
         'Email': {'S': req.body.email},
         'Name': {'S': req.body.name},
@@ -41,7 +41,7 @@ router.post('/', function(req, res) {
             res.status(returnStatus).end();
             console.log('DDB Error: ' + err);
         } else {
-            //mailer.sendCode(req.body.email, confirmationCode);
+            mailer.sendCode(req.body.email, confirmationCode);
             res.status(200).end();
         }
     });
@@ -98,7 +98,7 @@ router.post('/confirm', function(req, res) {
                 }, 
                 TableName: "Users", 
                 UpdateExpression: "SET #C = :c"
-               };
+            };
         
             database.updateItem(params, function(err, data) {
                 if (err) {
@@ -117,7 +117,7 @@ router.post('/resendCode', function(req, res) {
     var params = {
         TableName: "Users",
         Key: {
-            'Email' : req.body.email
+            'Email' : req.body.email    // Maybe req.session.user.email?
         },
         UpdateExpression: "set Code = :code",
         ExpressionAttributeValues:{

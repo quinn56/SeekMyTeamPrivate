@@ -85,10 +85,41 @@ router.post('/delete', function(req, res) {
             });
         }
     });
+});
 
-    router.post('/upload', function(req, res, next) {
-        var email = req.session.user.email;
-    });
+router.post('/upload', function(req, res) {
+    var email = req.session.user.email;
+    // Upload image, file, etc. to S3 bucket here
+});
+
+router.post('/update', function(req, res) {
+    var column = req.body.column;
+    var item = req.body.item;
+    var email = req.session.user.email;
+
+    var params = {
+        ExpressionAttributeNames: {
+         '#C': column
+        }, 
+        ExpressionAttributeValues: {
+         ":item": item
+        }, 
+        Key: {
+         "Email": {
+           'S': email
+          }
+        }, 
+        TableName: "Users", 
+        UpdateExpression: "SET #C = :item"
+    };
+
+    database.updateItem(params, function(err, data) {
+        if (err) {
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    });   
 });
 
 module.exports = router;

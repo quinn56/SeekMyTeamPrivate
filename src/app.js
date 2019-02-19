@@ -7,13 +7,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('cookie-session');
 
-/*
-    Configure our SMTP Server details.
-    STMP is mail server which is responsible for sending and recieving email.
-*/
-const api_key = '8d54b48db11d88a60c874686ce476d00-1b65790d-c59b878c';
-const DOMAIN = 'sandboxe1aea5edfa8f4904b65d4facc650f8c2.mailgun.org';
-const mg = mailgun({apiKey: api_key, domain: DOMAIN});
+/* Configure our SMTP Server details */
+const api_key = process.env.MAILGUN_KEY;
+const domain = process.env.MAILGUN_DOMAIN;
+
+const mg = mailgun({apiKey: api_key, domain: domain});
 module.exports.mg = mg;
 
 const crypto = require("crypto");
@@ -30,8 +28,6 @@ var app = express();
 /* Disable xpowered header, security++ */
 app.disable('x-powered-by') 
 
-module.exports.app = app;
-
 /* Connect database */
 var database = new AWS.DynamoDB(); 
 module.exports.database = database;
@@ -46,7 +42,7 @@ app.use(
         maxAge: 60 * 60 * 1000  // Cookie lasts one hour
     })
 );
-
+    
 /* Login required for all paths besides login,         */
 /* / (for now), register/confirm(for now)              */
 
@@ -62,9 +58,9 @@ app.use(function(req, res, next) {
         if (req.session && req.session.user) {    
             next();    
         } else {
-            res.status(400).send('unauthorized').end();
-        }
+        res.status(400).send('unauthorized').end();
     }
+}
 });
 
 /* Hookup controllers for endpoints w/ angular */
@@ -85,3 +81,4 @@ var server = app.listen(port, function () {
 });
 
 module.exports = server;
+module.exports.app = app;
