@@ -45,17 +45,22 @@ app.use(
     })
 );
 
-/* Login required for all paths besides login/register */
-/* Remove register check if necessary since both will  */
-/* be on login page?                                   */
+/* Login required for all paths besides login,         */
+/* / (for now), register/confirm(for now)              */
+
+/* Remove / once we have a working login page that     */
+/* handles registrations and in-step confirmations as  */
+/* well. Also remove register/confirm in future since  */
+/* we only show the confirm page to logged in users    */
+/* who are not already confirmed                       */
 app.use(function(req, res, next) {
-    if (req.url === '/login' || req.url === '/register/confirm' || req.url === '/register') {
+    if (req.path === '/login' || req.path === '/' || req.path === '/register/confirm') {
         next();
-    } else {
-        if (!req.session && !req.session.user) {
-            res.status(400).send('unauthorized').end();
+    } else {        
+        if (req.session && req.session.user) {    
+            next();    
         } else {
-            next();
+            res.status(400).send('unauthorized').end();
         }
     }
 });

@@ -8,15 +8,21 @@ var database = require('../app').database;
 
 router.get('/:email', function(req, res) {
     var email = req.params.email;
+    /* If it is the logged in users profile use session data */
+    /* Else pull from DB                                     */
     
-    res.send(email).end();
-    /* send file with user details here */
+    /*if (email === req.session.user.email) {
+        res.sendFile(path.resolve(__dirname + '/../views/profile.html));
+    } else {
+
+    }*/
+    res.send(email).end(); // For now
 });
 
-router.get('/logout', function(req, res, next) {
+router.post('/logout', function(req, res, next) {
     /* Delete session object */
     req.session = null;
-    return res.redirect('/login');
+    res.status(200).end();
 });
 
 router.post('/delete', function(req, res) {
