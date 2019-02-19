@@ -8,10 +8,7 @@ var bodyParser = require('body-parser');
 var session = require('cookie-session');
 
 /* Configure our SMTP Server details */
-const api_key = process.env.MAILGUN_KEY;
-const domain = process.env.MAILGUN_DOMAIN;
-
-const mg = mailgun({apiKey: api_key, domain: domain});
+const mg = mailgun({apiKey: process.env.MAILGUN_KEY, domain: process.env.MAILGUN_DOMAIN});
 module.exports.mg = mg;
 
 const crypto = require("crypto");
@@ -43,16 +40,16 @@ app.use(
     })
 );
     
-/* Login required for all paths besides login,         */
-/* / (for now), register/confirm(for now)              */
+/* Login required for all paths besides login, register */
+/* / (for now), register/confirm(for now)               */
 
-/* Remove / once we have a working login page that     */
-/* handles registrations and in-step confirmations as  */
-/* well. Also remove register/confirm in future since  */
-/* we only show the confirm page to logged in users    */
-/* who are not already confirmed                       */
+/* Remove / once we have a working login page that      */
+/* handles registrations and in-step confirmations as   */
+/* well. Also remove register/confirm in future since   */
+/* we only show the confirm page to logged in users     */
+/* who are not already confirmed                        */
 app.use(function(req, res, next) {
-    if (req.path === '/login' || req.path === '/' || req.path === '/register/confirm') {
+    if (req.path === '/login' || req.path === '/' || req.path === '/register' || req.path === '/register/confirm') {
         next();
     } else {        
         if (req.session && req.session.user) {    
