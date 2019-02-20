@@ -6,9 +6,11 @@ const mailgun = require("mailgun-js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('cookie-session');
+var path = require('path');
 
 /* Configure our SMTP Server details */
 const mg = mailgun({apiKey: process.env.MAILGUN_KEY, domain: process.env.MAILGUN_DOMAIN});
+//const mg = mailgun({apiKey: 'abc', domain: 'abc'});
 module.exports.mg = mg;
 
 const crypto = require("crypto");
@@ -20,7 +22,7 @@ module.exports.uuid = uuid;
 var app = express();
 
 /* Set the static files location, for use with angular */
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.resolve(__dirname + '/public/dist')));
 
 /* Disable xpowered header, security++ */
 app.disable('x-powered-by') 
@@ -53,7 +55,7 @@ app.use(function(req, res, next) {
         console.log(JSON.stringify(req.session.user));
         next();    
     } else {
-        if (req.path === '/api/login' || req.path === '/api' || req.path === '/api/register' || req.path === '/api/register/confirm') {
+        if (req.path === '/' || req.path === '/api/login' || req.path === '/api' || req.path === '/api/register' || req.path === '/api/register/confirm') {
             next();
         } else {
             res.status(400).redirect('/');
@@ -67,11 +69,30 @@ app.use('/api', require('./controllers'));
 /* Hookup controllers for endpoints w/o angular */
 //app.use(require('./controllers'));
 
+const allowedExt = [
+    '.js',
+    '.ico',
+    '.css',
+    '.png',
+    '.jpg',
+    '.woff2',
+    '.woff',
+    '.ttf',
+    '.svg',
+  ];
+
 
 /* Angular hookup */
-app.use('*', function(req, res) {
-    res.sendfile('./public/index.html');
-})
+
+ // Redirect all the other resquests
+ app.use('*', function (req, res) {
+    if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+      res.sendFile(path.resolve(__dirname + `./public/dist/${req.url}`));
+    } else {
+     console.log(path.resolve(__dirname + '/public/dist/index.html'));
+      res.sendFile(path.resolve(__dirname + '/public/dist/index.html'));
+    }
+  });
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
