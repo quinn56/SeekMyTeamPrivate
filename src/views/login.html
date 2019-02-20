@@ -45,7 +45,7 @@
         var email = document.getElementById('email');
         var password = document.getElementById('password');
 
-        $.post('/login', {
+        $.post('/api/login', {
           email: email.value,
           password: password.value
         }, (err) => {

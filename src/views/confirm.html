@@ -39,7 +39,7 @@
     <script type ="text/javascript">
     function handleConfirm() {
       var code = document.getElementById('code');
-      $.post('/register/confirm', {
+      $.post('/api/register/confirm', {
         code: code.value,
         email: getQueryVariable('email')
       }, (err) => {

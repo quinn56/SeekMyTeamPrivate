@@ -20,7 +20,7 @@ module.exports.uuid = uuid;
 var app = express();
 
 /* Set the static files location, for use with angular */
-//app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 /* Disable xpowered header, security++ */
 app.disable('x-powered-by') 
@@ -48,29 +48,30 @@ app.use(
 /* well. Also remove register/confirm in future since   */
 /* we only show the confirm page to logged in users     */
 /* who are not already confirmed                        */
-app.use(function(req, res, next) {
-    if (req.path === '/login' || req.path === '/' || req.path === '/register' || req.path === '/register/confirm') {
-        next();
-    } else {        
-        if (req.session && req.session.user) {    
-            next();    
+app.use(function(req, res, next) {        
+    if (req.session && req.session.user) {  
+        console.log(JSON.stringify(req.session.user));
+        next();    
+    } else {
+        if (req.path === '/api/login' || req.path === '/api' || req.path === '/api/register' || req.path === '/api/register/confirm') {
+            next();
         } else {
-        res.status(400).send('unauthorized').end();
+            res.status(400).redirect('/');
+        }
     }
-}
 });
 
 /* Hookup controllers for endpoints w/ angular */
-//app.use('/api', require('./controllers'));
+app.use('/api', require('./controllers'));
 
 /* Hookup controllers for endpoints w/o angular */
-app.use(require('./controllers'));
+//app.use(require('./controllers'));
 
 
 /* Angular hookup */
-/*app.use('*', function(req, res) {
+app.use('*', function(req, res) {
     res.sendfile('./public/index.html');
-})*/
+})
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
