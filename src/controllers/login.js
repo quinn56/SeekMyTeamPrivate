@@ -35,7 +35,7 @@ router.post('/', function(req, res) {
             /* Correct password */
             if (retrievedUser.Password.S === hashedPassword.passwordHash) {
                 /* User still needs to confirm account */
-                if (!retrievedUser.Confirmed) {
+                if (!retrievedUser.Confirmed.BOOL) {
                     res.status(401).end();
                 } else {
                     var user = User.summarize(retrievedUser);

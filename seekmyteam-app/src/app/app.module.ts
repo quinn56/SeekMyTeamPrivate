@@ -22,7 +22,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'confirm', component: ConfirmComponent},
+  { path: 'confirm/:email', component: ConfirmComponent},
   { path: '**', redirectTo: '/login' }
 ];
 

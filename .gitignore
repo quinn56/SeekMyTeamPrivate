@@ -2,7 +2,7 @@
 node_modules/
 someOtherfoler/
 bash.exe.stackdump
-
+src/public/dist
 
 # Compiled source #
 ###################

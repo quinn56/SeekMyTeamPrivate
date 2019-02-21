@@ -1,10 +1,12 @@
 # SeekMyTeam
 
-This directory contains the source code for SeekMyTeam
+This directory contains the server side source code for SeekMyTeam
 
 ## Directory Structure
 
 `/controllers` contains the routing management and API endpoint implementation
+
+`/models` contains models for objects in the system
 
 `/helpers` contains reusable utility functions
 
