@@ -12,22 +12,34 @@ export class RegisterComponent {
         password: ''
     };
 
-    
     constructor(private auth: AuthenticationService, private router: Router) { }
     
-    ngOnInit() {
-        console.log('register component');
-    }
-    
     register() {
-        this.auth.register(this.credentials).subscribe(() => {
-            this.router.navigateByUrl('/confirm');
-        }, (err) => {
-            if (err.status == 401) {
-                console.log('a user with that email already exists');
-            } else {
-                console.log('server error: failed to register');
+        if (!this.validateEmail(this.credentials.email)) {
+            console.log("invalid purdue email address");
+        } else {
+            this.auth.register(this.credentials).subscribe(() => {
+                this.router.navigateByUrl('/confirm');
+            }, (err) => {
+                if (err.status == 401) {
+                    console.log('a user with that email already exists');
+                } else {
+                    console.log('server error: failed to register');
+                }
+            });
+        }
+    }
+
+    validateEmail(email: string): boolean {
+        var re = /\S+@\S+\.\S+/;
+        let val = re.test(email);
+        if (!val) {
+            return false;
+        } else {
+            if (email.substr(email.indexOf('@')) !== '@purdue.edu') {
+                return false;
             }
-        });
+            return true;
+        }
     }
 }
