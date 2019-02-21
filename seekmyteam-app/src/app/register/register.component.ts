@@ -12,8 +12,13 @@ export class RegisterComponent {
         password: ''
     };
 
+    
     constructor(private auth: AuthenticationService, private router: Router) { }
-
+    
+    ngOnInit() {
+        console.log('register component');
+    }
+    
     register() {
         this.auth.register(this.credentials).subscribe(() => {
             this.router.navigateByUrl('/confirm');

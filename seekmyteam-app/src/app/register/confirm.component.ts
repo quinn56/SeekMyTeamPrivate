@@ -13,6 +13,11 @@ export class ConfirmComponent {
 
     constructor(private auth: AuthenticationService, private router: Router) { }
 
+
+    ngOnInit() {
+        console.log('confirm component');
+    }
+
     confirm() {
         this.auth.confirm(this.credentials).subscribe(() => {
             this.router.navigateByUrl('/profile');
