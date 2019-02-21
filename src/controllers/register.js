@@ -39,7 +39,6 @@ router.post('/', function(req, res) {
             }
 
             res.status(returnStatus).end();
-            console.log('DDB Error: ' + err);
         } else {
             mailer.sendCode(req.body.email, confirmationCode);
             res.status(200).end();
@@ -47,24 +46,11 @@ router.post('/', function(req, res) {
     });
 });
 
-router.get('/confirm', function(req, res) {
-    if (req.session) {
-        req.session.email = req.query.email;
-    }
-        
-    res.sendFile(path.resolve(__dirname + '/../views/confirm.html'));
-});
-
-
-/** CHANGE FOR JWTS **/
 router.post('/confirm', function(req, res) {
     /* Verifying email here */
-    var email;
-    if (req.session && req.session.email) {
-        email = req.session.email;
-    } else {
-        email = req.body.email;
-    }
+    var email = req.body.email;
+    var code = req.body.code;
+    
     var params = {
         TableName : 'Users',
         Key : { 
@@ -79,7 +65,7 @@ router.post('/confirm', function(req, res) {
         } else {
             var retrievedCode = data.Item.Code.S;
 
-            if (retrievedCode !== req.body.code) {
+            if (retrievedCode !== code) {
                 /* Invalid code */
                 res.status(403).end();
             }
@@ -106,7 +92,18 @@ router.post('/confirm', function(req, res) {
                 if (err) {
                     res.status(500).end();
                 } else {
-                  res.status(200).end();
+                    var expiry = new Date();
+                    expiry.setDate(expiry.getDate() + 7);
+                    
+                    var token = jwt.sign({
+                        email: email,
+                        exp: parseInt(expiry.getTime() / 1000)
+                    }, process.env.TOKEN_SECRET)
+                   
+                    /* Succesful confirmation, generate token */
+                    res.status(200).json({
+                        'token': token 
+                    });
                 }
             });   
         }

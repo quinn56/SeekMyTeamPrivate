@@ -1,0 +1,11 @@
+<form (submit)="confirm()">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" placeholder="email" [(ngModel)]="credentials.email">
+      </div>
+    <div class="form-group">
+      <label for="code">Confirmation Code</label>
+      <input type="text" class="form-control" name="code" placeholder="Confirmation Code" [(ngModel)]="credentials.code">
+    </div>
+    <button type="submit" class="btn btn-default">Confirm</button>
+  </form>
