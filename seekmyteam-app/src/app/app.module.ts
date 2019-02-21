@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -25,7 +26,8 @@ import { UserUtilsService } from './services/users/user-utils.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    routing
+    routing,
+    FormsModule
   ],
   providers: [
     AuthGuardService,

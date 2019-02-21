@@ -1,6 +1,6 @@
 var path = require('path');
 var express = require("express");
-var jwt = require('expres-jwt');
+var jwt = require('express-jwt');
 var auth = jwt({
     secret: process.env.TOKEN_SECRET,
     userProperty: 'payload'
