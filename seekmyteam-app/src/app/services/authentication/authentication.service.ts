@@ -59,7 +59,7 @@ export class AuthenticationService {
   }
 
   private requestRegistration(user: RegisterPayload): Observable<any> {
-    let base = this.http.post('/api/register', user);
+    let base = this.http.post('/api/register',  user);
 
     const requestedData = base.pipe(
       map((data: any) => {

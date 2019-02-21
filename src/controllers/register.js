@@ -3,10 +3,14 @@ var mailer = require("../helpers/mailer");
 var express = require("express");
 var path = require('path');
 
+var jwt = require('jsonwebtoken');
+
+
 var router = express.Router();
 var database = require('../app').database;
 
 router.post('/', function(req, res) {
+    console.log(req);
     var passObj = saltHashPassword(req.body.password);
 
     var confirmationCode = generateConfirmationCode();

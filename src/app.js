@@ -30,7 +30,7 @@ app.disable('x-powered-by')
 var database = new AWS.DynamoDB(); 
 module.exports.database = database;
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
     
 /* Catch error fro jwt token */
 app.use(function(err, req, res, next) {        
