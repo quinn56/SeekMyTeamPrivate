@@ -1,14 +1,19 @@
 var path = require('path');
 var express = require("express");
+var jwt = require('expres-jwt');
+var auth = jwt({
+    secret: process.env.TOKEN_SECRET,
+    userProperty: 'payload'
+});
+
 var router = express.Router();
 
 router.use('/register', require('./register'));
 router.use('/login', require('./login'));
-router.use('/profile', require('./profile'));
+router.use('/profile', auth, require('./profile'));
 
-router.get('/', function(req, res) {
-    /* get paginated results here */
-    res.sendFile(path.resolve(__dirname + '/../views/index.html'));
+router.get('/', auth, function(req, res) {
+    res.send('get paginated results here');
 });
 
 

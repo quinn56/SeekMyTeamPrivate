@@ -19,12 +19,6 @@ router.get('/:email', function(req, res) {
     res.send(email).end(); // For now
 });
 
-router.post('/logout', function(req, res, next) {
-    /* Delete session object */
-    req.session = null;
-    res.status(200).end();
-});
-
 router.post('/delete', function(req, res) {
     var queryParams = {
         TableName : "Posts",
@@ -88,15 +82,14 @@ router.post('/delete', function(req, res) {
 });
 
 router.post('/upload', function(req, res) {
-    var email = req.session.user.email;
     // Upload image, file, etc. to S3 bucket here
 });
 
 router.post('/update', function(req, res) {
     var column = req.body.column;
     var item = req.body.item;
-    var email = req.session.user.email;
-
+    var email = req.payload.email; 
+    
     var params = {
         ExpressionAttributeNames: {
          '#C': column

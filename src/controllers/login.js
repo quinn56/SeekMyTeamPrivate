@@ -1,6 +1,7 @@
 var crypto = require("../helpers/crypto");
 var express = require("express");
 var path = require('path');
+var jwt = require('jsonwebtoken');
 
 var router = express.Router();
 var database = require('../app').database;
@@ -38,8 +39,18 @@ router.post('/', function(req, res) {
                     res.status(401).end();
                 } else {
                     var user = User.summarize(retrievedUser);
-                    req.session.user = user;
-                    res.status(200).end();
+                    var expiry = new Date();
+                    expiry.setDate(expiry.getDate() + 7);
+                    
+                    var token = jwt.sign({
+                        email: user.email,
+                        exp: parseInt(expiry.getTime() / 1000)
+                    }, process.env.TOKEN_SECRET)
+                   
+                    /* Succesful login, generate token */
+                    res.status(200).json({
+                        'token': token 
+                    });
                 }
             } else {
                 // Passwords did not match

@@ -55,6 +55,8 @@ router.get('/confirm', function(req, res) {
     res.sendFile(path.resolve(__dirname + '/../views/confirm.html'));
 });
 
+
+/** CHANGE FOR JWTS **/
 router.post('/confirm', function(req, res) {
     /* Verifying email here */
     var email;
@@ -111,6 +113,7 @@ router.post('/confirm', function(req, res) {
     });
 });
 
+/** CHANGE FOR JWTS **/
 router.post('/resendCode', function(req, res) {
     var code = generateConfirmationCode();
 
