@@ -27,8 +27,13 @@ router.post('/', function(req, res) {
     database.getItem(params, function(err, data) {
         if (err) {
             /* User not found */
-           res.status(400).end();
+           res.status(500).end();
         } else {
+          /* No user with that email found */
+          if (data.Item === undefined) {
+            res.status(401).end();
+            return;
+            } 
             var retrievedUser = data.Item;
 
             var hashedPassword = crypto.sha512(password, retrievedUser.Salt.S);

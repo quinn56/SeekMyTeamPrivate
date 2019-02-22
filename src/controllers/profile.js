@@ -18,8 +18,13 @@ router.get('/:email', function(req, res) {
 
     database.getItem(params, function(err, data) {
         if (err) {
-            res.status(401).end();
+            res.status(500).end();
         } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
             var user = User.summarize(data.Item)
             res.status(200).json({
                 "user": user
