@@ -1,11 +1,30 @@
-<form (submit)="confirm()">
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" name="email" placeholder="email" [(ngModel)]="credentials.email">
+  <form (submit)="confirm()">
+      <!-- Beginning of container -->
+      <div class="container-fluid">
+        <!-- Mother row -->
+        <div class="row">
+          <div class="offset-1 col-10">
+            <!-- This creates white sidebars :)-->
+            <!-- Beginning of inner content -->
+    
+            <!-- Finish up inputs and buttons and stuff -->
+    
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" name="email" placeholder="email" [(ngModel)]="credentials.email">
+              </div>
+            <div class="form-group">
+              <label for="code">Confirmation Code</label>
+              <input type="text" class="form-control" name="code" placeholder="Confirmation Code" [(ngModel)]="credentials.code">
+            </div>
+            <button type="submit" class="btn btn-primary">Confirm!</button>
+    
+            <!-- End of input stuff -->
+    
+            <!-- End of inner content -->
+          </div>
+        </div>
+        <!-- End of Mother Row -->
       </div>
-    <div class="form-group">
-      <label for="code">Confirmation Code</label>
-      <input type="text" class="form-control" name="code" placeholder="Confirmation Code" [(ngModel)]="credentials.code">
-    </div>
-    <button type="submit" class="btn btn-default">Confirm</button>
-  </form>
+      <!-- End of container -->
+    </form>

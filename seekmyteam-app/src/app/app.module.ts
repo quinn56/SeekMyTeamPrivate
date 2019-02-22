@@ -22,9 +22,10 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   /**
-   * Please delete Profile component later
+   * Please delete Profile (line 27) and confirm (line 28) component later - used for testing purpose only
    */
   { path: 'profile', component: ProfileComponent },
+  { path: 'confirm', component: ConfirmComponent },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'confirm/:email', component: ConfirmComponent},
   { path: '**', redirectTo: '/login' }
