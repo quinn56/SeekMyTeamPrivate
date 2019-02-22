@@ -1,11 +1,37 @@
 <form (submit)="login()">
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="credentials.email">
+<!-- Beginning of container -->
+  <div class="container-fluid">
+    <!-- Mother row -->
+    <div class="row">
+      <div class="offset-1 col-10"> <!-- This creates white sidebars :)-->
+          <!-- Beginning of inner content -->
+
+        <div class="row">
+          <!-- Logo goes here in this row -->
+          <div class="offset-5 col-2">
+            <img src="../../assets/logo.PNG" class="img-fluid">
+          </div>
+        </div>
+          <!-- Finish up inputs and buttons and stuff -->
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter email"
+            [(ngModel)]="credentials.email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Password"
+            [(ngModel)]="credentials.password">
+          </div>
+          <button type="submit" class="btn btn-primary">Sign in!</button>
+
+          <!-- End of input stuff -->
+
+        <!-- End of inner content -->
+      </div>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="credentials.password">
-    </div>
-    <button type="submit" class="btn btn-default">Sign in!</button>
-  </form>
+    <!-- End of Mother Row -->
+  </div>
+  <!-- End of container -->
+</form>
