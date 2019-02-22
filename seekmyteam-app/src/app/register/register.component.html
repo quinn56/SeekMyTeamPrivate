@@ -1,15 +1,37 @@
 <form (submit)="register()">
-    <div class="form-group">
-      <label for="name">Full name</label>
-      <input type="text" class="form-control" name="name" placeholder="Enter your name" [(ngModel)]="credentials.name">
+  <!-- Beginning of container -->
+  <div class="container-fluid">
+    <!-- Mother row -->
+    <div class="row">
+      <div class="offset-1 col-10">
+        <!-- This creates white sidebars :)-->
+        <!-- Beginning of inner content -->
+
+        <!-- Finish up inputs and buttons and stuff -->
+
+        <div class="form-group">
+          <label for="name">Full name</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter your name"
+            [(ngModel)]="credentials.name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" name="email" placeholder="Enter email"
+            [(ngModel)]="credentials.email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password" placeholder="Password"
+            [(ngModel)]="credentials.password">
+        </div>
+        <button type="submit" class="btn btn-primary">Register!</button>
+
+        <!-- End of input stuff -->
+
+        <!-- End of inner content -->
+      </div>
     </div>
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="credentials.email">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="credentials.password">
-    </div>
-    <button type="submit" class="btn btn-default">Register!</button>
-  </form>
+    <!-- End of Mother Row -->
+  </div>
+  <!-- End of container -->
+</form>
