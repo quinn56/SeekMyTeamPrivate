@@ -31,7 +31,7 @@ router.post('/', function(req, res) {
         } else {
           /* No user with that email found */
           if (data.Item === undefined) {
-            res.status(401).end();
+            res.status(400).end();
             return;
             } 
             var retrievedUser = data.Item;
