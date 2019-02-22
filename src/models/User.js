@@ -8,9 +8,9 @@ function User(email, name) {
 
 function summarize(item) {
     return {
-        'email': item.Email,
-        'name': item.Name,
-        'description': item.Description
+        'email': item.Email.S,
+        'name': item.Name.S,
+        'description': item.Description.S
     };
 }
 

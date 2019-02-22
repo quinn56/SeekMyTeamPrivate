@@ -8,15 +8,24 @@ var database = require('../app').database;
 
 router.get('/:email', function(req, res) {
     var email = req.params.email;
-    /* If it is the logged in users profile use session data */
-    /* Else pull from DB                                     */
-    
-    /*if (email === req.session.user.email) {
-        res.sendFile(path.resolve(__dirname + '/../views/profile.html));
-    } else {
+     
+    var params = {
+        TableName : 'Users',
+        Key : { 
+          "Email" : {'S' : email}
+        }
+    };
 
-    }*/
-    res.send(email).end(); // For now
+    database.getItem(params, function(err, data) {
+        if (err) {
+            res.status(401).end();
+        } else {
+            var user = User.summarize(data.Item)
+            res.status(200).json({
+                "user": user
+            });
+        }
+    });
 });
 
 router.post('/delete', function(req, res) {
@@ -72,7 +81,7 @@ router.post('/delete', function(req, res) {
                         if (err) {
                             res.status(402).end();
                         } else {
-                            res.status(200).redirect('/login');
+                            res.status(200).end();
                         }
                     });
                 }

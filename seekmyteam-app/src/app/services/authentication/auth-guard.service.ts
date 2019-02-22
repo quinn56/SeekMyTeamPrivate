@@ -17,7 +17,7 @@ export class AuthGuardService implements CanActivate {
   }
 
   public isLoggedIn(): boolean {
-    const user = this.user_utils.getUserDetails();
+    const user = this.user_utils.getCurrentUserDetails();
     if (user) {
       return user.exp > Date.now() / 1000;
     } else {
