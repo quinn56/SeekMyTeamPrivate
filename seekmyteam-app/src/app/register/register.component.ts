@@ -19,13 +19,6 @@ export class RegisterComponent {
         private user_utils: UserUtilsService,
         private router: Router) { }
     
-    ngOnInit() {
-        // If logged in redirect
-        if (this.auth_guard.isLoggedIn()) {
-          this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
-        }
-      }
-    
     register() {
         if (!this.validateEmail(this.credentials.email)) {
             console.log("invalid purdue email address");

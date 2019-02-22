@@ -18,13 +18,6 @@ export class LoginComponent {
      private user_utils: UserUtilsService,
      private router: Router) {}
 
-  ngOnInit() {
-    // If logged in redirect
-    if (this.auth_guard.isLoggedIn()) {
-      this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
-    }
-  }
-
   login() {
     this.auth.login(this.credentials).subscribe(() => {
       this.router.navigateByUrl('/profile/' + this.credentials.email);
