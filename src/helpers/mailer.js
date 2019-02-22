@@ -2,7 +2,7 @@ const mg = require("../app").mg;
 
 function sendCode(email, code) {
     const data = {
-        from: 'verify@mg.seekmyteam.com',
+        from: 'postmaster@mg.seekmyteam.com',
         to: email,
         subject: 'SeekMyTeam Verification Code',
         text: 'Hello, your verification code is: ' + code 
