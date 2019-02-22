@@ -19,12 +19,25 @@ interface DeletePayload {
   email: string
 }
 
+interface UpdatePayload {
+  column: string,
+  description: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserUtilsService {
 
   constructor(private http: HttpClient) { }
+
+  public updateProfile(column: string, description: string): Observable<any> {
+    var req: UpdatePayload = {
+        column: column,
+        description: description
+    };
+    return this.requestUpdateProfile(req);
+  }
 
   public getProfile(email: string): Observable<any> {
     return this.requestProfile(email);
@@ -37,12 +50,16 @@ export class UserUtilsService {
     return this.requestDeleteProfile(req);
   }
 
-  public logout() {
-    this.removeToken();
-  }
+  private requestUpdateProfile(req: UpdatePayload): Observable<any> {
+    let base = this.http.post('/api/profile/update', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
 
-  private removeToken() {
-    localStorage.setItem('jwt-token', null);
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
   }
 
   private requestDeleteProfile(req: DeletePayload): Observable<any> {

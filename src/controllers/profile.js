@@ -33,7 +33,7 @@ router.get('/:email', function(req, res) {
     });
 });
 
-router.post('/delete', function(req, res) {
+/*router.post('/delete', function(req, res) {
     var queryParams = {
         TableName : "Posts",
         KeyConditionExpression: "Email = :email",
@@ -44,7 +44,7 @@ router.post('/delete', function(req, res) {
 
     var itemsArray = [];
     
-    /* Query for all posts matching users email */
+     Query for all posts matching users email 
     database.query(queryParams, function(err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err));
@@ -66,7 +66,7 @@ router.post('/delete', function(req, res) {
                 }
             };
             
-            /* Delete all posts associated with user */
+             Delete all posts associated with user 
             database.batchWrite(deleteParams, function(err, data) {
                 if (err) {
                     console.log('Batch delete unsuccessful ...');
@@ -76,7 +76,7 @@ router.post('/delete', function(req, res) {
                     console.log('Batch delete successful ...');
                     console.log(data); // successful response
                     
-                    /* Finally, delete user from table */
+                    Finally, delete user from table 
                     database.deleteItem({
                         "TableName": "Users", 
                         "Key" : {
@@ -91,6 +91,20 @@ router.post('/delete', function(req, res) {
                     });
                 }
             });
+        }
+    });
+});*/
+router.post('/delete', function(req, res) {
+    database.deleteItem({
+        "TableName": "Users", 
+        "Key" : {
+            "Email": { "S" : req.body.email }
+        }
+    }, function (err, data) {
+        if (err) {
+            res.status(402).end();
+        } else {
+            res.status(200).end();
         }
     });
 });
