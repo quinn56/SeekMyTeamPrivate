@@ -36,7 +36,7 @@ export class RegisterComponent {
     }
 
     validateEmail(email: string): boolean {
-        var re = /\S+@\S+\.\S+/;
+       /* var re = /\S+@\S+\.\S+/;
         let val = re.test(email);
         if (!val) {
             return false;
@@ -45,6 +45,7 @@ export class RegisterComponent {
                 return false;
             }
             return true;
-        }
+        }*/
+        return true;
     }
 }

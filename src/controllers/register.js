@@ -8,7 +8,6 @@ var router = express.Router();
 var database = require('../app').database;
 
 router.post('/', function(req, res) {
-    console.log(req);
     var passObj = saltHashPassword(req.body.password);
 
     var confirmationCode = generateConfirmationCode();

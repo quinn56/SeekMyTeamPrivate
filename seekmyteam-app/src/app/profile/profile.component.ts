@@ -18,10 +18,10 @@ export class ProfileComponent {
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() { 
-    this.isCurrentUser = this.checkCurrentUser();
-    
     this.route.params.subscribe(params => {
       this.getEmail = params['email']; 
+
+      this.isCurrentUser = this.checkCurrentUser();
 
       this.user_utils.getProfile(this.getEmail).subscribe(profile => {
         this.details = profile.user;
@@ -33,8 +33,8 @@ export class ProfileComponent {
 
   checkCurrentUser() {
     var check: UserDetails;
-    check = this.user_utils.getCurrentUserDetails()
-  
+    check = this.user_utils.getCurrentUserDetails();
+    
     return (check.email === this.getEmail); 
   }
 

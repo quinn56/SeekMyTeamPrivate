@@ -113,17 +113,23 @@ router.post('/upload', function(req, res) {
     // Upload image, file, etc. to S3 bucket here
 });
 
-router.post('/update', function(req, res) {
+router.post('/update', function(req, res) {   
     var column = req.body.column;
-    var item = req.body.item;
+    var item = req.body.description;
     var email = req.payload.email; 
+    console.log('item: ' + item);
+    console.log('email: ' + email);
+    console.log('col: ' + column);
     
+
     var params = {
         ExpressionAttributeNames: {
-         '#C': column
+         "#C": column
         }, 
         ExpressionAttributeValues: {
-         ":item": item
+         ":c": {
+           'S': item
+          }
         }, 
         Key: {
          "Email": {
@@ -131,7 +137,7 @@ router.post('/update', function(req, res) {
           }
         }, 
         TableName: "Users", 
-        UpdateExpression: "SET #C = :item"
+        UpdateExpression: "SET #C = :c"
     };
 
     database.updateItem(params, function(err, data) {
@@ -140,7 +146,7 @@ router.post('/update', function(req, res) {
         } else {
             res.status(200).end();
         }
-    });   
+    });  
 });
 
 module.exports = router;
