@@ -21,6 +21,10 @@ const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch:'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  /**
+   * Please delete Profile component later
+   */
+  { path: 'profile', component: ProfileComponent },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'confirm/:email', component: ConfirmComponent},
   { path: '**', redirectTo: '/login' }
