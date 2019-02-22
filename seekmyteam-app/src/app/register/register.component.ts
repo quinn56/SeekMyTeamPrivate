@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthenticationService, RegisterPayload } from '../services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { AuthGuardService } from '../services/authentication/auth-guard.service';
+import { UserUtilsService } from '../services/users/user-utils.service';
 
 @Component({
     templateUrl: './register.component.html'
@@ -12,7 +14,17 @@ export class RegisterComponent {
         password: ''
     };
 
-    constructor(private auth: AuthenticationService, private router: Router) { }
+    constructor(private auth: AuthenticationService,
+        private auth_guard: AuthGuardService,
+        private user_utils: UserUtilsService,
+        private router: Router) { }
+    
+    ngOnInit() {
+        // If logged in redirect
+        if (this.auth_guard.isLoggedIn()) {
+          this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
+        }
+      }
     
     register() {
         if (!this.validateEmail(this.credentials.email)) {

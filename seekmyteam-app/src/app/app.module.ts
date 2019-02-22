@@ -18,7 +18,7 @@ import { UserUtilsService } from './services/users/user-utils.service';
 import { NavbarComponent } from './navbar/navbar.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/login' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },

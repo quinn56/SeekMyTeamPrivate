@@ -19,6 +19,7 @@ export class LoginComponent {
      private router: Router) {}
 
   ngOnInit() {
+    // If logged in redirect
     if (this.auth_guard.isLoggedIn()) {
       this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
     }
