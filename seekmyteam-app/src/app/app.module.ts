@@ -11,23 +11,19 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { AuthRedirectService } from './services/authentication/auth-redirect.service';
 import { UserUtilsService } from './services/users/user-utils.service';
-import { NavbarComponent } from './navbar/navbar.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch:'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  /**
-   * Please delete Profile (line 27) and confirm (line 28) component later - used for testing purpose only
-   */
-  { path: 'profile', component: ProfileComponent },
-  { path: 'confirm', component: ConfirmComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
+  { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'confirm/:email', component: ConfirmComponent},
+  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
   { path: '**', redirectTo: '/login' }
 ];
 
@@ -49,6 +45,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthGuardService,
+    AuthRedirectService,
     AuthenticationService,
     UserUtilsService
   ],

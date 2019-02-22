@@ -62,9 +62,13 @@ router.post('/confirm', function(req, res) {
     
     database.getItem(params, function(err, data) {
         if (err) {
-           /* No user with that email found */ 
-           res.status(401).end(); 
+            res.status(500).end(); 
         } else {
+            /* No user with that email found */
+            if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
             var retrievedCode = data.Item.Code.S;
 
             if (retrievedCode !== code) {

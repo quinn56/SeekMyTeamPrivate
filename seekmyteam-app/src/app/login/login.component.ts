@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthenticationService, LoginPayload } from '../services/authentication/authentication.service';
+import { AuthGuardService } from '../services/authentication/auth-guard.service';
 import { Router } from '@angular/router';
+import { UserUtilsService } from '../services/users/user-utils.service';
 
 @Component({
   templateUrl: './login.component.html'
@@ -11,7 +13,10 @@ export class LoginComponent {
       password: ''
   };
 
-  constructor(private auth: AuthenticationService, private router: Router) {}
+  constructor(private auth: AuthenticationService,
+     private auth_guard: AuthGuardService,
+     private user_utils: UserUtilsService,
+     private router: Router) {}
 
   login() {
     this.auth.login(this.credentials).subscribe(() => {
