@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 
 @Component({
   templateUrl: './profile.component.html'
@@ -12,9 +13,9 @@ export class ProfileComponent {
     description: ''
   };
   private getEmail: string;
-  private isCurrentUser: boolean;
+  isCurrentUser: boolean;
 
-  constructor(private user_utils: UserUtilsService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() { 
     this.isCurrentUser = this.checkCurrentUser();
@@ -47,11 +48,18 @@ export class ProfileComponent {
     } else {
       this.user_utils.deleteProfile(this.user_utils.getCurrentUserDetails().email).subscribe(res => {
         console.log('successfully deleted profile');
-        this.user_utils.logout();
-        this.router.navigateByUrl('/login');
+        this.auth.logout();
       }, (err) => {
         console.log('could not delete profile');
       }) 
     }
+  }
+
+  updateProfile() {
+    this.user_utils.updateProfile('Description', this.details.description).subscribe(res => {
+      console.log('successfully updated profile');
+    }, (err) => {
+      console.log('could not update profile');
+    }) 
   }
 }

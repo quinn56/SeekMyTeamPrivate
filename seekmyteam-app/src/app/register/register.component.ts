@@ -24,7 +24,7 @@ export class RegisterComponent {
             console.log("invalid purdue email address");
         } else {
             this.auth.register(this.credentials).subscribe(() => {
-                this.router.navigateByUrl('/confirm');
+                this.router.navigateByUrl('/confirm/' + this.credentials.email);
             }, (err) => {
                 if (err.status == 401) {
                     console.log('a user with that email already exists');
