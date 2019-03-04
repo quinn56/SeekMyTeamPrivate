@@ -18,7 +18,7 @@ router.post('/', function(req, res) {
     var password = req.body.password;
 
     var params = {
-        TableName : 'Users',
+        TableName : process.env.USERS_TABLE,
         Key : { 
           "Email" : {'S' : email}
         }

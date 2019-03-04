@@ -15,12 +15,112 @@ router.use('/login', require('./login'));
 router.use('/profile', auth, require('./profile'));
 
 router.get('/posts', auth, function(req, res) {
-    res.send('get paginated results here');
+    res.send('get paginated results here, add filters as query params in future');
+    var params = {
+        TableName: process.env.POSTS_TABLE,
+        Limit: 10 
+    };
+
+    if (req.params.ExclusiveStartKey) {
+        params.ExclusiveStartKey = req.params.ExclusiveStartKey;
+    }
+      
+    database.scan(params, function (err, data) {
+    if (err) {
+        console.log(err, err.stack);
+    } else {
+        if (data.LastEvaluatedKey) {
+            req.payload.ExclusiveStartKey = data.LastEvaluatedKey;
+            
+            res.status(200).json({
+                "posts": data.Items
+            });
+        } else {
+            // all results scanned
+            req.payload.ExclusiveStartKey = null;
+        }
+    }
+    });
 });
 
-router.get('/filter', auth, function(req, res) {
-    res.send('get filtered results here');
+router.post('/savePost', auth, function(req, res) {
+    var name = req.body.name;
+    var description = req.body.description;
+    var owner = req.payload.email;
+
+    var item = {
+        'Name': {'S': name},
+        'Description' : {'S' : description},
+        'Owner': {'S': owner},
+    };
+
+    var params = { 
+        'TableName': process.env.POSTS_TABLE,
+        'Item': item,
+        'ConditionExpression': 'attribute_not_exists(Owner)'
+    };
+
+    database.putItem(params, function(err, data) {
+        if (err) {
+            var returnStatus = 500;
+
+            if (err.code === 'ConditionalCheckFailedException') {
+                returnStatus = 401;
+            }
+
+            res.status(returnStatus).end();
+        } else {
+            res.status(200).end();
+        }
+    });
 });
 
+router.post('/updatePost', auth, function(req, res) {
+    var name = req.body.name;
+    var description = req.body.description;
+
+    var params = {
+        ExpressionAttributeNames: {
+         "#C": 'Description'
+        }, 
+        ExpressionAttributeValues: {
+         ":c": {
+           'S': description
+          }
+        }, 
+        Key: {
+         "Name": {
+           'S': name
+          }
+        }, 
+        TableName: process.env.POSTS_TABLE, 
+        UpdateExpression: "SET #C = :c"
+    };
+
+    database.updateItem(params, function(err, data) {
+        if (err) {
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    });  
+});
+
+router.post('/deletePost', auth, function(req, res) {
+    database.deleteItem({
+        "TableName": process.env.POSTS_TABLE, 
+        "Key" : {
+            "Name": { 
+                "S" : req.body.name 
+            }
+        }
+    }, function (err, data) {
+        if (err) {
+            res.status(402).end();
+        } else {
+            res.status(200).end();
+        }
+    });
+});
 
 module.exports = router;

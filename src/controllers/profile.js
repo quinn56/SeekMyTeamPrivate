@@ -10,7 +10,7 @@ router.get('/:email', function(req, res) {
     var email = req.params.email;
      
     var params = {
-        TableName : 'Users',
+        TableName : process.env.USERS_TABLE,
         Key : { 
           "Email" : {'S' : email}
         }
@@ -96,7 +96,7 @@ router.get('/:email', function(req, res) {
 });*/
 router.post('/delete', function(req, res) {
     database.deleteItem({
-        "TableName": "Users", 
+        "TableName": process.env.USERS_TABLE, 
         "Key" : {
             "Email": { "S" : req.body.email }
         }
@@ -116,11 +116,7 @@ router.post('/upload', function(req, res) {
 router.post('/update', function(req, res) {   
     var column = req.body.column;
     var item = req.body.description;
-    var email = req.payload.email; 
-    console.log('item: ' + item);
-    console.log('email: ' + email);
-    console.log('col: ' + column);
-    
+    var email = req.payload.email;     
 
     var params = {
         ExpressionAttributeNames: {
@@ -136,7 +132,7 @@ router.post('/update', function(req, res) {
            'S': email
           }
         }, 
-        TableName: "Users", 
+        TableName: process.env.USERS_TABLE, 
         UpdateExpression: "SET #C = :c"
     };
 

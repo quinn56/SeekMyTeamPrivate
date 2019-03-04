@@ -26,7 +26,7 @@ router.post('/', function(req, res) {
     };
 
     var params = { 
-        'TableName': "Users",
+        'TableName': process.env.USERS_TABLE,
         'Item': item,
         'ConditionExpression': 'attribute_not_exists(Email)'
     };
@@ -53,7 +53,7 @@ router.post('/confirm', function(req, res) {
     var code = req.body.code;
     
     var params = {
-        TableName : 'Users',
+        TableName : process.env.USERS_TABLE,
         Key : { 
           "Email" : {'S' : email}
         }
@@ -89,7 +89,7 @@ router.post('/confirm', function(req, res) {
                    'S': email
                   }
                 }, 
-                TableName: "Users", 
+                TableName: process.env.USERS_TABLE, 
                 UpdateExpression: "SET #C = :c"
             };
         
@@ -120,7 +120,7 @@ router.post('/resendCode', function(req, res) {
     var code = generateConfirmationCode();
 
     var params = {
-        TableName: "Users",
+        TableName: process.env.USERS_TABLE,
         Key: {
             'Email' : req.body.email    // Maybe req.session.user.email?
         },
