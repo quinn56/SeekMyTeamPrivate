@@ -29,15 +29,16 @@ router.get('/posts', auth, function(req, res) {
     if (err) {
         console.log(err, err.stack);
     } else {
-        if (data.LastEvaluatedKey) {
-            req.payload.ExclusiveStartKey = data.LastEvaluatedKey;
-            
+        if (data.LastEvaluatedKey) {            
             res.status(200).json({
-                "posts": data.Items
+                "posts": data.Items,
+                "key": data.LastEvaluatedKey
             });
         } else {
-            // all results scanned
-            req.payload.ExclusiveStartKey = null;
+            res.status(201).json({
+                "posts": data.Items,
+                "key": null
+            });
         }
     }
     });
