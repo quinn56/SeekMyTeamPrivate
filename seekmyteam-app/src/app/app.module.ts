@@ -12,19 +12,22 @@ import { RegisterComponent } from './register/register.component';
 import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthRedirectService } from './services/authentication/auth-redirect.service';
 import { UserUtilsService } from './services/users/user-utils.service';
+import { PostUtilsService } from './services/posts/post-utils.service';
+
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
@@ -34,7 +37,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     ConfirmComponent,
     ProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,8 @@ const appRoutes: Routes = [
     AuthGuardService,
     AuthRedirectService,
     AuthenticationService,
-    UserUtilsService
+    UserUtilsService,
+    PostUtilsService
   ],
   bootstrap: [AppComponent]
 })
