@@ -17,9 +17,10 @@ export class PostUtilsService {
 
   private getPosts(key: string): Observable<any> {
     let base = this.http.get('/api/posts', { headers: { Authorization: `Bearer ${this.getToken()}`}});
-
+    
     const requestedData = base.pipe(
       map((data) => {
+        console.log(JSON.stringify(data));
         return data;
       })
     );

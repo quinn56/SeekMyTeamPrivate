@@ -8,11 +8,6 @@ var database = require('../app').database;
 
 var User = require('../models/User');
 
-router.get('/', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '/../views/login.html'));
-});
-
-
 router.post('/', function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
@@ -23,16 +18,16 @@ router.post('/', function(req, res) {
           "Email" : {'S' : email}
         }
     };
-    
+
     database.getItem(params, function(err, data) {
         if (err) {
             /* User not found */
            res.status(500).end();
         } else {
           /* No user with that email found */
-          if (data.Item === undefined) {
-            res.status(400).end();
-            return;
+            if (data.Item === undefined) {
+                res.status(400).end();
+                return;
             } 
             var retrievedUser = data.Item;
 
@@ -51,7 +46,6 @@ router.post('/', function(req, res) {
                         email: user.email,
                         exp: parseInt(expiry.getTime() / 1000)
                     }, process.env.TOKEN_SECRET)
-                   
                     /* Succesful login, generate token */
                     res.status(200).json({
                         'token': token 

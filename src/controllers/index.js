@@ -15,16 +15,14 @@ router.use('/login', require('./login'));
 router.use('/profile', auth, require('./profile'));
 
 router.get('/posts', auth, function(req, res) {
-    res.send('get paginated results here, add filters as query params in future');
     var params = {
         TableName: process.env.POSTS_TABLE,
         Limit: 10 
     };
 
-    if (req.params.ExclusiveStartKey) {
+    if (req.params && req.params.ExclusiveStartKey) {
         params.ExclusiveStartKey = req.params.ExclusiveStartKey;
     }
-      
     database.scan(params, function (err, data) {
     if (err) {
         console.log(err, err.stack);

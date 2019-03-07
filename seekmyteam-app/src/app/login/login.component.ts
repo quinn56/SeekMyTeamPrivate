@@ -20,7 +20,7 @@ export class LoginComponent {
 
   login() {
     this.auth.login(this.credentials).subscribe(() => {
-      this.router.navigateByUrl('/profile/' + this.credentials.email);
+      this.router.navigateByUrl('/');
     }, (err) => {
         console.log(JSON.stringify(err));
         if (err.status == 400) {
