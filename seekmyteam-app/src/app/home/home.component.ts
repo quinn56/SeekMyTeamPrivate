@@ -14,13 +14,13 @@ interface Post {
 export class HomeComponent {
     posts: Post[];
     private LastEvaluatedKey: string; 
-    showMoreButton: boolean;
+    showMore: boolean;
 
     constructor(
         private router: Router,
         private post_utils: PostUtilsService
     ) {
-        this.showMoreButton = true;
+        this.showMore = true;
         this.LastEvaluatedKey = null;
     }
     
@@ -48,9 +48,9 @@ export class HomeComponent {
 
     checkMorePosts() {
         if (!this.LastEvaluatedKey) {
-            this.showMoreButton = false;
+            this.showMore = false;
         } else { 
-            this.showMoreButton = true;
+            this.showMore = true;
         }
     }
 }

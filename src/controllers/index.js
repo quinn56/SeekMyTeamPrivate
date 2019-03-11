@@ -17,7 +17,7 @@ router.use('/profile', auth, require('./profile'));
 router.get('/posts', auth, function(req, res) {
     var params = {
         TableName: process.env.POSTS_TABLE,
-        Limit: 10 
+        Limit: 1 
     };
 
     if (req.params && req.params.ExclusiveStartKey) {
