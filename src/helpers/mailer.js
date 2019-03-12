@@ -11,10 +11,29 @@ function sendCode(email, code) {
       if(err) {
         console.log(err);
         return false;
-      }
-      else
+      } else {
         return true;
+      }
     });
 }
 
+function sendApplication(owner, applicant) {
+  const data = {
+    from: 'postmaster@mg.seekmyteam.com',
+    to: owner,
+    subject: 'SeekMyTeam - Someone applied to your project!',
+    text: 'Hello, \n' + applicant + ' has applied to your project post. Go checkout their profile and see if they are a good fit here: ' 
+  };
+  
+  mg.messages().send(data, function (err, body) {
+    if(err) {
+      console.log(err);
+      return false;
+    } else {
+      return true;
+    }
+  });
+}
+
 module.exports.sendCode = sendCode;
+module.exports.sendApplication = sendApplication;

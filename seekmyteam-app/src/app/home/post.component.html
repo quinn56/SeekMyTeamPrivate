@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <p class="form-control-static">{{ post.name }}</p>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <p class="form-control-static">{{ post.description }}</p>
+    </div>
+    <div class="form-group">
+        <label for="owner">Owner Name</label>
+        <p class="form-control-static">{{ post.ownerName }}</p>
+    </div>
+
+    <div class="form-group">
+        <label for="owner">Owner Email</label>
+        <p class="form-control-static">{{ post.ownerEmail }}</p>
+    </div>
+
+    <button *ngIf="!isOP && showApply" (click)="apply()">Apply</button>
+    <button *ngIf="isOP" (click)="delete()">Delete</button>
+</div>

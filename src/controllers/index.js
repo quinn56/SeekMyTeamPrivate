@@ -5,6 +5,7 @@ var auth = jwt({
     secret: process.env.TOKEN_SECRET,
     userProperty: 'payload'
 });
+var mailer = require('../helpers/mailer');
 
 var router = express.Router();
 
@@ -43,21 +44,23 @@ router.get('/posts', auth, function(req, res) {
     });
 });
 
-router.post('/savePost', auth, function(req, res) {
+router.post('/createPost', auth, function(req, res) {
     var name = req.body.name;
     var description = req.body.description;
-    var owner = req.payload.email;
+    var ownerName = req.body.ownerName;
+    var ownerEmail = req.payload.email;
 
     var item = {
         'Name': {'S': name},
         'Description' : {'S' : description},
-        'Owner': {'S': owner},
+        'OwnerName': {'S': ownerName},
+        'OwnerEmail': {'S': ownerEmail}
     };
 
     var params = { 
         'TableName': process.env.POSTS_TABLE,
         'Item': item,
-        'ConditionExpression': 'attribute_not_exists(Owner)'
+        'ConditionExpression': 'attribute_not_exists(Name)'
     };
 
     database.putItem(params, function(err, data) {
@@ -121,6 +124,11 @@ router.post('/deletePost', auth, function(req, res) {
             res.status(200).end();
         }
     });
+});
+
+router.post('/apply', auth, function(req, res) {
+    mailer.sendApplication(req.body.owner, req.body.applicant);
+    res.status(200).end();
 });
 
 module.exports = router;
