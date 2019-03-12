@@ -60,11 +60,15 @@ router.post('/createPost', auth, function(req, res) {
     var params = { 
         'TableName': process.env.POSTS_TABLE,
         'Item': item,
-        'ConditionExpression': 'attribute_not_exists(Name)'
+        'ConditionExpression': 'attribute_not_exists(#n)',
+        ExpressionAttributeNames: {
+            "#n": "Name"
+        }, 
     };
 
     database.putItem(params, function(err, data) {
         if (err) {
+            console.log(err);
             var returnStatus = 500;
 
             if (err.code === 'ConditionalCheckFailedException') {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { PostUtilsService } from '../services/posts/post-utils.service';
+import { UserUtilsService, UserProfile } from '../services/users/user-utils.service';
 
 export interface Post {
     name: string,
@@ -17,20 +17,29 @@ export class HomeComponent {
     private LastEvaluatedKey: any; 
     showMore: boolean;
     showModal: boolean;
-    selectedPost: Post = null;
+    selectedPost: Post; 
+    newPost: Post;
 
     constructor(
-        private router: Router,
+        private user_utils: UserUtilsService,
         private post_utils: PostUtilsService
     ) {
         this.showMore = true;
         this.showModal = false;
         this.LastEvaluatedKey = null;
-
+        this.selectedPost = null;
+        this.newPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: ""
+        };
     }
     
     ngOnInit() {
-        this.post_utils.fetchPosts(this.LastEvaluatedKey).subscribe(data => {
+        this.showModal = false;
+
+        this.post_utils.fetchPosts(null).subscribe(data => {
             this.posts = data.posts;
             this.LastEvaluatedKey = data.key; 
             this.checkMorePosts();
@@ -67,11 +76,30 @@ export class HomeComponent {
         };
     }
 
-    closeModal() {
-        this.showModal = false;
+    addNewPost() {
+        var details: UserProfile = {
+            email: '',
+            name: '',
+            description: ''
+        };
+
+        this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
+            details = profile.user;
+            this.post_utils.create(this.newPost.name, this.newPost.description, details.name).subscribe(data => {
+                this.ngOnInit();    // Repopulate list automatically??
+            }, (err) => {
+                if (err.status == 401) {
+                    console.log('a project with that name already exists')
+                } else {
+                    console.log('server error: could not create post');
+                }
+            });
+        }, (err) => {
+            console.error(err);
+        });        
     }
 
-    addNewPost() {
-        
+    handleDone($event) {
+        this.showModal = $event;
     }
 }

@@ -22,7 +22,6 @@ export class LoginComponent {
     this.auth.login(this.credentials).subscribe(() => {
       this.router.navigateByUrl('/');
     }, (err) => {
-        console.log(JSON.stringify(err));
         if (err.status == 400) {
             console.log('no user with that email found');
         } else if (err.status == 401) {
