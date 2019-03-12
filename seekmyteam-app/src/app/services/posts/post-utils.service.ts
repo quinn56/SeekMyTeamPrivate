@@ -11,16 +11,21 @@ export class PostUtilsService {
 
   constructor(private http: HttpClient) { }
 
-  fetchPosts(key: string): Observable<any> {
-    return this.getPosts(key);
+  fetchPosts(key: any): Observable<any> {
+    if (key) {
+      return this.getPosts(key.Name.S);
+    } else {
+      return this.getPosts(null);
+    }
   }
 
   private getPosts(key: string): Observable<any> {
-    let base = this.http.get('/api/posts', { headers: { Authorization: `Bearer ${this.getToken()}`}});
+    console.log(JSON.stringify(key));
+
+    let base = this.http.get('/api/posts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {ExclusiveStartKey: key}});
     
     const requestedData = base.pipe(
       map((data) => {
-        console.log(JSON.stringify(data));
         return data;
       })
     );

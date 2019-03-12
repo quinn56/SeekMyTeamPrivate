@@ -13,7 +13,7 @@ interface Post {
 })
 export class HomeComponent {
     posts: Post[];
-    private LastEvaluatedKey: string; 
+    private LastEvaluatedKey: any; 
     showMore: boolean;
 
     constructor(
@@ -28,22 +28,21 @@ export class HomeComponent {
         this.post_utils.fetchPosts(this.LastEvaluatedKey).subscribe(data => {
             this.posts = data.posts;
             this.LastEvaluatedKey = data.key; 
+            this.checkMorePosts();
         }, (err) => {
             console.error(err);
         });
-
-        this.checkMorePosts();
     }
 
     fetchMore() {
         this.post_utils.fetchPosts(this.LastEvaluatedKey).subscribe(data => {
-            this.posts.concat(data.posts);
+            console.log("fetch more" + JSON.stringify(data));
+            this.posts = this.posts.concat(data.posts);
             this.LastEvaluatedKey = data.key; 
+            this.checkMorePosts();
         }, (err) => {
             console.error(err);
         });
-
-        this.checkMorePosts();
     }
 
     checkMorePosts() {

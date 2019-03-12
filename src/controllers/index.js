@@ -17,12 +17,13 @@ router.use('/profile', auth, require('./profile'));
 router.get('/posts', auth, function(req, res) {
     var params = {
         TableName: process.env.POSTS_TABLE,
-        Limit: 1 
+        Limit: 8
     };
 
-    if (req.params && req.params.ExclusiveStartKey) {
-        params.ExclusiveStartKey = req.params.ExclusiveStartKey;
+    if (req.query && req.query.ExclusiveStartKey !== "null") {
+        params.ExclusiveStartKey = {"Name": {'S': req.query.ExclusiveStartKey}};
     }
+    
     database.scan(params, function (err, data) {
     if (err) {
         console.log(err, err.stack);
