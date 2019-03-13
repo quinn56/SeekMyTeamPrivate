@@ -21,7 +21,7 @@ interface CreatePayload {
 interface UpdatePayload {
   name: string,
   description: string,
-  skills: []
+  skills: string
 }
 
 
@@ -67,11 +67,11 @@ export class PostUtilsService {
     return this.postCreate(payload);
   }
 
-  update(name: string, description: string): Observable<any> {
+  update(name: string, description: string, skills: string): Observable<any> {
     let payload: UpdatePayload = {
       name: name,
       description: description,
-      skills: null
+      skills: skills
     };
 
     return this.postUpdate(payload);

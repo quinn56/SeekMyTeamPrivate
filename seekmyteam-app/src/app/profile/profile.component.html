@@ -21,15 +21,19 @@
             </div>
             <div class="form-group">
               <label for="skills">Skills</label>
-              <p class="form-control-static" *ngFor="let item of details.skills" style="float:left">
-                {{item}} 
-              </p>
+            </div>
+            <div class="form-group">
+              <span class="form-control-static" *ngFor="let item of details.skills">
+                {{item}}
+              </span>
             </div>
 
             <div *ngIf="isCurrentUser" class="form-group">
               <input type="text" [(ngModel)]="newSkill">  
-              <div class="col-2">
-                <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
+              <div class="row mt-4">
+                <div class="col-2">
+                  <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
+                </div>
               </div>
             </div>
             

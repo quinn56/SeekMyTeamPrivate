@@ -16,6 +16,7 @@ export class PostComponent implements OnChanges{
 
   isOP: boolean;
   showApply: boolean; 
+  newSkill: string;
 
   constructor(private user_utils: UserUtilsService, private post_utils: PostUtilsService, private router: Router) {  }
 
@@ -56,8 +57,16 @@ export class PostComponent implements OnChanges{
     this.doneEvent.emit(false);
   }
 
+  addSkill() {
+    this.post.skills.push(this.newSkill);
+  }
+
+  deleteSkill(idx: number) {
+    this.post.skills.splice(idx, 1);
+  }
+
   save() {
-    this.post_utils.update(this.post.name, this.post.description).subscribe(data => {
+    this.post_utils.update(this.post.name, this.post.description, JSON.stringify(this.post.skills)).subscribe(data => {
       this.refreshEvent.emit(false);
     }, (err) => {
       console.log(err);

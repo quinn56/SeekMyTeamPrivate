@@ -18,8 +18,23 @@
         <p class="form-control-static">{{ post.ownerEmail }}</p>
     </div>
 
-    <button *ngIf="!isOP && showApply" (click)="apply()">Apply</button>
-    <button *ngIf="isOP" (click)="save()">Save</button>
-    <button *ngIf="isOP" (click)="deletePost()">Delete</button>
-    <button (click)="closeModal()">Close</button>
+    <div class="form-group">
+            <label for="skill">Desired Skills</label>
+            <input *ngIf="isOP" type="text" class="form-control" name="skill" placeholder="Enter a desired skill for this project"
+            [(ngModel)]="newSkill">
+            <div *ngIf="isOP" class="row mt-4">
+                <div class="col-2">
+                    <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
+                </div>
+            </div>
+        </div>        
+        
+        <div class="form-group">
+            <p *ngFor="let item in post.skills; let i = index" (click)="deleteSkill(i)">{{item}}</p>
+        </div>
+
+    <button *ngIf="!isOP && showApply" (click)="apply()" class="btn btn-success pl-6 pr-6">Apply</button>
+    <button *ngIf="isOP" (click)="save()" class="btn btn-success pl-6 pr-6">Save</button>
+    <button *ngIf="isOP" (click)="deletePost()" class="btn btn-danger pl-6 pr-6">Delete</button>
+    <button (click)="closeModal()" class="btn btn-danger pl-6 pr-6">Close</button>
 </div>

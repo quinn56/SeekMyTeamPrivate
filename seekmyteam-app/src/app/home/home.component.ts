@@ -6,7 +6,8 @@ export interface Post {
     name: string,
     description: string,
     ownerName: string,
-    ownerEmail: string
+    ownerEmail: string,
+    skills: string[]
 }
 
 @Component({
@@ -19,6 +20,7 @@ export class HomeComponent {
     showModal: boolean;
     selectedPost: Post; 
     newPost: Post;
+    newSkill: string;
 
     constructor(
         private user_utils: UserUtilsService,
@@ -32,7 +34,8 @@ export class HomeComponent {
             name: "",
             description: "",
             ownerName: "",
-            ownerEmail: ""
+            ownerEmail: "",
+            skills: []
         };
     }
     
@@ -72,7 +75,8 @@ export class HomeComponent {
             name: item.Name.S,
             description: item.Description.S,
             ownerName: item.OwnerName.S,
-            ownerEmail: item.OwnerEmail.S
+            ownerEmail: item.OwnerEmail.S,
+            skills: JSON.parse(item.Skills.S)
         };
     }
 
@@ -90,6 +94,11 @@ export class HomeComponent {
         }, (err) => {
             console.error(err);
         });        
+    }
+
+    addSkill() {
+        this.newPost.skills.push(this.newSkill);
+        this.newSkill = '';
     }
 
     handleDone($event) {

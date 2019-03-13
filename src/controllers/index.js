@@ -49,7 +49,8 @@ router.post('/createPost', auth, function(req, res) {
     var description = req.body.description;
     var ownerName = req.body.ownerName;
     var ownerEmail = req.payload.email;
-    
+    var skills = req.body.skills;
+
     var postList = [];
 
     var params = {
@@ -69,7 +70,8 @@ router.post('/createPost', auth, function(req, res) {
                 'Name': {'S': name},
                 'Description' : {'S' : description},
                 'OwnerName': {'S': ownerName},
-                'OwnerEmail': {'S': ownerEmail}
+                'OwnerEmail': {'S': ownerEmail},
+                'Skills': {'S': skills}
             };
         
             var postParams = { 
@@ -132,11 +134,15 @@ router.post('/updatePost', auth, function(req, res) {
     
     var params = {
         ExpressionAttributeNames: {
-         "#C": 'Description'
+         "#C": 'Description',
+         '#S': 'Skills'
         }, 
         ExpressionAttributeValues: {
          ":c": {
            'S': description
+          },
+          ":s": {
+            'S': skills
           }
         }, 
         Key: {
@@ -145,7 +151,7 @@ router.post('/updatePost', auth, function(req, res) {
           }
         }, 
         TableName: process.env.POSTS_TABLE, 
-        UpdateExpression: "SET #C = :c"
+        UpdateExpression: "SET #C = :c, #S = :s"
     };
 
     database.updateItem(params, function(err, data) {
