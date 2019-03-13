@@ -22,7 +22,8 @@ function sendApplication(owner, applicant) {
     from: 'postmaster@mg.seekmyteam.com',
     to: owner,
     subject: 'SeekMyTeam - Someone applied to your project!',
-    text: 'Hello, \n' + applicant + ' has applied to your project post. Go checkout their profile and see if they are a good fit here: ' 
+    text: 'Hi' + owner + ',\n\n' + applicant + ' has applied to your project post. ' +
+    'View their profile to see if they are a good fit here: http://seekmyteam.com/profile/'+applicant 
   };
   
   mg.messages().send(data, function (err, body) {
