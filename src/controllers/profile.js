@@ -114,17 +114,21 @@ router.post('/upload', function(req, res) {
 });
 
 router.post('/update', function(req, res) {   
-    var column = req.body.column;
-    var item = req.body.item;
+    var description = req.body.description;
+    var skills = req.body.skills;
     var email = req.payload.email;     
 
     var params = {
         ExpressionAttributeNames: {
-         "#C": column
+         "#C": "Description",
+         "#S": 'Skills'
         }, 
         ExpressionAttributeValues: {
          ":c": {
-           'S': item
+           'S': description
+          },
+          ":s": {
+              'S': skills
           }
         }, 
         Key: {
@@ -133,7 +137,7 @@ router.post('/update', function(req, res) {
           }
         }, 
         TableName: process.env.USERS_TABLE, 
-        UpdateExpression: "SET #C = :c"
+        UpdateExpression: "SET #C = :c, #S = :s"
     };
 
     database.updateItem(params, function(err, data) {

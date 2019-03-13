@@ -15,6 +15,7 @@ interface DeletePayload {
 interface CreatePayload {
   name: string, 
   description: string,
+  skills: string,
   ownerName: string
 }
 
@@ -57,10 +58,11 @@ export class PostUtilsService {
     return this.postDelete(payload);
   }
 
-  create(name: string, description: string, ownerName: string): Observable<any> {
+  create(name: string, description: string, skills: string, ownerName: string): Observable<any> {
     let payload: CreatePayload = {
       name: name,
       description: description,
+      skills: skills,
       ownerName: ownerName
     }
 

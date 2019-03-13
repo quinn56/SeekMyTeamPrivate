@@ -23,7 +23,7 @@
               <label for="skills">Skills</label>
             </div>
             <div class="form-group">
-              <span class="form-control-static" *ngFor="let item of details.skills">
+              <span class="form-control-static" *ngFor="let item of details.skills; let i = index" (click)="deleteSkill(i)" style="cursor: pointer;">
                 {{item}}
               </span>
             </div>

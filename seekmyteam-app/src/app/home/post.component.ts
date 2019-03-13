@@ -59,6 +59,7 @@ export class PostComponent implements OnChanges{
 
   addSkill() {
     this.post.skills.push(this.newSkill);
+    this.newSkill = '';
   }
 
   deleteSkill(idx: number) {

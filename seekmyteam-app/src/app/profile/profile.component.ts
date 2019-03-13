@@ -61,7 +61,7 @@ export class ProfileComponent {
   }
 
   updateProfile() {
-    this.user_utils.updateProfile('Description', this.details.description).subscribe(res => {
+    this.user_utils.updateProfile(this.details.description, JSON.stringify(this.details.skills)).subscribe(res => {
       console.log('successfully updated profile');
     }, (err) => {
       console.log(err);
@@ -70,10 +70,10 @@ export class ProfileComponent {
 
   addSkill() {
     this.details.skills.push(this.newSkill);
-    this.user_utils.updateProfile('Skills', JSON.stringify(this.details.skills)).subscribe(res => {
-      this.newSkill = '';
-    }, (err) => {
-      console.log(err);
-    })
+    this.newSkill = '';
+  }
+
+  deleteSkill(idx: number) {
+    this.details.skills.splice(idx, 1);
   }
 }

@@ -21,8 +21,8 @@ interface DeletePayload {
 }
 
 interface UpdatePayload {
-  column: string,
-  item: string
+  description: string,
+  skills: string
 }
 
 @Injectable({
@@ -32,10 +32,10 @@ export class UserUtilsService {
 
   constructor(private http: HttpClient) { }
 
-  public updateProfile(column: string, item: string): Observable<any> {
+  public updateProfile(description: string, skills: string): Observable<any> {
     var req: UpdatePayload = {
-        column: column,
-        item: item
+        description: description,
+        skills: skills
     };
     return this.requestUpdateProfile(req);
   }

@@ -23,10 +23,10 @@
             </div>        
             
             <div class="form-group">
-                <p *ngFor="let item in newPost.skills">{{item}}</p>
+                <span *ngFor="let item of newPost.skills">{{item}}</span>
             </div>
 
-            <button (click)="addNewPost()">Submit</button>
+            <button (click)="addNewPost()" class="btn btn-success pl-6 pr-6">Submit</button>
         </div>
         <div class="offset-1 col-10">             
             <ul>
@@ -43,7 +43,7 @@
             </ul>
         </div>
     </div>
-    <button *ngIf="showMore" (click)="fetchMore()">Load more</button> 
+    <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-success pl-6 pr-6">Load more</button> 
 
     <post-modal *ngIf="showModal" [post]="selectedPost" (doneEvent)="handleDone($event)" (refreshEvent)="ngOnInit()"></post-modal>
 </div>

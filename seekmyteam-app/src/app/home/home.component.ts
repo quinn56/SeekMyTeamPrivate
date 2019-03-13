@@ -41,6 +41,13 @@ export class HomeComponent {
     
     ngOnInit() {
         this.showModal = false;
+        this.newPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: "",
+            skills: []
+        };
 
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.posts = data.posts;
@@ -82,7 +89,7 @@ export class HomeComponent {
 
     addNewPost() {
         this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
-            this.post_utils.create(this.newPost.name, this.newPost.description, profile.user.name).subscribe(data => {
+            this.post_utils.create(this.newPost.name, this.newPost.description, JSON.stringify(this.newPost.skills), profile.user.name).subscribe(data => {
                 this.ngOnInit();    // Repopulate list automatically??
             }, (err) => {
                 if (err.status == 401) {
