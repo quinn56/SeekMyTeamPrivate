@@ -10,7 +10,8 @@ function summarize(item) {
     return {
         'email': item.Email.S,
         'name': item.Name.S,
-        'description': item.Description.S
+        'description': item.Description.S,
+        'skills': item.Skills.S
     };
 }
 

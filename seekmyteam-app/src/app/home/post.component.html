@@ -5,7 +5,8 @@
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <p class="form-control-static">{{ post.description }}</p>
+        <p *ngIf="!isOP" class="form-control-static">{{ post.description }}</p>
+        <input *ngIf="isOP" [(ngModel)]="post.description" class="form-control-static">
     </div>
     <div class="form-group">
         <label for="owner">Owner Name</label>
@@ -18,6 +19,7 @@
     </div>
 
     <button *ngIf="!isOP && showApply" (click)="apply()">Apply</button>
+    <button *ngIf="isOP" (click)="save()">Save</button>
     <button *ngIf="isOP" (click)="deletePost()">Delete</button>
     <button (click)="closeModal()">Close</button>
 </div>

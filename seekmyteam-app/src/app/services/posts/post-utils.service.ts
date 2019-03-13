@@ -18,6 +18,13 @@ interface CreatePayload {
   ownerName: string
 }
 
+interface UpdatePayload {
+  name: string,
+  description: string,
+  skills: []
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -58,6 +65,28 @@ export class PostUtilsService {
     }
 
     return this.postCreate(payload);
+  }
+
+  update(name: string, description: string): Observable<any> {
+    let payload: UpdatePayload = {
+      name: name,
+      description: description,
+      skills: null
+    };
+
+    return this.postUpdate(payload);
+  }
+
+  private postUpdate(req: UpdatePayload): Observable<any> {
+    let base = this.http.post('/api/updatePost', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
   }
 
   private postCreate(req: CreatePayload): Observable<any> {

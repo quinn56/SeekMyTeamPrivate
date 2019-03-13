@@ -12,7 +12,8 @@ export interface UserDetails {
 export interface UserProfile {
   email: string,
   name: string,
-  description: string
+  description: string,
+  skills: string[]
 }
 
 interface DeletePayload {
@@ -21,7 +22,7 @@ interface DeletePayload {
 
 interface UpdatePayload {
   column: string,
-  description: string
+  item: string
 }
 
 @Injectable({
@@ -31,10 +32,10 @@ export class UserUtilsService {
 
   constructor(private http: HttpClient) { }
 
-  public updateProfile(column: string, description: string): Observable<any> {
+  public updateProfile(column: string, item: string): Observable<any> {
     var req: UpdatePayload = {
         column: column,
-        description: description
+        item: item
     };
     return this.requestUpdateProfile(req);
   }

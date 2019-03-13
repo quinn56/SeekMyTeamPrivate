@@ -77,15 +77,8 @@ export class HomeComponent {
     }
 
     addNewPost() {
-        var details: UserProfile = {
-            email: '',
-            name: '',
-            description: ''
-        };
-
         this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
-            details = profile.user;
-            this.post_utils.create(this.newPost.name, this.newPost.description, details.name).subscribe(data => {
+            this.post_utils.create(this.newPost.name, this.newPost.description, profile.user.name).subscribe(data => {
                 this.ngOnInit();    // Repopulate list automatically??
             }, (err) => {
                 if (err.status == 401) {

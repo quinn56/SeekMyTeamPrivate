@@ -49,35 +49,78 @@ router.post('/createPost', auth, function(req, res) {
     var description = req.body.description;
     var ownerName = req.body.ownerName;
     var ownerEmail = req.payload.email;
+    
+    var postList = [];
 
-    var item = {
-        'Name': {'S': name},
-        'Description' : {'S' : description},
-        'OwnerName': {'S': ownerName},
-        'OwnerEmail': {'S': ownerEmail}
+    var params = {
+        TableName : process.env.USERS_TABLE,
+        Key : { 
+          "Email" : {'S' : ownerEmail}
+        }
     };
 
-    var params = { 
-        'TableName': process.env.POSTS_TABLE,
-        'Item': item,
-        'ConditionExpression': 'attribute_not_exists(#n)',
-        ExpressionAttributeNames: {
-            "#n": "Name"
-        }, 
-    };
-
-    database.putItem(params, function(err, data) {
+    database.getItem(params, function(err, data) {
         if (err) {
-            console.log(err);
-            var returnStatus = 500;
-
-            if (err.code === 'ConditionalCheckFailedException') {
-                returnStatus = 401;
-            }
-
-            res.status(returnStatus).end();
+            res.status(500).end();
         } else {
-            res.status(200).end();
+            postList = JSON.parse(data.Item.Posts.S); 
+    
+            var postItem = {
+                'Name': {'S': name},
+                'Description' : {'S' : description},
+                'OwnerName': {'S': ownerName},
+                'OwnerEmail': {'S': ownerEmail}
+            };
+        
+            var postParams = { 
+                'TableName': process.env.POSTS_TABLE,
+                'Item': postItem,
+                'ConditionExpression': 'attribute_not_exists(#n)',
+                ExpressionAttributeNames: {
+                    "#n": "Name"
+                }, 
+            };
+
+            database.putItem(postParams, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    var returnStatus = 500;
+        
+                    if (err.code === 'ConditionalCheckFailedException') {
+                        returnStatus = 401;
+                    }
+        
+                    res.status(returnStatus).end();
+                } else {
+                    postList.push(name);
+
+                    var userParams = {
+                        ExpressionAttributeNames: {
+                         "#C": "Posts"
+                        }, 
+                        ExpressionAttributeValues: {
+                         ":c": {
+                           'S': JSON.stringify(postList)
+                          }
+                        }, 
+                        Key: {
+                         "Email": {
+                           'S': ownerEmail
+                          }
+                        }, 
+                        TableName: process.env.USERS_TABLE, 
+                        UpdateExpression: "SET #C = :c"
+                    };
+                
+                    database.updateItem(userParams, function(err, data) {
+                        if (err) {
+                            res.status(500).end();
+                        } else {
+                            res.status(200).end();
+                        }
+                    });   
+                }
+            });
         }
     });
 });
@@ -85,7 +128,8 @@ router.post('/createPost', auth, function(req, res) {
 router.post('/updatePost', auth, function(req, res) {
     var name = req.body.name;
     var description = req.body.description;
-
+    var skills = req.body.skills;
+    
     var params = {
         ExpressionAttributeNames: {
          "#C": 'Description'

@@ -10,10 +10,12 @@ export class ProfileComponent {
   details: UserProfile = {
     email: '',
     name: '',
-    description: ''
+    description: '',
+    skills: []
   };
   private getEmail: string;
   isCurrentUser: boolean;
+  newSkill: string = '';
 
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
@@ -24,7 +26,10 @@ export class ProfileComponent {
       this.isCurrentUser = this.checkCurrentUser();
 
       this.user_utils.getProfile(this.getEmail).subscribe(profile => {
-        this.details = profile.user;
+        this.details.email = profile.user.email;
+        this.details.name = profile.user.name;
+        this.details.description = profile.user.description;
+        this.details.skills = JSON.parse(profile.user.skills)
       }, (err) => {
         console.error(err);
       });
@@ -59,7 +64,16 @@ export class ProfileComponent {
     this.user_utils.updateProfile('Description', this.details.description).subscribe(res => {
       console.log('successfully updated profile');
     }, (err) => {
-      console.log('could not update profile');
+      console.log(err);
     }) 
+  }
+
+  addSkill() {
+    this.details.skills.push(this.newSkill);
+    this.user_utils.updateProfile('Skills', JSON.stringify(this.details.skills)).subscribe(res => {
+      this.newSkill = '';
+    }, (err) => {
+      console.log(err);
+    })
   }
 }

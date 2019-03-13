@@ -15,21 +15,30 @@
               <p class="form-control-static">{{ details?.email }}</p>
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" [(ngModel)]="details.description" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <label for="description">Description</label>
+              <textarea readonly *ngIf="!isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
+              <textarea *ngIf="isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
             </div>
-            <!-- <div class = "row">
-                <div class="col-sm-12 text-center">
-                  <button type="submit" class="btn btn-primary">Update</button>
-                  <button type="submit" class="btn btn-danger">Delete Account!</button>
-                </div>
-            </div> -->
+            <div class="form-group">
+              <label for="skills">Skills</label>
+              <p class="form-control-static" *ngFor="let item of details.skills" style="float:left">
+                {{item}} 
+              </p>
+            </div>
+
+            <div *ngIf="isCurrentUser" class="form-group">
+              <input type="text" [(ngModel)]="newSkill">  
+              <div class="col-2">
+                <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
+              </div>
+            </div>
+            
             <div class="row mt-4">
                 <div class="col-2">
-                    <button type="button" *ngIf="isCurrentUser" (click)="updateProfile()" class="btn btn-success pl-6 pr-6">Update</button>
+                    <button type="button" *ngIf="isCurrentUser" (click)="updateProfile()" class="btn btn-success pl-6 pr-6">Save</button>
                 </div>
                 <div class="col-2">
-                    <button type="button" *ngIf="isCurrentUser" (click)="handleDelete()" class="btn btn-danger pl-6 pr-6">Delete account</button>
+                  <button type="button" *ngIf="isCurrentUser" (click)="handleDelete()" class="btn btn-danger pl-6 pr-6">Delete Account</button>
                 </div>
             </div>
             <!-- End of input stuff -->

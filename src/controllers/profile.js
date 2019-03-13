@@ -115,7 +115,7 @@ router.post('/upload', function(req, res) {
 
 router.post('/update', function(req, res) {   
     var column = req.body.column;
-    var item = req.body.description;
+    var item = req.body.item;
     var email = req.payload.email;     
 
     var params = {

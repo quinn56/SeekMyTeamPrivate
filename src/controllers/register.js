@@ -9,7 +9,7 @@ var database = require('../app').database;
 
 router.post('/', function(req, res) {
     var passObj = saltHashPassword(req.body.password);
-
+    var empty = [];
     var confirmationCode = generateConfirmationCode();
 
     // New item to represent a user
@@ -22,7 +22,9 @@ router.post('/', function(req, res) {
         'Password' : {'S': passObj.passwordHash}, 
         'Salt' : {'S': passObj.salt},
         'Confirmed' : {'BOOL' : false},
-        'Code' : {'S' : confirmationCode}
+        'Code' : {'S' : confirmationCode},
+        'Posts' : {'S': JSON.stringify(empty)},
+        'Skills': {'S': JSON.stringify(empty)}
     };
 
     var params = { 
@@ -122,7 +124,7 @@ router.post('/resendCode', function(req, res) {
     var params = {
         TableName: process.env.USERS_TABLE,
         Key: {
-            'Email' : req.body.email    // Maybe req.session.user.email?
+            'Email' : req.body.email   
         },
         UpdateExpression: "set Code = :code",
         ExpressionAttributeValues:{

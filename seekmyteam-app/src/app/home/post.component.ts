@@ -55,4 +55,12 @@ export class PostComponent implements OnChanges{
   closeModal() {
     this.doneEvent.emit(false);
   }
+
+  save() {
+    this.post_utils.update(this.post.name, this.post.description).subscribe(data => {
+      this.refreshEvent.emit(false);
+    }, (err) => {
+      console.log(err);
+    })
+  }
 }
