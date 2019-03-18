@@ -1,12 +1,22 @@
 var express = require("express");
 var router = express.Router();
 var path = require("path");
-
+var s3 = require('../app').s3;
 var User = require("../models/User");
 var database = require('../app').database;
+var jwt = require('express-jwt');
+var auth = jwt({
+    secret: process.env.TOKEN_SECRET,
+    userProperty: 'payload'
+});
 
+const imageTypes = [
+    'image/gif',
+    'image/jpeg',
+    'image/png'
+];
 
-router.get('/:email', function(req, res) {
+router.get('/:email', auth, function(req, res) {
     var email = req.params.email;
      
     var params = {
@@ -94,7 +104,7 @@ router.get('/:email', function(req, res) {
         }
     });
 });*/
-router.post('/delete', function(req, res) {
+router.post('/delete', auth, function(req, res) {
     database.deleteItem({
         "TableName": process.env.USERS_TABLE, 
         "Key" : {
@@ -109,11 +119,7 @@ router.post('/delete', function(req, res) {
     });
 });
 
-router.post('/upload', function(req, res) {
-    // Upload image, file, etc. to S3 bucket here
-});
-
-router.post('/update', function(req, res) {   
+router.post('/update', auth, function(req, res) {   
     var description = req.body.description;
     var skills = req.body.skills;
     var email = req.payload.email;     
@@ -147,6 +153,38 @@ router.post('/update', function(req, res) {
             res.status(200).end();
         }
     });  
+});
+
+router.post('/uploadPicture', auth, function(req, res) {
+    //get the image data from upload
+    const body = JSON.parse(req.body.image);
+
+    const fileBuffer = new Buffer(body['image'], 'base64');
+    const fileTypeInfo = fileType(fileBuffer);
+
+    //validate image is on right type
+    if (fileBuffer.length < 500000 && imageTypes.includes(fileTypeInfo.mime)) {
+        // upload it to s3 with unix timestamp as a file name
+        const fileName = req.payload.email + `/pic.${fileTypeInfo.ext}`
+
+        const bucket = process.env.BUCKET;
+        const params = {
+            Body: fileBuffer,
+            Key: fileName,
+            Bucket: bucket,
+            ContentEncoding: 'base64',
+            ContentType: fileTypeInfo.mime
+        };
+
+        s3.putObject(params, (err, data) => {
+            if (err) {
+                res.status(400).send(err);
+            } 
+            res.status(200).end()
+        });
+    } else {
+        res.status(401).end();
+    }
 });
 
 module.exports = router;

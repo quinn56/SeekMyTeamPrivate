@@ -25,6 +25,10 @@ interface UpdatePayload {
   skills: string
 }
 
+interface PicturePayload {
+  image: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,6 +53,25 @@ export class UserUtilsService {
       email: email
     }
     return this.requestDeleteProfile(req);
+  }
+
+  public uploadProfilePicture(data: string): Observable<any> {
+    var req: PicturePayload = {
+      image: data
+    }
+    return this.postPicture(req);
+  }
+
+  private postPicture(req: PicturePayload) {
+    let base = this.http.post('/api/profile/uploadPicture', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
   }
 
   private requestUpdateProfile(req: UpdatePayload): Observable<any> {

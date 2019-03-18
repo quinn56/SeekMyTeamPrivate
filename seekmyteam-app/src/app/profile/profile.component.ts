@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/authentication/authentication.service';
@@ -7,15 +7,27 @@ import { AuthenticationService } from '../services/authentication/authentication
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
+  acceptedMimeTypes: string[] = [
+    'image/gif',
+    'image/jpeg',
+    'image/png'
+  ];
+
+  @ViewChild('fileInput') fileInput: ElementRef;
+  fileDataUri: string;
+  
   details: UserProfile = {
     email: '',
     name: '',
     description: '',
     skills: []
   };
+
   private getEmail: string;
+  
   isCurrentUser: boolean;
   newSkill: string = '';
+
 
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
@@ -75,5 +87,38 @@ export class ProfileComponent {
 
   deleteSkill(idx: number) {
     this.details.skills.splice(idx, 1);
+  }
+
+
+  previewFile() {
+    const file = this.fileInput.nativeElement.files[0];
+    if (file && this.validateFile(file)) {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(this.fileInput.nativeElement.files[0]);
+      reader.onload = () => {
+        this.fileDataUri = reader.result.toString();
+      }
+    } else {
+      console.log('File must be jpg, png, or gif and cannot be exceed 500 KB in size');
+    }
+  }
+
+  uploadFile(event: Event) {
+    event.preventDefault();
+    // get only the base64 file and post it
+    if (this.fileDataUri.length > 0) {
+      const base64File = this.fileDataUri.split(',')[1];
+      this.user_utils.uploadProfilePicture(base64File).subscribe(res => {
+          // reset file input
+          this.fileInput.nativeElement.value = '';
+        }, (err) => {
+          console.log('Could not upload image.');
+      });
+    }
+  }
+
+  validateFile(file) {
+    return this.acceptedMimeTypes.includes(file.type) && file.size < 500000;
   }
 }

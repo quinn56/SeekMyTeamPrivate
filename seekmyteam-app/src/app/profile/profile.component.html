@@ -3,9 +3,15 @@
       <div class="row">
         <div class="offset-1 col-10"> <!-- This creates white sidebars :)-->
             <!-- Beginning of inner content -->
-  
-            <!-- Finish up inputs and buttons and stuff -->
-  
+            
+            <img [src]="fileDataUri">
+
+            <!-- Form with submit method and template variable (#fileInput) -->
+            <form (submit)="uploadFile($event)">
+              <input type="file" (change)="previewFile()" #fileInput>
+              <button type="submit" [disabled]="fileDataUri.length === 0" class="btn btn-primary">Upload</button>
+            </form>
+            
             <div class="form-group">
               <label for="name">Name</label>
               <p class="form-control-static">{{ details?.name }}</p>

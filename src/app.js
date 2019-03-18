@@ -7,9 +7,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 
+const s3 = new AWS.S3();
+module.exports.s3 = s3;
+
 /* Configure our SMTP Server details */
 const mg = mailgun({apiKey: process.env.MAILGUN_KEY, domain: process.env.MAILGUN_DOMAIN});
-//const mg = mailgun({apiKey: 'abc', domain: 'abc'});
 module.exports.mg = mg;
 
 const crypto = require("crypto");
