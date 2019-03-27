@@ -1,61 +1,64 @@
-  <div class="container-fluid">
-      <!-- Mother row -->
-      <div class="row">
-        <div class="offset-1 col-10"> <!-- This creates white sidebars :)-->
-            <!-- Beginning of inner content -->
-            
-            <img width="250" height="250" [src]="fileDataUri">
-
-            <!-- Form with submit method and template variable (#fileInput) -->
-            <form *ngIf="isCurrentUser" (submit)="uploadFile($event)">
-              <input type="file" (change)="previewFile()" #fileInput>
-              <button type="submit" *ngIf="fileDataUri.length !== 0" class="btn btn-primary">Upload</button>
-            </form>
-            
-            <div class="form-group">
-              <label for="name">Name</label>
-              <p class="form-control-static">{{ details?.name }}</p>
-            </div>
-            <div class="form-group">
-              <label for="password">Email</label>
-              <p class="form-control-static">{{ details?.email }}</p>
-            </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea readonly *ngIf="!isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
-              <textarea *ngIf="isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="skills">Skills</label>
-            </div>
-            <div class="form-group">
-              <span class="form-control-static" *ngFor="let item of details.skills; let i = index" (click)="deleteSkill(i)" style="cursor: pointer;">
-                {{item}}
-              </span>
-            </div>
-
-            <div *ngIf="isCurrentUser" class="form-group">
-              <input type="text" [(ngModel)]="newSkill">  
-              <div class="row mt-4">
-                <div class="col-2">
-                  <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
-                </div>
-              </div>
-            </div>
-            
-            <div class="row mt-4">
-                <div class="col-2">
-                    <button type="button" *ngIf="isCurrentUser" (click)="updateProfile()" class="btn btn-success pl-6 pr-6">Save</button>
-                </div>
-                <div class="col-2">
-                  <button type="button" *ngIf="isCurrentUser" (click)="handleDelete()" class="btn btn-danger pl-6 pr-6">Delete Account</button>
-                </div>
-            </div>
-            <!-- End of input stuff -->
-  
-          <!-- End of inner content -->
+<div class="container-fluid">
+  <!-- Mother row -->
+  <div class="row">
+    <div class="offset-1 col-10 bg-white rounded"> <!-- This creates white sidebars :)-->
+      <!-- Beginning of inner content -->
+      <div class="row mt-2 ml-2">
+        <div class="col-4">
+          <img class="rounded-circle" height="200" width="200" [src]="fileDataUri">
+          <!-- <h2>Mark</h2> -->
+          <h2>{{ details?.name }}</h2>
+          <!-- <h5>jeets@jeetsmail.com</h5> -->
+          <h5>{{ details?.email }}</h5>
         </div>
       </div>
-      <!-- End of Mother Row -->
+
+      <!-- Form with submit method and template variable (#fileInput) -->
+      <div class="row">
+        <form *ngIf="isCurrentUser" (submit)="uploadFile($event)">
+          <input type="file" (change)="previewFile()" #fileInput>
+          <button type="submit" *ngIf="fileDataUri.length !== 0" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+     
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea readonly *ngIf="!isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
+        <textarea *ngIf="isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
+      </div>
+
+
+      <div class="form-group">
+        <label for="skills">Skills</label>
+      </div>
+      <div class="form-group">
+        <span class="form-control-static" *ngFor="let item of details.skills; let i = index" (click)="deleteSkill(i)" style="cursor: pointer;">
+          {{item}}
+        </span>
+      </div>
+
+      <div *ngIf="isCurrentUser" class="form-group">
+        <input type="text" [(ngModel)]="newSkill">  
+        <div class="row mt-4">
+          <div class="col-2">
+            <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+          <div class="col-2">
+              <button type="button" *ngIf="isCurrentUser" (click)="updateProfile()" class="btn btn-success pl-6 pr-6">Save</button>
+          </div>
+          <div class="col-2">
+            <button type="button" *ngIf="isCurrentUser" (click)="handleDelete()" class="btn btn-danger pl-6 pr-6">Delete Account</button>
+          </div>
+      </div>
+      <!-- End of input stuff -->
+
     </div>
-    <!-- End of container -->
+    <!-- End of inner content -->
+  </div>
+  <!-- End of Mother Row -->
+</div>
+  <!-- End of container -->
