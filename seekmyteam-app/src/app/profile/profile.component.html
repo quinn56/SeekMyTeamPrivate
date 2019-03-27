@@ -6,10 +6,10 @@
       <div class="row mt-2 ml-2">
         <div class="col-4">
           <img class="rounded-circle" height="200" width="200" [src]="fileDataUri">
-          <!-- <h2>Mark</h2> -->
-          <h2>{{ details?.name }}</h2>
-          <!-- <h5>jeets@jeetsmail.com</h5> -->
-          <h5>{{ details?.email }}</h5>
+          <h2>Mark</h2>
+          <!-- <h2>{{ details?.name }}</h2> -->
+          <h5>jeets@jeetsmail.com</h5>
+          <!-- <h5>{{ details?.email }}</h5> -->
         </div>
       </div>
 
@@ -20,11 +20,16 @@
           <button type="submit" *ngIf="fileDataUri.length !== 0" class="btn btn-primary">Upload</button>
         </form>
       </div>
-     
-      <div class="form-group">
-        <label for="description">Description</label>
+      
+      <hr class="border-top mt-3 mb-2">
+
+      <div class="row mt-3 ml-2 mr-2">
+        <!-- <label>Description</label>
         <textarea readonly *ngIf="!isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
-        <textarea *ngIf="isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
+        <textarea *ngIf="isCurrentUser" class="form-control" [(ngModel)]="details.description" rows="3"></textarea> -->
+        <textarea class="form-control border-0" rows="4">Creative Web Designer working full stack. Fluent in HTML/CSS/JS/Bootstrap, familiar with Node, Angular, Webpack and Relational Databases.
+            Experienced Software Quality Assurance with a demonstrated history of working in the telecommunications industry. Strong quality assurance professional skilled in Python, LTE, C++, Test Automation, and Jenkins.
+        </textarea>
       </div>
 
 
