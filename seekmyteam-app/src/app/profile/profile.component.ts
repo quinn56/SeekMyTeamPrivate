@@ -14,7 +14,7 @@ export class ProfileComponent {
   ];
 
   @ViewChild('fileInput') fileInput: ElementRef;
-  fileDataUri: string;
+  fileDataUri: string = '';
   
   details: UserProfile = {
     email: '',
@@ -32,6 +32,10 @@ export class ProfileComponent {
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() { 
+    this.loadProfile();
+  }
+
+  loadProfile() {
     this.route.params.subscribe(params => {
       this.getEmail = params['email']; 
 
@@ -41,7 +45,13 @@ export class ProfileComponent {
         this.details.email = profile.user.email;
         this.details.name = profile.user.name;
         this.details.description = profile.user.description;
-        this.details.skills = JSON.parse(profile.user.skills)
+        this.details.skills = JSON.parse(profile.user.skills);
+
+        this.user_utils.getProfilePic(this.getEmail).subscribe(pic => {
+          this.fileDataUri = pic.image;
+        }, (err) => {
+          console.error(err);
+        });
       }, (err) => {
         console.error(err);
       });
@@ -108,8 +118,8 @@ export class ProfileComponent {
     event.preventDefault();
     // get only the base64 file and post it
     if (this.fileDataUri.length > 0) {
-      const base64File = this.fileDataUri.split(',')[1];
-      this.user_utils.uploadProfilePicture(base64File).subscribe(res => {
+      //const base64File = this.fileDataUri.split(',')[1];
+      this.user_utils.uploadProfilePicture(this.fileDataUri).subscribe(res => {
           // reset file input
           this.fileInput.nativeElement.value = '';
         }, (err) => {
@@ -119,6 +129,7 @@ export class ProfileComponent {
   }
 
   validateFile(file) {
-    return this.acceptedMimeTypes.includes(file.type) && file.size < 500000;
+   // return this.acceptedMimeTypes.includes(file.type) && file.size < 500000;
+    return true;
   }
 }

@@ -48,6 +48,10 @@ export class UserUtilsService {
     return this.requestProfile(email);
   }
 
+  public getProfilePic(email: string): Observable<any> {
+    return this.requestProfilePic(email);
+  }
+
   public deleteProfile(email: string): Observable<any> {
     var req: DeletePayload = {
       email: email
@@ -65,6 +69,17 @@ export class UserUtilsService {
   private postPicture(req: PicturePayload) {
     let base = this.http.post('/api/profile/uploadPicture', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
 
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  private requestProfilePic(email: string): Observable<any> {
+    let base = this.http.get('/api/profile/' + email + '/pic', { headers: { Authorization: `Bearer ${this.getToken()}`}});
     const requestedData = base.pipe(
       map((data) => {
         return data;

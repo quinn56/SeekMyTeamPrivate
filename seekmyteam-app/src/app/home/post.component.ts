@@ -29,6 +29,10 @@ export class PostComponent implements OnChanges{
     this.showApply = true;
   }
 
+  profileRedirect() {
+    this.router.navigateByUrl('/profile/' + this.post.ownerEmail);
+  }
+
   checkOP() {
     if (this.post.ownerEmail === this.user_utils.getCurrentUserDetails().email) {
       this.isOP = true;

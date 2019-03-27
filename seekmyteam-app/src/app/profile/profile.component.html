@@ -4,12 +4,12 @@
         <div class="offset-1 col-10"> <!-- This creates white sidebars :)-->
             <!-- Beginning of inner content -->
             
-            <img [src]="fileDataUri">
+            <img width="200" height="200" [src]="fileDataUri">
 
             <!-- Form with submit method and template variable (#fileInput) -->
-            <form (submit)="uploadFile($event)">
+            <form *ngIf="isCurrentUser" (submit)="uploadFile($event)">
               <input type="file" (change)="previewFile()" #fileInput>
-              <button type="submit" [disabled]="fileDataUri.length === 0" class="btn btn-primary">Upload</button>
+              <button type="submit" *ngIf="fileDataUri.length !== 0" class="btn btn-primary">Upload</button>
             </form>
             
             <div class="form-group">

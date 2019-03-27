@@ -5,6 +5,9 @@ var s3 = require('../app').s3;
 var User = require("../models/User");
 var database = require('../app').database;
 var jwt = require('express-jwt');
+const fileType = require('file-type');
+
+
 var auth = jwt({
     secret: process.env.TOKEN_SECRET,
     userProperty: 'payload'
@@ -38,6 +41,33 @@ router.get('/:email', auth, function(req, res) {
             var user = User.summarize(data.Item)
             res.status(200).json({
                 "user": user
+            });
+        }
+    });
+});
+
+router.get('/:email/pic', auth, function(req, res) {
+    var email = req.params.email;
+     
+    var params = {
+        TableName : process.env.USERS_TABLE,
+        Key : { 
+          "Email" : {'S' : email}
+        }
+    };
+
+    database.getItem(params, function(err, data) {
+        if (err) {
+            res.status(500).end();
+        } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
+            var image = data.Item.Image.S;
+            res.status(200).json({
+                "image": image
             });
         }
     });
@@ -154,19 +184,19 @@ router.post('/update', auth, function(req, res) {
         }
     });  
 });
-
+/*
 router.post('/uploadPicture', auth, function(req, res) {
     //get the image data from upload
-    const body = JSON.parse(req.body.image);
+    const image = req.body.image;
 
-    const fileBuffer = new Buffer(body['image'], 'base64');
+    const fileBuffer = Buffer.from(image, 'base64');
     const fileTypeInfo = fileType(fileBuffer);
 
     //validate image is on right type
     if (fileBuffer.length < 500000 && imageTypes.includes(fileTypeInfo.mime)) {
         // upload it to s3 with unix timestamp as a file name
-        const fileName = req.payload.email + `/pic.${fileTypeInfo.ext}`
-
+        const fileName = req.payload.email + '/pic'
+        
         const bucket = process.env.BUCKET;
         const params = {
             Body: fileBuffer,
@@ -178,13 +208,45 @@ router.post('/uploadPicture', auth, function(req, res) {
 
         s3.putObject(params, (err, data) => {
             if (err) {
-                res.status(400).send(err);
+                console.log(err);
+                res.status(400);
             } 
             res.status(200).end()
         });
     } else {
         res.status(401).end();
     }
+});*/
+
+router.post('/uploadPicture', auth, function(req, res) {
+    const image = req.body.image;
+    const email = req.payload.email;
+
+    var params = {
+        ExpressionAttributeNames: {
+         "#C": "Image",
+        }, 
+        ExpressionAttributeValues: {
+         ":c": {
+           'S': image
+          }
+        }, 
+        Key: {
+         "Email": {
+           'S': email
+          }
+        }, 
+        TableName: process.env.USERS_TABLE, 
+        UpdateExpression: "SET #C = :c"
+    };
+
+    database.updateItem(params, function(err, data) {
+        if (err) {
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    });  
 });
 
 module.exports = router;

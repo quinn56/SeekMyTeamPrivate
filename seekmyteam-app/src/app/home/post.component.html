@@ -10,12 +10,12 @@
     </div>
     <div class="form-group">
         <label for="owner">Owner Name</label>
-        <p class="form-control-static">{{ post.ownerName }}</p>
+        <p class="form-control-static" style="cursor: pointer;" (click)="profileRedirect()">{{ post.ownerName }}</p>
     </div>
 
     <div class="form-group">
         <label for="owner">Owner Email</label>
-        <p class="form-control-static">{{ post.ownerEmail }}</p>
+        <p class="form-control-static" style="cursor: pointer;" (click)="profileRedirect()">{{ post.ownerEmail }}</p>
     </div>
 
     <div class="form-group">
