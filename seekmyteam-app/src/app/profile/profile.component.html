@@ -4,7 +4,7 @@
         <div class="offset-1 col-10"> <!-- This creates white sidebars :)-->
             <!-- Beginning of inner content -->
             
-            <img width="200" height="200" [src]="fileDataUri">
+            <img width="250" height="250" [src]="fileDataUri">
 
             <!-- Form with submit method and template variable (#fileInput) -->
             <form *ngIf="isCurrentUser" (submit)="uploadFile($event)">
