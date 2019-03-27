@@ -8,7 +8,7 @@ deploy:
   secret_access_key: $secret_access_key
   region: us-east-2
   app: SeekMyTeam
-  env: Seekmyteam-env
+  env: Seekmyteam-env-prod
   bucket_name: elasticbeanstalk-us-east-2-690432244782
   on:
     branch: master
