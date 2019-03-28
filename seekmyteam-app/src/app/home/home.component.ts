@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PostUtilsService } from '../services/posts/post-utils.service';
-import { UserUtilsService, UserProfile } from '../services/users/user-utils.service';
+import { UserUtilsService } from '../services/users/user-utils.service';
 
 export interface Post {
     name: string,
@@ -49,14 +49,29 @@ export class HomeComponent {
             ownerEmail: "",
             skills: []
         };
-
+        this.posts = [];
+        
         this.post_utils.fetchPosts(null).subscribe(data => {
-            this.posts = data.posts;
+            this.parsePosts(data.posts);
             this.LastEvaluatedKey = data.key; 
             this.checkMorePosts();
+
         }, (err) => {
             console.error(err);
         });
+    }
+
+    parsePosts(data) {
+        data.forEach((item) => {
+            let parse: Post = {
+                name: item.Name.S,
+                description: item.Description.S,
+                ownerName: item.OwnerName.S,
+                ownerEmail: item.OwnerEmail.S,
+                skills: JSON.parse(item.Skills.S)
+            };
+            this.posts.push(parse); 
+        })
     }
 
     fetchMore() {
@@ -79,13 +94,7 @@ export class HomeComponent {
 
     displayPost(item) {
         this.showModal = true;
-        this.selectedPost = {
-            name: item.Name.S,
-            description: item.Description.S,
-            ownerName: item.OwnerName.S,
-            ownerEmail: item.OwnerEmail.S,
-            skills: JSON.parse(item.Skills.S)
-        };
+        this.selectedPost = item;
     }
 
     addNewPost() {
