@@ -1,59 +1,80 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="offset-1 col-10">
+        <div class="offset-2 col-8">
 
-            <div class="card">
-                <div class="card-header">Create A Post</div>
-                
-                <div class="card-body">
-                    <button></button>
+            <div class="card mb-2">
+                <div style="cursor: pointer" class="card-header text-center" data-toggle="modal" data-target="#newPostModal">
+                    <a href="#" class="text-dark mr-2 font-weight-light">Create New Post</a>
+                    <img src="assets/writing.svg" height="30" alt="a responsive img" class="float-right mr-2">
                 </div>
             </div>
 
-          
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Button with data-target
-                  </button>
 
-
-
-                  <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                          Some text
-                        </div>
-                      </div>
-
-
-
-
-
-
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="Enter project name"
-                    [(ngModel)]="newPost.name">
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" name="description" placeholder="Enter project description"
-                    [(ngModel)]="newPost.description">
-            </div>        
-            <div class="form-group">
-                <label for="skill">Desired Skills</label>
-                <input type="text" class="form-control" name="skill" placeholder="Enter a desired skill for this project"
-                [(ngModel)]="newSkill">
-                <div class="row mt-4">
-                    <div class="col-2">
-                        <button type="button" (click)="addSkill()" class="btn btn-success pl-6 pr-6">Add Skill</button>
+            <div class="card text-center" *ngFor="let post of posts; let pIdx = index">
+                <div class="card-header text-left">
+                    <h4>{{post.name}}</h4>
+                    <!-- <img src="assets/jeetsball.jpg" alt=""> -->
+                </div>
+                <div class="card-body text-left">
+                    <h6>{{post.description}}</h6>
+                    <div class="form-group mt-3 mb-0">
+                        <button type="button" class="btn btn-outline-info mr-2" *ngFor="let skill of post.skills; let idx = index">{{skill}}</button>
                     </div>
                 </div>
-            </div>        
-            
-            <div class="form-group">
-                <h3 *ngFor="let item of newPost.skills">{{item}}<br></h3>
+                <!-- <div class="card-footer text-muted">
+                    2 days ago
+                </div> -->
             </div>
 
-            <button (click)="addNewPost()" class="btn btn-success pl-6 pr-6">Submit</button>
+ 
+                <!-- Modal -->
+                <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">What project is on your mind</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Enter project name"
+                                [(ngModel)]="newPost.name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" rows="2" name="description" placeholder="Enter project description"
+                                [(ngModel)]="newPost.description"></textarea>   
+                        </div>        
+
+                        <div class="form-group">
+                            <label for="selectSkill">Example select</label>
+                            <select class="form-control" id="selectSkill" #s (change)="addSkill(s.value)">
+                                <option value="Select a skill" disabled>Select a skill</option>
+                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                    {{skill}}
+                                </option>
+                            </select>
+                        </div>
+
+                        
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of newPost.skills; let idx = index" (click)="deleteSkill(idx)">{{item}}</button>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="clearNewPost()" data-dismiss="modal">Close</button>
+                        <button type="button" (click)="addNewPost()" data-dismiss="modal" class="btn btn-primary">Post</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of modal -->
         </div>
         <div class="offset-1 col-10">             
             <ul>

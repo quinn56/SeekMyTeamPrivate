@@ -20,7 +20,8 @@ export class HomeComponent {
     showModal: boolean;
     selectedPost: Post; 
     newPost: Post;
-    newSkill: string;
+
+    SKILLS_ARRAY: string[] = ['java', 'angular', 'project management'];
 
     constructor(
         private user_utils: UserUtilsService,
@@ -103,12 +104,28 @@ export class HomeComponent {
         });        
     }
 
-    addSkill() {
-        this.newPost.skills.push(this.newSkill);
-        this.newSkill = '';
+    addSkill(skill: string) {
+        document.getElementById("selectSkill").getElementsByTagName('option')[0].selected = true;
+        if (!this.newPost.skills.includes(skill)) {
+            this.newPost.skills.push(skill);
+        }
+    }
+
+    deleteSkill(idx: number) {
+        this.newPost.skills.splice(idx, 1);
     }
 
     handleDone($event) {
         this.showModal = $event;
+    }
+
+    clearNewPost() {
+        this.newPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: "",
+            skills: []
+        };
     }
 }
