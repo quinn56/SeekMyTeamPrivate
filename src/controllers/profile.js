@@ -21,7 +21,6 @@ const imageTypes = [
 
 router.get('/:email', auth, function(req, res) {
     var email = req.params.email;
-     
     var params = {
         TableName : process.env.USERS_TABLE,
         Key : { 
@@ -31,6 +30,7 @@ router.get('/:email', auth, function(req, res) {
 
     database.getItem(params, function(err, data) {
         if (err) {
+            console.log(err);
             res.status(500).end();
         } else {
              /* No user with that email found */
@@ -58,6 +58,7 @@ router.get('/:email/pic', auth, function(req, res) {
 
     database.getItem(params, function(err, data) {
         if (err) {
+            console.log(err);
             res.status(500).end();
         } else {
              /* No user with that email found */
@@ -189,6 +190,7 @@ router.post('/update', auth, function(req, res) {
 
     database.updateItem(params, function(err, data) {
         if (err) {
+            console.log(err);
             res.status(500).end();
         } else {
             res.status(200).end();

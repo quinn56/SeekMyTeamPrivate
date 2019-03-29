@@ -33,7 +33,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">What project is on your mind</h5>
+                            <h5 class="modal-title">What project is on your mind?</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -105,7 +105,7 @@
                         <div class="row mt-3">
                             <div *ngIf="isOP" class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="selectedSkill">Skills Needed</label>
+                                    <h6>Skills Needed</h6>
                                     <select class="form-control" id="selectedSkill" #sk (change)="selectedAddSkill(sk.value)">
                                         <option value="Select a skill" disabled>Select a skill</option>
                                         <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
@@ -129,7 +129,7 @@
                         <button *ngIf="isOP" (click)="deletePost()" class="btn btn-danger mr-auto" data-dismiss="modal">Delete</button>
                         <button class="btn btn-secondary pl-6 pr-6" data-dismiss="modal">Close</button>
                         <button *ngIf="!isOP && showApply" (click)="apply()" class="btn btn-primary pl-6 pr-6" data-dismiss="modal">Apply</button>
-                        <button *ngIf="isOP" (click)="save()" data-dismiss="modal" class="btn btn-success pl-6 pr-6">Save</button>
+                        <button *ngIf="isOP" (click)="saveSelectedPost()" data-dismiss="modal" class="btn btn-success pl-6 pr-6">Save</button>
                     </div>
                     </div>
                 </div>

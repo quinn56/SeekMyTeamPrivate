@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { Router } from '@angular/router';
@@ -37,10 +37,8 @@ export class HomeComponent {
     constructor(
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
-        private router: Router,
-        private changes: ChangeDetectorRef
-    ) {
-    }
+        private router: Router
+    ) { }
     
     ngOnInit() {
         this.showMore = true;
@@ -48,7 +46,7 @@ export class HomeComponent {
 
         this.newPost = {
             name: "",
-            description: " ",
+            description: "",
             ownerName: "",
             ownerEmail: "",
             skills: []
@@ -70,6 +68,12 @@ export class HomeComponent {
             console.error(err);
         });
     }
+    
+    addSpaces() {
+        if (this.newPost.description.length === 0) {
+            this.newPost.description = ' ';
+        }
+    }
 
     parsePosts(data) {
         data.forEach((item) => {
@@ -80,6 +84,9 @@ export class HomeComponent {
                 ownerEmail: item.OwnerEmail.S,
                 skills: JSON.parse(item.Skills.S)
             };
+            if (parse.description === ' ') {
+                parse.description = '';
+            }
             this.posts.push(parse); 
         })
     }
@@ -103,9 +110,9 @@ export class HomeComponent {
     }
 
     displayPost(item) {
-        this.checkOP();
-        this.showApply = true;
         this.selectedPost = item;
+        this.showApply = true;
+        this.checkOP();
     }
 
     addNewPost() {

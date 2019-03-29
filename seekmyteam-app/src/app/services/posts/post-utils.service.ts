@@ -75,7 +75,7 @@ export class PostUtilsService {
       description: description,
       skills: skills
     };
-
+    
     return this.postUpdate(payload);
   }
 

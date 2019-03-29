@@ -19,16 +19,22 @@ export class ProfileComponent {
   details: UserProfile = {
     email: '',
     name: '',
-    description: ' ',
+    description: '',
     skills: [],
-    facebook: ' ',
-    linkedin: ' '
+    facebook: '',
+    linkedin: ''
   };
 
   private getEmail: string;
   isCurrentUser: boolean;
 
-  SKILLS_ARRAY: string[] = ['java', 'angular', 'project management'];
+  SKILLS_ARRAY: string[] = [
+    'Web Development',
+    'Backend Development',
+    'Full Stack Development',
+    'Project Management',
+    'Database Management'
+  ];
 
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
@@ -49,16 +55,46 @@ export class ProfileComponent {
         this.details.skills = JSON.parse(profile.user.skills);
         this.details.facebook = profile.user.facebook;
         this.details.linkedin = profile.user.linkedin;
-
+        
+        this.handleSpaces();
+        
         this.user_utils.getProfilePic(this.getEmail).subscribe(pic => {
           this.fileDataUri = pic.image;
         }, (err) => {
           console.error(err);
         });
       }, (err) => {
+        if (err.status === 401) {
+          console.log('user with that email not found');
+          this.router.navigateByUrl('/');
+        }
         console.error(err);
       });
     });
+  }
+
+  handleSpaces() {
+    if (this.details.description === ' ') {
+      this.details.description = '';
+    }
+    if (this.details.facebook === ' ') {
+      this.details.facebook = '';
+    }
+    if (this.details.linkedin === ' ') {
+      this.details.linkedin = '';
+    }
+  }
+
+  addSpaces() {
+    if (this.details.description.length === 0) {
+      this.details.description = ' ';
+    }
+    if (this.details.facebook.length === 0) {
+      this.details.facebook = ' ';
+    }
+    if (this.details.linkedin.length === 0) {
+      this.details.linkedin = ' ';
+    }
   }
 
   checkCurrentUser() {
@@ -86,6 +122,9 @@ export class ProfileComponent {
   }
 
   updateProfile() {
+    // :( dynamodb
+    this.addSpaces();
+
     this.user_utils.updateProfile(
       this.details.description,
       JSON.stringify(this.details.skills),

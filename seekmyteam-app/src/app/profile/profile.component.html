@@ -14,6 +14,13 @@
           <h2 class="mt-3">{{ details?.name }}</h2>
           <h5 class="mt-3">{{ details?.email }}</h5>
         </div>
+        <div *ngIf="isCurrentUser" class="offset-3 col-4 text-right" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
+            <br><br>
+            <a class="text-dark">
+            <img src="assets/settings.svg" height="25">
+            &nbsp;Edit
+            </a>
+        </div>
         <div class="col-10">
           <div class="row ml-1 mb-2">
             <a style="cursor:pointer;" (click)="directFacebook()">
@@ -24,13 +31,6 @@
               <img src="assets/linkedin.svg" height="30">
             </a>  
           </div>
-        </div>
-        <div *ngIf="isCurrentUser" class="offset-4 col-3 text-right" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
-            <br><br>
-            <a class="text-dark">
-            <img src="assets/settings.svg" height="25">
-            &nbsp;Edit
-            </a>
         </div>
       </div>
       
@@ -47,18 +47,9 @@
         <div class="col-8">
           <h5>Skills</h5>
           <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of details.skills; let idx = index" >{{item}}</button>
-
         </div>
-
-
-
       </div>
-
-
       <!-- End of input stuff -->
-
-
-
        <!-- The coolest of Modals -->
        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModal" aria-hidden="false">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -69,37 +60,36 @@
                       <span aria-hidden="true">&times;</span>
                   </button>
               </div>
-              <div class="modal-body mb-1">
+              <div class="modal-body mb-1 mt-2">
                 <div class="row">
                   <div class="col-5 border-right">
-                      <form (submit)="uploadFile()">
-                        <h5>Change Profile Picture</h5>
-                        <br>
-                        <input class="form-control-file" type="file" (change)="previewFile()" #fileInput>
-                      </form>
-                      <div class="mt-3 mb 2">
-                        <h5>Social Media Links</h5>
-                        <input type="text" [(ngModel)]="details.facebook"class="form-control mb-2" placeholder="Facebook"> 
-                        <input type="text"[(ngModel)]="details.linkedin" class="form-control" placeholder="LinkedIn"> 
-                      </div>
+                    <h5>Change Profile Picture</h5>
+                    <br>
+                    <input class="form-control-file" type="file" (change)="previewFile()" #fileInput>
+                    <div class="mt-5 mb-2">
+                      <h5>Social Media Links</h5>
+                      <input type="text" [(ngModel)]="details.facebook"class="form-control mb-2" placeholder="Facebook"> 
+                      <input type="text"[(ngModel)]="details.linkedin" class="form-control" placeholder="LinkedIn"> 
+                    </div>
                   </div>
                   <div class="col-7">
-                      <h5>Description</h5>
-                      <textarea [(ngModel)]="details.description" rows="3" class="form-control"></textarea>
+                    <h5>Description</h5>
+                    <textarea [(ngModel)]="details.description" rows="3" class="form-control"></textarea>
 
-                      <div class="form-group">
-                          <h5>My Skills</h5>
-                          <select class="form-control" id="selectedSkill" #sk (change)="addSkill(sk.value)">
-                              <option value="Select a skill" disabled>Select a skill</option>
-                              <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
-                                  {{skill}}
-                              </option>
-                          </select>
-                      </div>
-                      <br>
+                    <div class="form-group mt-3">
+                        <h5>My Skills</h5>
+                        <select class="form-control" id="selectedSkill" #sk (change)="addSkill(sk.value)">
+                            <option value="Select a skill" disabled>Select a skill</option>
+                            <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                {{skill}}
+                            </option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="mb-2"> 
                       <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of details.skills; let i = index" (click)="deleteSkill(i)">{{item}}</button>
+                    </div>
                   </div>
-
                 </div>
                 <div class="modal-footer mb-0">
                   <button type="button" (click)="handleDelete()" data-dismiss="modal" class="btn btn-danger mr-auto ml-3">Delete Account</button>

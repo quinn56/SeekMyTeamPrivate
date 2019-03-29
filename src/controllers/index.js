@@ -18,7 +18,7 @@ router.use('/profile', auth, require('./profile'));
 router.get('/posts', auth, function(req, res) {
     var params = {
         TableName: process.env.POSTS_TABLE,
-        Limit: 8
+        Limit: 15
     };
 
     if (req.query && req.query.ExclusiveStartKey !== "null") {
@@ -156,6 +156,7 @@ router.post('/updatePost', auth, function(req, res) {
 
     database.updateItem(params, function(err, data) {
         if (err) {
+            console.log(err);
             res.status(500).end();
         } else {
             res.status(200).end();
