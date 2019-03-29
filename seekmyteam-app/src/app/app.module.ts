@@ -13,7 +13,6 @@ import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
-import { PostComponent } from './home/post.component';
 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
@@ -31,14 +30,14 @@ const appRoutes: Routes = [
   { path: '**', redirectTo: '/' }
 ];
 
-/*const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [] },
-  { path: 'login', component: LoginComponent, canActivate: []},
-  { path: 'register', component: RegisterComponent, canActivate: [] },
-  { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
-  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
-  { path: '**', redirectTo: '/' }
-];*/
+// const appRoutes: Routes = [
+//   { path: '', component: HomeComponent, canActivate: [] },
+//   { path: 'login', component: LoginComponent, canActivate: []},
+//   { path: 'register', component: RegisterComponent, canActivate: [] },
+//   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
+//   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
+//   { path: '**', redirectTo: '/' }
+// ];
 
 @NgModule({
   declarations: [
@@ -48,8 +47,7 @@ const appRoutes: Routes = [
     ConfirmComponent,
     ProfileComponent,
     NavbarComponent,
-    HomeComponent,
-    PostComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,

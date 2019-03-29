@@ -24,14 +24,17 @@ export class ProfileComponent {
   };
 
   private getEmail: string;
-  
   isCurrentUser: boolean;
-  newSkill: string = '';
+  facebook: string;
+  linkedin: string;
 
+  SKILLS_ARRAY: string[] = ['java', 'angular', 'project management'];
 
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() { 
+    this.facebook = ' ';
+    this.linkedin = ' ';
     this.loadProfile();
   }
 
@@ -90,15 +93,15 @@ export class ProfileComponent {
     }) 
   }
 
-  addSkill() {
-    this.details.skills.push(this.newSkill);
-    this.newSkill = '';
+  addSkill(skill: string) {
+    if (!this.details.skills.includes(skill)) {
+      this.details.skills.push(skill);
+    }
   }
 
   deleteSkill(idx: number) {
     this.details.skills.splice(idx, 1);
   }
-
 
   previewFile() {
     const file = this.fileInput.nativeElement.files[0];
@@ -131,5 +134,13 @@ export class ProfileComponent {
   validateFile(file) {
    // return this.acceptedMimeTypes.includes(file.type) && file.size < 500000;
     return true;
+  }
+
+  directFacebook() {
+    window.location.href = this.facebook;
+  }
+  
+  directLinkedin() {
+    window.location.href = this.linkedin;
   }
 }

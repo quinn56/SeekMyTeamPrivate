@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
+import { Router } from '@angular/router';
 
 export interface Post {
     name: string,
@@ -14,23 +15,34 @@ export interface Post {
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
+    /* Home variables */    
     posts: Post[];
     private LastEvaluatedKey: any; 
     showMore: boolean;
-    showModal: boolean;
     selectedPost: Post; 
     newPost: Post;
+
+    /* Post modal variables */
+    isOP: boolean;
+    showApply: boolean; 
 
     SKILLS_ARRAY: string[] = ['java', 'angular', 'project management'];
 
     constructor(
         private user_utils: UserUtilsService,
-        private post_utils: PostUtilsService
+        private post_utils: PostUtilsService,
+        private router: Router,
+        private changes: ChangeDetectorRef
     ) {
         this.showMore = true;
-        this.showModal = false;
         this.LastEvaluatedKey = null;
-        this.selectedPost = null;
+        this.selectedPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: "",
+            skills: []
+        };
         this.newPost = {
             name: "",
             description: "",
@@ -41,7 +53,6 @@ export class HomeComponent {
     }
     
     ngOnInit() {
-        this.showModal = false;
         this.newPost = {
             name: "",
             description: "",
@@ -49,13 +60,27 @@ export class HomeComponent {
             ownerEmail: "",
             skills: []
         };
+        this.selectedPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: "",
+            skills: []
+        };
+        // this.posts = [
+        //     {
+        //         name: 'jeetsaball',
+        //         description: "a big ol jeeetsabll On my Philly to Atlanta flight today we carried home a fallen service member Delta Airlines conducted a very respectful and dignified ceremony whe",
+        //         ownerEmail: 'abc@anc.com',
+        //         ownerName: 'JEETO',
+        //         skills: ['java', 'html', 'the strap']
+        //     }
+        // ];
         this.posts = [];
-        
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
             this.LastEvaluatedKey = data.key; 
             this.checkMorePosts();
-
         }, (err) => {
             console.error(err);
         });
@@ -93,7 +118,8 @@ export class HomeComponent {
     }
 
     displayPost(item) {
-        this.showModal = true;
+        this.checkOP();
+        this.showApply = true;
         this.selectedPost = item;
     }
 
@@ -124,10 +150,6 @@ export class HomeComponent {
         this.newPost.skills.splice(idx, 1);
     }
 
-    handleDone($event) {
-        this.showModal = $event;
-    }
-
     clearNewPost() {
         this.newPost = {
             name: "",
@@ -136,5 +158,53 @@ export class HomeComponent {
             ownerEmail: "",
             skills: []
         };
+    }
+    
+    profileRedirect() {
+        this.router.navigateByUrl('/profile/' + this.selectedPost.ownerEmail);
+    }
+
+
+    checkOP() {
+        if (this.selectedPost) { 
+            if (this.selectedPost.ownerEmail === this.user_utils.getCurrentUserDetails().email) {
+                this.isOP = true;
+            } else {
+                this.isOP = false;
+            }
+        }
+    }
+
+    apply() {
+        this.post_utils.apply(this.selectedPost.ownerEmail, this.user_utils.getCurrentUserDetails().email).subscribe(data => {
+            this.showApply = false;
+        }, (err) => {
+            console.log(err);
+        });
+    }
+
+    deletePost() {
+        this.post_utils.delete(this.selectedPost.name).subscribe(data => {  
+        }, (err) => {
+            console.log(err);
+        });
+    }
+
+
+    selectedAddSkill(skill: string) {
+        if (!this.selectedPost.skills.includes(skill)) {
+            this.selectedPost.skills.push(skill);
+        }
+    }
+
+    selectedDeleteSkill(idx: number) {
+        this.selectedPost.skills.splice(idx, 1);
+    }
+
+    saveSelectedPost() {
+        this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills)).subscribe(data => {
+        }, (err) => {
+            console.log(err);
+        })
     }
 }
