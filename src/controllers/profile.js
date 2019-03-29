@@ -150,14 +150,19 @@ router.post('/delete', auth, function(req, res) {
 });
 
 router.post('/update', auth, function(req, res) {   
+    var email = req.payload.email;     
+    
     var description = req.body.description;
     var skills = req.body.skills;
-    var email = req.payload.email;     
+    var facebook = req.body.facebook;
+    var linkedin = req.body.linkedin;
 
     var params = {
         ExpressionAttributeNames: {
          "#C": "Description",
-         "#S": 'Skills'
+         "#S": 'Skills',
+         "#F": 'Facebook',
+         "#L": 'Linkedin'
         }, 
         ExpressionAttributeValues: {
          ":c": {
@@ -165,7 +170,13 @@ router.post('/update', auth, function(req, res) {
           },
           ":s": {
               'S': skills
-          }
+          },
+          ":f": {
+            'S': facebook
+          },
+          ":l": {
+            'S': linkedin
+          },
         }, 
         Key: {
          "Email": {
@@ -173,7 +184,7 @@ router.post('/update', auth, function(req, res) {
           }
         }, 
         TableName: process.env.USERS_TABLE, 
-        UpdateExpression: "SET #C = :c, #S = :s"
+        UpdateExpression: "SET #C = :c, #S = :s, #F = :f, #L = :l"
     };
 
     database.updateItem(params, function(err, data) {

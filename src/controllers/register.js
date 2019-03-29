@@ -25,7 +25,9 @@ router.post('/', function(req, res) {
         'Code' : {'S' : confirmationCode},
         'Posts' : {'S': JSON.stringify(empty)},
         'Skills': {'S': JSON.stringify(empty)},
-        'Image': {'S': ' '}
+        'Image': {'S': ' '},
+        'Facebook': {'S': ' '},
+        'Linkedin': {'S': ' '}
     };
 
     var params = { 

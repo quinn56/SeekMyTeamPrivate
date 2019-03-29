@@ -26,7 +26,13 @@ export class HomeComponent {
     isOP: boolean;
     showApply: boolean; 
 
-    SKILLS_ARRAY: string[] = ['java', 'angular', 'project management'];
+    SKILLS_ARRAY: string[] = [
+        'Web Development',
+        'Backend Development',
+        'Full Stack Development',
+        'Project Management',
+        'Database Management'
+    ];
 
     constructor(
         private user_utils: UserUtilsService,
@@ -34,28 +40,15 @@ export class HomeComponent {
         private router: Router,
         private changes: ChangeDetectorRef
     ) {
-        this.showMore = true;
-        this.LastEvaluatedKey = null;
-        this.selectedPost = {
-            name: "",
-            description: "",
-            ownerName: "",
-            ownerEmail: "",
-            skills: []
-        };
-        this.newPost = {
-            name: "",
-            description: "",
-            ownerName: "",
-            ownerEmail: "",
-            skills: []
-        };
     }
     
     ngOnInit() {
+        this.showMore = true;
+        this.LastEvaluatedKey = null;
+
         this.newPost = {
             name: "",
-            description: "",
+            description: " ",
             ownerName: "",
             ownerEmail: "",
             skills: []
@@ -67,16 +60,8 @@ export class HomeComponent {
             ownerEmail: "",
             skills: []
         };
-        // this.posts = [
-        //     {
-        //         name: 'jeetsaball',
-        //         description: "a big ol jeeetsabll On my Philly to Atlanta flight today we carried home a fallen service member Delta Airlines conducted a very respectful and dignified ceremony whe",
-        //         ownerEmail: 'abc@anc.com',
-        //         ownerName: 'JEETO',
-        //         skills: ['java', 'html', 'the strap']
-        //     }
-        // ];
         this.posts = [];
+        
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
             this.LastEvaluatedKey = data.key; 
@@ -124,6 +109,11 @@ export class HomeComponent {
     }
 
     addNewPost() {
+        if (this.newPost.name.length === 0) {
+            console.log('Post must have a name');
+            return;
+        }
+
         this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
             this.post_utils.create(this.newPost.name, this.newPost.description, JSON.stringify(this.newPost.skills), profile.user.name).subscribe(data => {
                 this.ngOnInit();    // Repopulate list automatically??

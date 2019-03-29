@@ -13,7 +13,9 @@ export interface UserProfile {
   email: string,
   name: string,
   description: string,
-  skills: string[]
+  skills: string[],
+  facebook: string,
+  linkedin: string
 }
 
 interface DeletePayload {
@@ -22,7 +24,9 @@ interface DeletePayload {
 
 interface UpdatePayload {
   description: string,
-  skills: string
+  skills: string,
+  facebook: string,
+  linkedin: string
 }
 
 interface PicturePayload {
@@ -36,10 +40,12 @@ export class UserUtilsService {
 
   constructor(private http: HttpClient) { }
 
-  public updateProfile(description: string, skills: string): Observable<any> {
+  public updateProfile(description: string, skills: string, facebook: string, linkedin: string): Observable<any> {
     var req: UpdatePayload = {
         description: description,
-        skills: skills
+        skills: skills,
+        facebook: facebook,
+        linkedin: linkedin
     };
     return this.requestUpdateProfile(req);
   }

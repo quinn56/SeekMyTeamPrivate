@@ -19,22 +19,20 @@ export class ProfileComponent {
   details: UserProfile = {
     email: '',
     name: '',
-    description: '',
-    skills: []
+    description: ' ',
+    skills: [],
+    facebook: ' ',
+    linkedin: ' '
   };
 
   private getEmail: string;
   isCurrentUser: boolean;
-  facebook: string;
-  linkedin: string;
 
   SKILLS_ARRAY: string[] = ['java', 'angular', 'project management'];
 
   constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() { 
-    this.facebook = ' ';
-    this.linkedin = ' ';
     this.loadProfile();
   }
 
@@ -49,6 +47,8 @@ export class ProfileComponent {
         this.details.name = profile.user.name;
         this.details.description = profile.user.description;
         this.details.skills = JSON.parse(profile.user.skills);
+        this.details.facebook = profile.user.facebook;
+        this.details.linkedin = profile.user.linkedin;
 
         this.user_utils.getProfilePic(this.getEmail).subscribe(pic => {
           this.fileDataUri = pic.image;
@@ -86,7 +86,13 @@ export class ProfileComponent {
   }
 
   updateProfile() {
-    this.user_utils.updateProfile(this.details.description, JSON.stringify(this.details.skills)).subscribe(res => {
+    this.user_utils.updateProfile(
+      this.details.description,
+      JSON.stringify(this.details.skills),
+      this.details.facebook,
+      this.details.linkedin
+    ).subscribe(res => {
+      this.uploadFile();
       console.log('successfully updated profile');
     }, (err) => {
       console.log(err);
@@ -117,8 +123,7 @@ export class ProfileComponent {
     }
   }
 
-  uploadFile(event: Event) {
-    event.preventDefault();
+  uploadFile() {
     // get only the base64 file and post it
     if (this.fileDataUri.length > 0) {
       //const base64File = this.fileDataUri.split(',')[1];
@@ -137,10 +142,10 @@ export class ProfileComponent {
   }
 
   directFacebook() {
-    window.location.href = this.facebook;
+    window.location.href = this.details.facebook;
   }
   
   directLinkedin() {
-    window.location.href = this.linkedin;
+    window.location.href = this.details.linkedin;
   }
 }
