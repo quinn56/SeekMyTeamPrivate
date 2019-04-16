@@ -180,8 +180,9 @@ export class HomeComponent {
         });
     }
 
-    deletePost() {
+    deletePost(idx:number) {
         this.post_utils.delete(this.selectedPost.name).subscribe(data => {  
+            this.posts.splice(idx,1);
         }, (err) => {
             console.log(err);
         });
