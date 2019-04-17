@@ -15,6 +15,8 @@ export class UsersComponent {
     ) { }
 
     ngOnInit() {
+        this.users = [];
+
         this.user_utils.getAllUsers().subscribe((data) => {
             this.parseUsers(data.users);
         }, (err) => {
@@ -27,6 +29,7 @@ export class UsersComponent {
             let parse = {
                 name: item.name,
                 description: item.description,
+                email: item.email,
                 skills: JSON.parse(item.skills)
             };
             this.users.push(parse); 
