@@ -165,18 +165,61 @@ router.post('/updatePost', auth, function(req, res) {
 });
 
 router.post('/deletePost', auth, function(req, res) {
-    database.deleteItem({
-        "TableName": process.env.POSTS_TABLE, 
-        "Key" : {
-            "Name": { 
-                "S" : req.body.name 
-            }
+    var postList = [];
+
+    var params = {
+        TableName : process.env.USERS_TABLE,
+        Key : { 
+          "Email" : {'S' : req.payload.email}
         }
-    }, function (err, data) {
+    };
+
+    database.getItem(params, function(err, data) {
         if (err) {
-            res.status(402).end();
+            res.status(500).end();
         } else {
-            res.status(200).end();
+            postList = JSON.parse(data.Item.Posts.S); 
+
+            database.deleteItem({
+                "TableName": process.env.POSTS_TABLE, 
+                "Key" : {
+                    "Name": { 
+                        "S" : req.body.name 
+                    }
+                }
+            }, function (err, data) {
+                if (err) {
+                    res.status(402).end();
+                } else {
+                    postList.splice(postList.indexOf(req.body.name));
+
+                    var userParams = {
+                        ExpressionAttributeNames: {
+                         "#C": "Posts"
+                        }, 
+                        ExpressionAttributeValues: {
+                         ":c": {
+                           'S': JSON.stringify(postList)
+                          }
+                        }, 
+                        Key: {
+                         "Email": {
+                           'S': req.payload.email
+                          }
+                        }, 
+                        TableName: process.env.USERS_TABLE, 
+                        UpdateExpression: "SET #C = :c"
+                    };
+                
+                    database.updateItem(userParams, function(err, data) {
+                        if (err) {
+                            res.status(500).end();
+                        } else {
+                            res.status(200).end();
+                        }
+                    });   
+                }
+            });
         }
     });
 });
