@@ -14,6 +14,7 @@ var database = require('../app').database;
 router.use('/register', require('./register'));
 router.use('/login', require('./login'));
 router.use('/profile', auth, require('./profile'));
+router.use('/users', auth, require('./users'));
 
 router.get('/posts', auth, function(req, res) {
     var params = {

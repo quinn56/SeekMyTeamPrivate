@@ -19,10 +19,12 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { AuthRedirectService } from './services/authentication/auth-redirect.service';
 import { UserUtilsService } from './services/users/user-utils.service';
 import { PostUtilsService } from './services/posts/post-utils.service';
-
+import { FilterPipe } from './services/pipes/filter.pipe';
+import { UsersComponent } from './home/users.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuardService]},
   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
@@ -31,7 +33,8 @@ const appRoutes: Routes = [
 ];
 
 // const appRoutes: Routes = [
-//   { path: '', component: HomeComponent, canActivate: [] },
+  //   { path: '', component: HomeComponent, canActivate: [] },
+  // { path: 'users', component: UsersComponent, canActivate: []},
 //   { path: 'login', component: LoginComponent, canActivate: []},
 //   { path: 'register', component: RegisterComponent, canActivate: [] },
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
@@ -47,7 +50,9 @@ const appRoutes: Routes = [
     ConfirmComponent,
     ProfileComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    UsersComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

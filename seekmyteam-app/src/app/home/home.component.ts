@@ -21,6 +21,7 @@ export class HomeComponent {
     showMore: boolean;
     selectedPost: Post; 
     newPost: Post;
+    searchText: string;
 
     /* Post modal variables */
     isOP: boolean;

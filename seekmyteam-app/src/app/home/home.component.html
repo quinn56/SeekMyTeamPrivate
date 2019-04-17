@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="offset-2 col-8">
+            <input class="form-control" [(ngModel)]="searchText" placeholder="Search">
 
             <!-- Create New post Card -->
             <div class="card mb-4 mt-2">
@@ -11,7 +12,7 @@
             </div>
 
             <!-- Posting cards -->
-            <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
+            <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts | filter:searchText:'name'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
                 <div class="card-header text-left">
                     <h4>{{post.name}}</h4>
                     <!-- <img src="assets/jeetsball.jpg" alt=""> -->

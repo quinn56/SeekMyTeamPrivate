@@ -55,6 +55,10 @@ export class UserUtilsService {
     return this.requestUpdateProfile(req);
   }
 
+  public getAllUsers(): Observable<any> {
+    return this.requestAllUsers();
+  }
+
   public getProfile(email: string): Observable<any> {
     return this.requestProfile(email);
   }
@@ -68,6 +72,18 @@ export class UserUtilsService {
 
   public uploadProfilePicture(data: FormData): Observable<any> {
     return this.postPicture(data);
+  }
+
+  private requestAllUsers(): Observable<any> {
+    let base = this.http.get('/api/users', { headers: { Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
   }
 
   private postPicture(req: FormData) {

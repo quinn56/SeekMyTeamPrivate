@@ -6,6 +6,11 @@ var database = require('../app').database;
 var jwt = require('express-jwt');
 const fileType = require('file-type');
 
+var auth = jwt({
+    secret: process.env.TOKEN_SECRET,
+    userProperty: 'payload'
+});
+
 var s3 = require('../app').s3;
 const multer = require('../app').multer;
 const multers3 = require('../app').multers3;
@@ -23,11 +28,6 @@ const upload = multer({
 });
 
 const singleUpload = upload.single('image');
-
-var auth = jwt({
-    secret: process.env.TOKEN_SECRET,
-    userProperty: 'payload'
-});
 
 const imageTypes = [
     'image/gif',

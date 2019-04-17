@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="offset-2 col-8">
+            <input class="form-control" [(ngModel)]="searchText" placeholder="Search">
+
+            <!-- User cards -->
+            <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let user of users | filter:searchText:'name'; let idx = index" (click)="routeProfile(user)">
+                <div class="card-header text-left">
+                    <h4>{{user.name}}</h4>
+                </div>
+                <div class="card-body text-left">
+                    <h6>{{user.description}}</h6>
+                    <div class="form-group mt-3 mb-0">
+                        <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of user.skills; let i = index">{{item}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
