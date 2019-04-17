@@ -2,8 +2,10 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/authentication/authentication.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
+  providers: [NavbarComponent],
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
@@ -14,7 +16,7 @@ export class ProfileComponent {
   ];
 
   @ViewChild('fileInput') fileInput: ElementRef;
-  fileDataUri: string = '';
+  fileDataUrl: string = '';
   
   details: UserProfile = {
     email: '',
@@ -36,7 +38,13 @@ export class ProfileComponent {
     'Database Management'
   ];
 
-  constructor(private user_utils: UserUtilsService, private auth: AuthenticationService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private user_utils: UserUtilsService,
+    private auth: AuthenticationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private navComp: NavbarComponent
+  ) {}
 
   ngOnInit() { 
     this.loadProfile();
@@ -56,13 +64,9 @@ export class ProfileComponent {
         this.details.facebook = profile.user.facebook;
         this.details.linkedin = profile.user.linkedin;
         
+        this.fileDataUrl = this.user_utils.buildProfilePicUrl(this.getEmail);
+
         this.handleSpaces();
-        
-        this.user_utils.getProfilePic(this.getEmail).subscribe(pic => {
-          this.fileDataUri = pic.image;
-        }, (err) => {
-          console.error(err);
-        });
       }, (err) => {
         if (err.status === 401) {
           console.log('user with that email not found');
@@ -148,36 +152,31 @@ export class ProfileComponent {
     this.details.skills.splice(idx, 1);
   }
 
-  previewFile() {
+  /*previewFile() {
     const file = this.fileInput.nativeElement.files[0];
-    if (file && this.validateFile(file)) {
-
+    if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(this.fileInput.nativeElement.files[0]);
       reader.onload = () => {
-        this.fileDataUri = reader.result.toString();
+        this.fileDataUrl = reader.result.toString();
       }
     } else {
       console.log('File must be jpg, png, or gif and cannot be exceed 500 KB in size');
     }
-  }
+  }*/
 
   uploadFile() {
-    // get only the base64 file and post it
-    if (this.fileDataUri.length > 0) {
-      //const base64File = this.fileDataUri.split(',')[1];
-      this.user_utils.uploadProfilePicture(this.fileDataUri).subscribe(res => {
-          // reset file input
-          this.fileInput.nativeElement.value = '';
-        }, (err) => {
-          console.log('Could not upload image.');
-      });
-    }
-  }
-
-  validateFile(file) {
-   // return this.acceptedMimeTypes.includes(file.type) && file.size < 500000;
-    return true;
+    let formData = new FormData();
+    formData.append('image', this.fileInput.nativeElement.files[0]);
+    this.user_utils.uploadProfilePicture(formData).subscribe((res) => {
+      if (res.imageUrl) {
+        // this.fileDataUrl = res.imageUrl;
+        // this.navComp.profilePic = res.imageUrl;
+        location.reload();
+      }
+    }, (err) => {
+      console.log(err);
+    })
   }
 
   directFacebook() {

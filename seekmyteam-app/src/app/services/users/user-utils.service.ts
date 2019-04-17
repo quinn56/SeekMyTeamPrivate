@@ -30,7 +30,7 @@ interface UpdatePayload {
 }
 
 interface PicturePayload {
-  image: string
+  image: FormData
 }
 
 @Injectable({
@@ -39,6 +39,11 @@ interface PicturePayload {
 export class UserUtilsService {
 
   constructor(private http: HttpClient) { }
+
+  public buildProfilePicUrl(email: string) { 
+    var S3_URL = 'https://s3.us-east-2.amazonaws.com/seekmyteam-profile-pics/';
+    return S3_URL + email + '/picture';
+  }
 
   public updateProfile(description: string, skills: string, facebook: string, linkedin: string): Observable<any> {
     var req: UpdatePayload = {
@@ -54,10 +59,6 @@ export class UserUtilsService {
     return this.requestProfile(email);
   }
 
-  public getProfilePic(email: string): Observable<any> {
-    return this.requestProfilePic(email);
-  }
-
   public deleteProfile(email: string): Observable<any> {
     var req: DeletePayload = {
       email: email
@@ -65,27 +66,13 @@ export class UserUtilsService {
     return this.requestDeleteProfile(req);
   }
 
-  public uploadProfilePicture(data: string): Observable<any> {
-    var req: PicturePayload = {
-      image: data
-    }
-    return this.postPicture(req);
+  public uploadProfilePicture(data: FormData): Observable<any> {
+    return this.postPicture(data);
   }
 
-  private postPicture(req: PicturePayload) {
+  private postPicture(req: FormData) {
     let base = this.http.post('/api/profile/uploadPicture', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
 
-    const requestedData = base.pipe(
-      map((data) => {
-        return data;
-      })
-    );
-
-    return requestedData;
-  }
-
-  private requestProfilePic(email: string): Observable<any> {
-    let base = this.http.get('/api/profile/' + email + '/pic', { headers: { Authorization: `Bearer ${this.getToken()}`}});
     const requestedData = base.pipe(
       map((data) => {
         return data;

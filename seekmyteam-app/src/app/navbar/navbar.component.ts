@@ -15,11 +15,12 @@ export class NavbarComponent implements OnChanges {
   constructor(private auth: AuthenticationService, private user_utils: UserUtilsService, private router: Router) { }
 
   ngOnInit() {
-    this.getProfilePic();
+    this.currentEmail = this.user_utils.getCurrentUserDetails().email;
+    this.profilePic = this.user_utils.buildProfilePicUrl(this.currentEmail);
   }
 
   ngOnChanges() {
-    this.getProfilePic();
+    this.ngOnInit();
   }
 
   routeProfile() {
@@ -29,13 +30,5 @@ export class NavbarComponent implements OnChanges {
 
   logout() {
     this.auth.logout();
-  }
-
-  getProfilePic() {
-    this.user_utils.getProfilePic(this.user_utils.getCurrentUserDetails().email).subscribe(pic => {
-      this.profilePic = pic.image;
-    }, (err) => {
-      console.log(err);
-    });
   }
 }

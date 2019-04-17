@@ -7,6 +7,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 
+const multer = require('multer');
+module.exports.multer = multer;
+
+const multers3 = require('multer-s3');
+module.exports.multers3 = multers3;
+
 const s3 = new AWS.S3();
 module.exports.s3 = s3;
 
