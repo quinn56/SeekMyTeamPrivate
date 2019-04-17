@@ -16,7 +16,7 @@ export class UsersComponent {
 
     ngOnInit() {
         this.user_utils.getAllUsers().subscribe((data) => {
-            this.parseUsers(data);
+            this.parseUsers(data.users);
         }, (err) => {
             console.log(err);
         })
