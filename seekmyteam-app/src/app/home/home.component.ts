@@ -19,7 +19,11 @@ export class HomeComponent {
     posts: Post[];
     private LastEvaluatedKey: any; 
     showMore: boolean;
-    selectedPost: Post; 
+    selectedPost: Post;
+    
+    // Post to keep track of edits without changing before save
+    editPost: Post;
+    
     newPost: Post;
     searchText: string;
 
@@ -59,6 +63,15 @@ export class HomeComponent {
             ownerEmail: "",
             skills: []
         };
+
+        this.editPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: "",
+            skills: []
+        };
+
         this.posts = [];
         
         this.post_utils.fetchPosts(null).subscribe(data => {
@@ -112,8 +125,18 @@ export class HomeComponent {
 
     displayPost(item) {
         this.selectedPost = item;
+        this.copyEditPost();
+
         this.showApply = true;
         this.checkOP();
+    }
+
+    copyEditPost() {
+        this.editPost.name = this.selectedPost.name;
+        this.editPost.description = this.selectedPost.description;
+        this.editPost.ownerEmail = this.selectedPost.ownerEmail;
+        this.editPost.ownerName = this.selectedPost.ownerName;
+        this.editPost.skills = this.selectedPost.skills.slice();
     }
 
     addNewPost() {
@@ -189,21 +212,32 @@ export class HomeComponent {
         });
     }
 
-
     selectedAddSkill(skill: string) {
-        if (!this.selectedPost.skills.includes(skill)) {
-            this.selectedPost.skills.push(skill);
+        if (!this.editPost.skills.includes(skill)) {
+            this.editPost.skills.push(skill);
         }
     }
 
     selectedDeleteSkill(idx: number) {
-        this.selectedPost.skills.splice(idx, 1);
+        this.editPost.skills.splice(idx, 1);
     }
 
     saveSelectedPost() {
+        this.selectedPost = this.editPost;
         this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills)).subscribe(data => {
+            location.reload();
         }, (err) => {
             console.log(err);
         })
+    }
+
+    clearEdit() {
+        this.editPost = {
+            name: "",
+            description: "",
+            ownerName: "",
+            ownerEmail: "",
+            skills: []
+        };
     }
 }

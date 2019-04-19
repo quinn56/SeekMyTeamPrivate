@@ -68,13 +68,13 @@
                     <input class="form-control-file" type="file" #fileInput>
                     <div class="mt-5 mb-2">
                       <h5>Social Media Links</h5>
-                      <input type="text" [(ngModel)]="details.facebook"class="form-control mb-2" placeholder="Facebook"> 
-                      <input type="text"[(ngModel)]="details.linkedin" class="form-control" placeholder="LinkedIn"> 
+                      <input type="text" [(ngModel)]="editDetails.facebook"class="form-control mb-2" placeholder="Facebook"> 
+                      <input type="text"[(ngModel)]="editDetails.linkedin" class="form-control" placeholder="LinkedIn"> 
                     </div>
                   </div>
                   <div class="col-7">
                     <h5>Description</h5>
-                    <textarea [(ngModel)]="details.description" rows="3" class="form-control"></textarea>
+                    <textarea [(ngModel)]="editDetails.description" rows="3" class="form-control"></textarea>
 
                     <div class="form-group mt-3">
                         <h5>My Skills</h5>
@@ -87,13 +87,13 @@
                     </div>
                     <br>
                     <div class="mb-2"> 
-                      <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of details.skills; let i = index" (click)="deleteSkill(i)">{{item}}</button>
+                      <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of editDetails.skills; let i = index" (click)="deleteSkill(i)">{{item}}</button>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer mb-0">
                   <button type="button" (click)="handleDelete()" data-dismiss="modal" class="btn btn-danger mr-auto ml-3">Delete Account</button>
-                  <button class="btn btn-secondary ml-auto mr-2" data-dismiss="modal">Close</button>
+                  <button class="btn btn-secondary ml-auto mr-2" (click)='resetEdit()' data-dismiss="modal">Close</button>
                   <button type="button" (click)="updateProfile()" data-dismiss="modal" class="btn btn-success mr-3">Save</button>
                 </div>
                                  

@@ -86,7 +86,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">{{ selectedPost.name }}</h4><br>
+                        <h4 class="modal-title">{{ editPost.name }}</h4><br>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -100,7 +100,7 @@
                             <div class="col-sm-8 border-left">
                                 <h6>Project Description</h6>
                                 <p *ngIf="!isOP">{{ selectedPost.description }}</p>
-                                <textarea *ngIf="isOP" [(ngModel)]="selectedPost.description" rows="3" class="form-control"></textarea>
+                                <textarea *ngIf="isOP" [(ngModel)]="editPost.description" rows="3" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -117,18 +117,18 @@
                             </div>
                             <div *ngIf="isOP" class="col-sm-8 mt-2">
                                 <br>
-                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of selectedPost.skills; let i = index" (click)="selectedDeleteSkill(i)">{{item}}</button>
+                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of editPost.skills; let i = index" (click)="selectedDeleteSkill(i)">{{item}}</button>
                             </div>
                             <div *ngIf="!isOP" class="col-sm-8 mt-2">
-                                    <br>
-                                    <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of selectedPost.skills; let i = index" >{{item}}</button>
-                                </div>
+                                <br>
+                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of selectedPost.skills; let i = index" >{{item}}</button>
+                            </div>
                         </div>
                         
                     </div>
                     <div class="modal-footer">
                         <button *ngIf="isOP" (click)="deletePost()" class="btn btn-danger mr-auto" data-dismiss="modal">Delete</button>
-                        <button class="btn btn-secondary pl-6 pr-6" data-dismiss="modal">Close</button>
+                        <button class="btn btn-secondary pl-6 pr-6" (click)='clearEdit()' data-dismiss="modal">Close</button>
                         <button *ngIf="!isOP && showApply" (click)="apply()" class="btn btn-primary pl-6 pr-6" data-dismiss="modal">Apply</button>
                         <button *ngIf="isOP" (click)="saveSelectedPost()" data-dismiss="modal" class="btn btn-success pl-6 pr-6">Save</button>
                     </div>

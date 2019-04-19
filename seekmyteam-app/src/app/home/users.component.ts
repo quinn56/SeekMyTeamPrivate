@@ -39,4 +39,8 @@ export class UsersComponent {
     routeProfile(user: UserProfile) {
         this.router.navigateByUrl('profile/' + user.email);
     }
+
+    buildPic(email: string) {
+        return this.user_utils.buildProfilePicUrl(email);
+    }
 }

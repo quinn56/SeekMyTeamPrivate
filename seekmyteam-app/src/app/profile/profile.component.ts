@@ -27,6 +27,15 @@ export class ProfileComponent {
     linkedin: ''
   };
 
+  editDetails: UserProfile = {
+    email: '',
+    name: '',
+    description: '',
+    skills: [],
+    facebook: '',
+    linkedin: ''
+  };
+
   private getEmail: string;
   isCurrentUser: boolean;
 
@@ -64,6 +73,9 @@ export class ProfileComponent {
         this.details.facebook = profile.user.facebook;
         this.details.linkedin = profile.user.linkedin;
         
+        // Keep a new copy so that the edits dont show up before saving
+        this.copyDetails();
+
         this.fileDataUrl = this.user_utils.buildProfilePicUrl(this.getEmail);
 
         this.handleSpaces();
@@ -75,6 +87,15 @@ export class ProfileComponent {
         console.error(err);
       });
     });
+  }
+
+  copyDetails() {
+    this.editDetails.email = this.details.email;
+    this.editDetails.name = this.details.name;
+    this.editDetails.description = this.details.description;
+    this.editDetails.facebook = this.details.facebook;
+    this.editDetails.linkedin = this.details.linkedin;
+    this.editDetails.skills = this.details.skills.slice();
   }
 
   handleSpaces() {
@@ -128,6 +149,7 @@ export class ProfileComponent {
   updateProfile() {
     // :( dynamodb
     this.addSpaces();
+    this.details = this.editDetails;
 
     this.user_utils.updateProfile(
       this.details.description,
@@ -143,13 +165,17 @@ export class ProfileComponent {
   }
 
   addSkill(skill: string) {
-    if (!this.details.skills.includes(skill)) {
-      this.details.skills.push(skill);
+    if (!this.editDetails.skills.includes(skill)) {
+      this.editDetails.skills.push(skill);
     }
   }
 
+  resetEdit() {
+    this.copyDetails();
+  }
+
   deleteSkill(idx: number) {
-    this.details.skills.splice(idx, 1);
+    this.editDetails.skills.splice(idx, 1);
   }
 
   /*previewFile() {
@@ -170,8 +196,6 @@ export class ProfileComponent {
     formData.append('image', this.fileInput.nativeElement.files[0]);
     this.user_utils.uploadProfilePicture(formData).subscribe((res) => {
       if (res.imageUrl) {
-        // this.fileDataUrl = res.imageUrl;
-        // this.navComp.profilePic = res.imageUrl;
         location.reload();
       }
     }, (err) => {

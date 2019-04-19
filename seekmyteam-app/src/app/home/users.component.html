@@ -6,6 +6,7 @@
             <!-- User cards -->
             <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let user of users | filter:searchText:'name'; let idx = index" (click)="routeProfile(user)">
                 <div class="card-header text-left">
+                    <img class="rounded-circle" height="40" [src]='buildPic(user.email)'>
                     <h4>{{user.name}}</h4>
                 </div>
                 <div class="card-body text-left">
