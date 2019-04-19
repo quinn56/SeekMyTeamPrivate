@@ -45,6 +45,28 @@ router.get('/posts', auth, function(req, res) {
     });
 });
 
+router.get('/userPosts', auth, function(req, res) {
+    var params = {
+        TableName : "Posts",
+        KeyConditionExpression: "OwnerEmail = :email",
+        ExpressionAttributeValues: {
+            ":email": {
+                'S': req.query.email
+            }
+        }
+    };
+    
+    database.query(params, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {    
+            res.status(200).json({
+                "posts": data.Items,
+            });
+        }
+    });
+});
+
 router.post('/createPost', auth, function(req, res) {
     var name = req.body.name;
     var description = req.body.description;

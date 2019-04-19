@@ -2,10 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
-  providers: [NavbarComponent],
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
@@ -51,8 +49,7 @@ export class ProfileComponent {
     private user_utils: UserUtilsService,
     private auth: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router,
-    private navComp: NavbarComponent
+    private router: Router
   ) {}
 
   ngOnInit() { 

@@ -34,7 +34,7 @@ export class PostUtilsService {
 
   constructor(private http: HttpClient) { }
 
-  fetchPosts(key: any): Observable<any> {
+  public fetchPosts(key: any): Observable<any> {
     if (key) {
       return this.getPosts(key.Name.S);
     } else {
@@ -42,7 +42,11 @@ export class PostUtilsService {
     }
   }
 
-  apply(owner: string, applicant: string): Observable<any> {
+  public fetchUserPosts(email: string): Observable<any> {
+    return this.getUserPosts(email);
+  }
+
+  public apply(owner: string, applicant: string): Observable<any> {
     let payload: ApplyPayload = {
       owner: owner,
       applicant: applicant
@@ -51,14 +55,14 @@ export class PostUtilsService {
     return this.postApply(payload);
   }
 
-  delete(name: string): Observable<any> {
+  public delete(name: string): Observable<any> {
     let payload: DeletePayload = {
       name: name
     };
     return this.postDelete(payload);
   }
 
-  create(name: string, description: string, skills: string, ownerName: string): Observable<any> {
+  public create(name: string, description: string, skills: string, ownerName: string): Observable<any> {
     let payload: CreatePayload = {
       name: name,
       description: description,
@@ -69,7 +73,7 @@ export class PostUtilsService {
     return this.postCreate(payload);
   }
 
-  update(name: string, description: string, skills: string): Observable<any> {
+  public update(name: string, description: string, skills: string): Observable<any> {
     let payload: UpdatePayload = {
       name: name,
       description: description,
@@ -139,8 +143,19 @@ export class PostUtilsService {
     return requestedData;
   }
 
-  filterPosts() {
+  private getUserPosts(email: string): Observable<any> {
+    let base = this.http.get('/api/userPosts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {email: email}});
+    
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
 
+    return requestedData;
+  }
+
+  filterPosts() {
   }
 
   private getToken(): string {
