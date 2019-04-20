@@ -47,19 +47,23 @@ router.get('/posts', auth, function(req, res) {
 
 router.get('/userPosts', auth, function(req, res) {
     var params = {
-        TableName : "Posts",
-        KeyConditionExpression: "OwnerEmail = :email",
+        TableName: "Posts",
+        FilterExpression: "#owner = :email",
+        ExpressionAttributeNames: {
+            "#owner": "OwnerEmail",
+        },
         ExpressionAttributeValues: {
-            ":email": {
-                'S': req.query.email
-            }
+             ":email": {
+                 'S': req.query.email
+             }
         }
     };
     
-    database.query(params, function (err, data) {
+    database.scan(params, function (err, data) {
         if (err) {
             console.log(err);
         } else {    
+            console.log(data.Items);
             res.status(200).json({
                 "posts": data.Items,
             });

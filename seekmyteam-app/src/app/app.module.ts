@@ -22,6 +22,7 @@ import { PostUtilsService } from './services/posts/post-utils.service';
 import { FilterPipe } from './services/pipes/filter.pipe';
 import { UsersComponent } from './home/users.component';
 import { PostListComponent } from './profile/post-list.component';
+import { SkillsPipe } from './services/pipes/skills.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -55,7 +56,8 @@ const appRoutes: Routes = [
     HomeComponent,
     UsersComponent,
     PostListComponent,
-    FilterPipe
+    FilterPipe,
+    SkillsPipe
   ],
   imports: [
     BrowserModule,
