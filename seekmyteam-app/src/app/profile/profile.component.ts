@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
+import { PostUtilsService } from '../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/authentication/authentication.service';
 
@@ -37,6 +38,10 @@ export class ProfileComponent {
   private getEmail: string;
   isCurrentUser: boolean;
 
+  // For inviting the user who's profile is being used to a certain project
+  selectedProject: string;
+  ownedProjects: string[];
+
   SKILLS_ARRAY: string[] = [
     'Web Development',
     'Backend Development',
@@ -47,6 +52,7 @@ export class ProfileComponent {
 
   constructor(
     private user_utils: UserUtilsService,
+    private post_utils: PostUtilsService,
     private auth: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router
@@ -206,5 +212,29 @@ export class ProfileComponent {
   
   directLinkedin() {
     window.location.href = this.details.linkedin;
+  }
+
+  loadInvite() {
+    this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe((data) => {
+      this.ownedProjects = JSON.parse(data.user.posts);
+    }, (err) => {
+      console.log(err);
+    })
+  }
+ 
+  invite(proj: string) {
+    this.post_utils.invite(this.user_utils.getCurrentUserDetails().email, this.getEmail, proj ).subscribe((data) => {
+      this.selectedProject = '';
+    }, (err) => {
+        console.log(err);
+    });
+  }
+
+  selectProject(proj: string) {
+    this.selectedProject = proj;
+  }
+
+  resetSelectedProject() {
+    this.selectedProject = '';
   }
 }

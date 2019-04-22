@@ -8,6 +8,12 @@ interface ApplyPayload {
   applicant: string
 }
 
+interface InvitePayload {
+  owner: string,
+  invite: string,
+  project: string
+}
+
 interface DeletePayload {
   name: string
 }
@@ -53,6 +59,16 @@ export class PostUtilsService {
     };
     
     return this.postApply(payload);
+  }
+
+  public invite(owner: string, invite: string, project: string): Observable<any> {
+    let payload: InvitePayload = {
+      owner: owner,
+      invite: invite, 
+      project: project
+    };
+    
+    return this.postInvite(payload);
   }
 
   public delete(name: string): Observable<any> {
@@ -121,6 +137,18 @@ export class PostUtilsService {
 
   private postApply(req: ApplyPayload): Observable<any> {
     let base = this.http.post('/api/apply', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  private postInvite(req: InvitePayload): Observable<any> {
+    let base = this.http.post('/api/invite', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
 
     const requestedData = base.pipe(
       map((data) => {

@@ -135,8 +135,68 @@ router.post('/uploadPicture', auth, function(req, res) {
       });
 });
 
+router.post('/markApplied', auth, function(req, res) {
+    var email = req.payload.email;
+    var project = req.body.project;
+
+    var params = {
+        TableName : process.env.USERS_TABLE,
+        Key : { 
+          "Email" : {'S' : email}
+        }
+    };
+
+    database.getItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
+            var arr = JSON.parse(data.Item.AppliedPosts.S);
+            
+            // Avoid duplicate applies
+            if (arr.includes(project)) {
+                res.status(200).end();
+                return;
+            }
+            arr.push(project);
+
+            params = {
+                ExpressionAttributeNames: {
+                 "#C": "AppliedPosts",
+                }, 
+                ExpressionAttributeValues: {
+                 ":c": {
+                   'S': JSON.stringify(arr)
+                  }
+                }, 
+                Key: {
+                 "Email": {
+                   'S': email
+                  }
+                }, 
+                TableName: process.env.USERS_TABLE, 
+                UpdateExpression: "SET #C = :c"
+            };
+        
+            database.updateItem(params, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).end();
+                } else {
+                    res.status(200).end();
+                }
+            });  
+        }
+    });
+});
+
 /* CODE TO DELETE ALL ENTITIES CREATED BY A USER
-THIS CODE WORKS BUT MAY NOT BE THE DESIRED FUNCTIONALITY
+THIS CODE NEEDS AN UPDATE, BUT WORKS. MAY NOT BE THE DESIRED FUNCTIONALITY
 
 router.post('/delete', function(req, res) {
     var queryParams = {

@@ -31,6 +31,11 @@
             </a>  
           </div>
         </div>
+        <div *ngIf="!isCurrentUser" class="col-10">
+            <div class="row ml-1 mb-2">
+              <button class="btn btn-success" (click)='loadInvite()' data-toggle="modal" data-target="#inviteModal">Invite User</button>
+            </div>
+          </div>
       </div>
       
       <hr class="border-top mt-3 mb-2">
@@ -103,6 +108,36 @@
           </div>
       </div>
       <!-- End of cool modal -->
+
+      <!-- Invite modal -->
+      <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModal" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Invite User</h3><br>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mb-1 mt-2">
+              <div class="form-group mt-3">
+                <h5>My Projects</h5>
+                <select class="form-control" id="selectedProject" #inv (change)="selectProject(inv.value)">
+                    <option value="Select one of your projects" disabled>Select one of your projects</option>
+                    <option *ngFor="let proj of ownedProjects" value={{proj}}>
+                        {{proj}}
+                    </option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer mb-0">
+                <button class="btn btn-secondary ml-auto mr-2" (click)='resetSelectedProject()' data-dismiss="modal">Close</button>
+                <button type="button" (click)="invite(selectedProject)" data-dismiss="modal" class="btn btn-success mr-3">Invite</button>
+              </div>
+          </div>                               
+        </div>
+      </div>
+      <!-- End Invite modal -->
       <br><br><br>
 
     </div>

@@ -5,7 +5,9 @@ function summarize(item) {
         'description': item.Description.S,
         'skills': item.Skills.S,
         'facebook': item.Facebook.S,
-        'linkedin': item.Linkedin.S
+        'linkedin': item.Linkedin.S,
+        'posts': item.Posts.S,
+        'appliedPosts': item.AppliedPosts.S
     };
 }
 

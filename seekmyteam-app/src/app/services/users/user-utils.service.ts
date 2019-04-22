@@ -29,8 +29,8 @@ interface UpdatePayload {
   linkedin: string
 }
 
-interface PicturePayload {
-  image: FormData
+interface MarkAppliedPayload {
+  project: string
 }
 
 @Injectable({
@@ -43,6 +43,13 @@ export class UserUtilsService {
   public buildProfilePicUrl(email: string) { 
     var S3_URL = 'https://s3.us-east-2.amazonaws.com/seekmyteam-profile-pics/';
     return S3_URL + email + '/picture';
+  }
+
+  public markApplied(proj: string) {
+    var req: MarkAppliedPayload = {
+      project: proj
+    };
+    return this.postMarkApplied(req);
   }
 
   public updateProfile(description: string, skills: string, facebook: string, linkedin: string): Observable<any> {
@@ -72,6 +79,18 @@ export class UserUtilsService {
 
   public uploadProfilePicture(data: FormData): Observable<any> {
     return this.postPicture(data);
+  }
+
+  private postMarkApplied(req: MarkAppliedPayload): Observable<any> {
+    let base = this.http.post('/api/profile/markApplied', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
   }
 
   private requestAllUsers(): Observable<any> {

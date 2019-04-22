@@ -256,4 +256,8 @@ router.post('/apply', auth, function(req, res) {
     res.status(200).end();
 });
 
+router.post('/invite', auth, function(req, res) {
+    mailer.sendInvitation(req.body.owner, req.body.invite, req.body.project);
+    res.status(200).end();
+});
 module.exports = router;
