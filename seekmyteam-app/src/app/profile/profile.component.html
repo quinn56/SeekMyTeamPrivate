@@ -138,35 +138,19 @@
               <div class="form-group mt-3">
                 <h5>My Projects</h5>
                 <select class="form-control" id="selectedProject" #inv (change)="selectProject(inv.value)">
-<<<<<<< HEAD
-                  <option value="Select one of your projects" disabled>Select one of your projects</option>
-                  <option *ngFor="let proj of ownedProjects" value={{proj}}>
-                    {{proj}}
-                  </option>
-=======
                     <option value="Select a project" disabled>Select a project</option>
                     <option *ngFor="let proj of ownedProjects" value={{proj}}>
                         {{proj}}
                     </option>
                     <option value="test">test</option>
->>>>>>> master
                 </select>
               </div>
             </div>
             <div class="modal-footer mb-0">
-<<<<<<< HEAD
-              <button class="btn btn-secondary ml-auto mr-2" (click)='resetSelectedProject()'
-                data-dismiss="modal">Close</button>
-              <button type="button" (click)="invite(selectedProject)" data-dismiss="modal"
-                class="btn btn-success mr-3">Invite</button>
-            </div>
-          </div>
-=======
                 <button class="btn btn-secondary ml-auto mr-2" (click)='resetSelectedProject()' data-dismiss="modal">Close</button>
                 <button type="button" [disabled]="selectedProject === 'Select a project' || selectedProject === undefined" (click)="invite(selectedProject)" data-dismiss="modal" class="btn btn-success mr-3">Invite</button>
               </div>
           </div>                               
->>>>>>> master
         </div>
       </div>
       <!-- End Invite modal -->
