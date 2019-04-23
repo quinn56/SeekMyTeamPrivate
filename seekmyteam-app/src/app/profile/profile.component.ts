@@ -78,7 +78,6 @@ export class ProfileComponent {
         
         // Keep a new copy so that the edits dont show up before saving
         this.copyDetails();
-
         this.fileDataUrl = this.user_utils.buildProfilePicUrl(this.getEmail);
 
         this.handleSpaces();
@@ -214,7 +213,7 @@ export class ProfileComponent {
     window.location.href = this.details.linkedin;
   }
 
-  loadInvite() {
+  loadInvite() {    
     this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe((data) => {
       this.ownedProjects = JSON.parse(data.user.posts);
     }, (err) => {
