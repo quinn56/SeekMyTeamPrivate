@@ -3,7 +3,6 @@
   <ul class="navbar-nav mr-auto" style="padding-left: 4%">
     <a class="navbar-brand" routerLink='/'><img src="assets/small.png" height="25" width="25" class="m-0"></a>
     <a class="navbar-brand text-white" routerLink='/'>SeekMyTeam</a>
-    <input *ngIf="isLoggedIn()" class="form-control my-center" [(ngModel)]="searchText" placeholder="Search">
   </ul>
   <div *ngIf="isLoggedIn()" class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav ml-auto" style="padding-right: 7%">
