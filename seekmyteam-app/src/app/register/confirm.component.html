@@ -1,25 +1,70 @@
-  <form (submit)="confirm()">
-      <!-- Beginning of container -->
+<!-- <form (submit)="confirm()">
       <div class="container-fluid">
-        <!-- Mother row -->
         <div class="row">
-          <div class="offset-1 col-10">
-            <!-- This creates white sidebars :)-->
-            <!-- Beginning of inner content -->
-    
-            <!-- Finish up inputs and buttons and stuff -->
+          <div class="offset-2 col-8">
+            <br><br>
             <div class="form-group">
               <label for="code">Confirmation Code</label>
               <input type="text" class="form-control" name="code" placeholder="Enter confirmation PIN here" [(ngModel)]="credentials.code">
             </div>
             <button type="submit" class="btn btn-primary">Confirm!</button>
     
-            <!-- End of input stuff -->
-    
-            <!-- End of inner content -->
           </div>
         </div>
-        <!-- End of Mother Row -->
       </div>
-      <!-- End of container -->
     </form>
+ -->
+
+<form (submit)="confirm()">
+
+  <div class="container-fluid p-0" id="bg">
+    <!-- <img src="assets/image.png" class="img-fluid"> -->
+    <div class="my-center text-center">
+      <div class="row">
+        <div class="offset-3 col-6 rounded" style="background: rgba(185, 182, 182, 0.6); ">
+          <div class="row">
+            <div class="offset-1 col-10">
+              <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo">
+
+              <div class="form-group">
+                <input type="text" class="form-control" name="code" placeholder="Enter confirmation PIN here"
+                  [(ngModel)]="credentials.code">
+              </div>
+              <button type="submit" class="btn btn-primary mb-4">Confirm!</button>
+           
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</form>
+
+<style>
+  #bg {
+    background-image: url("assets/main.jpg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .my-center {
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    /* transform: translateY(-50%); */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #pic_logo {
+    /* height: 40%; */
+    width: 20%;
+  }
+</style>

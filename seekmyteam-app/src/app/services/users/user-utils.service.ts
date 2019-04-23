@@ -42,7 +42,7 @@ export class UserUtilsService {
 
   public buildProfilePicUrl(email: string) { 
     var S3_URL = 'https://s3.us-east-2.amazonaws.com/seekmyteam-profile-pics/';
-    return S3_URL + email + '/picture';
+    return S3_URL + email + '/picture?' + new Date().getTime();
   }
 
   public markApplied(proj: string) {

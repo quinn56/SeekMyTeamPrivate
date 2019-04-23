@@ -36,8 +36,8 @@ const appRoutes: Routes = [
 ];
 
 // const appRoutes: Routes = [
-  //   { path: '', component: HomeComponent, canActivate: [] },
-  // { path: 'users', component: UsersComponent, canActivate: []},
+//     { path: '', component: HomeComponent, canActivate: [] },
+//   { path: 'users', component: UsersComponent, canActivate: []},
 //   { path: 'login', component: LoginComponent, canActivate: []},
 //   { path: 'register', component: RegisterComponent, canActivate: [] },
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },

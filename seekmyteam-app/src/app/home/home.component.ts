@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { Router } from '@angular/router';
@@ -12,6 +13,7 @@ export interface Post {
 }
 
 @Component({
+  providers: [NavbarComponent],
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
@@ -42,10 +44,12 @@ export class HomeComponent {
     constructor(
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
-        private router: Router
+        private router: Router,
+        private navComp: NavbarComponent
     ) { }
     
     ngOnInit() {
+        this.navComp.ngOnInit();
         this.showMore = true;
         this.LastEvaluatedKey = null;
 

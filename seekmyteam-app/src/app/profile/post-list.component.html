@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="offset-2 col-8">
-            <input class="form-control" [(ngModel)]="searchText" placeholder="Search">
+            <!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
 
             <!-- Posting cards -->
             <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts | filter:searchText:'name'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
