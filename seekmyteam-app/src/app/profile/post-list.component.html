@@ -7,7 +7,6 @@
             <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts | filter:searchText:'name'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
                 <div class="card-header text-left">
                     <h4>{{post.name}}</h4>
-                    <!-- <img src="assets/jeetsball.jpg" alt=""> -->
                 </div>
                 <div class="card-body text-left">
                     <h6>{{post.description}}</h6>
