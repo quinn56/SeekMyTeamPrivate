@@ -1,7 +1,16 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="offset-2 col-8">
-            <input class="form-control" [(ngModel)]="searchText" placeholder="Search">
+<div class="container-fluid wrapper">
+    <div class="row pr-3" style="height: 100vh">
+        <div class="col-3 bg-secondary">
+            <div style="position: sticky; position: -webkit-sticky; top: 0">
+                <br>
+                <h3 class="text-center">Filter</h3>
+                <hr class="border-bottom mb-2">
+                <input class="form-control" [(ngModel)]="searchText" placeholder="Search For Users">
+            </div>
+        </div>
+
+        <div class="col-9 pl-3 pr-3">
+            <!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
 
             <!-- User cards -->
             <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let user of users | filter:searchText:'name'; let idx = index" (click)="routeProfile(user)">
