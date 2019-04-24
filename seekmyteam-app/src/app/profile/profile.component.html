@@ -7,13 +7,13 @@
       <div class="row mt-4 ml-3">
         <div class="col-3 mb-3">
           <div class="image" *ngIf="isCurrentUser" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
-            <img class="img-fluid img" height="200" [src]="fileDataUrl">
+            <img class="img-fluid img rounded" [src]="fileDataUrl">
           </div>
-          <div class="image">
-            <img *ngIf="!isCurrentUser" class="img-fluid img" height="200" [src]="fileDataUrl">
+          <div class="image" *ngIf="!isCurrentUser">
+            <img class="img-fluid img rounded" [src]="fileDataUrl">
           </div>
           <!-- <div class="image">
-            <img class="img-fluid img rounded" src="assets/test.jpg">
+              <img class="img-fluid img rounded" src="assets/wakanda.jpg">
           </div> -->
 
           <h2 class="mt-3">{{ details?.name }}</h2>
@@ -167,9 +167,11 @@
 <style>
   .image {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     padding-bottom: 25%;
-    border-radius: 10%;
+    /* border-radius: 10%; */
+    height: 30vh;
+    /* max-height:  */
   }
 
   .image img {
