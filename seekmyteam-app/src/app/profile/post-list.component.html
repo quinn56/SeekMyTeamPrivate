@@ -37,7 +37,7 @@
                                     <p class="text-left">{{ selectedPost.ownerEmail }}</p>
                                 </div>
                                 <div class="col-sm-8 border-left">
-                                    <h6>Project Description</h6>
+                                    <h6 class="">Project Description</h6>
                                     <p *ngIf="!isOP">{{ selectedPost.description }}</p>
                                     <textarea *ngIf="isOP" [(ngModel)]="editPost.description" rows="3" class="form-control"></textarea>
                                 </div>

@@ -10,7 +10,7 @@
 
                 <div class="form-group mt-3">
                     <h6>Filter By Skills</h6>
-                    <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                    <select class="form-control p-1" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
                         <option value="Select a skill" disabled>Select a skill</option>
                         <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
                             {{skill}}
@@ -20,7 +20,7 @@
                        
                 <div  class="col-sm-8 mt-2">
                     <br>
-                    <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of filterSkills; let i = index" (click)="filterDeleteSkill(i)">{{item}}</button>
+                    <button type="button" class="btn btn-success m-1 form-control" *ngFor="let item of filterSkills; let i = index" (click)="filterDeleteSkill(i)">{{item}}</button>
                 </div>
             </div>
         </div>
@@ -159,7 +159,7 @@
                 </div>
             </div>
             <!-- End of cool modal -->
-            <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-success pl-6 pr-6">Load more</button> 
+            <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-info pl-6 pr-6">Load more</button> 
         </div>
     </div>
 </div>

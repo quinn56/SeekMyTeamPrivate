@@ -1,28 +1,30 @@
-<!-- NAV BAR  -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <ul class="navbar-nav mr-auto" style="padding-left: 4%">
-    <div routerLink='/'>
-      <a class="navbar-brand"><img src="assets/small.png" height="25" width="25" class="m-0"></a>
-      <a class="navbar-brand text-white mr-5">SeekMyTeam</a>
+<!-- NAV BAR  --> 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-0 container-fluid">
+  <div class="row w-100">
+    <div class="col-3 navbar-brand nav-link mt-2" routerLink="/">
+      <img class="nav-item" src="assets/small.png" height="25" width="25" class="m-0">
+      <a class="nav-item text-white ml-3">SeekMyTeam</a>
     </div>
-    <a class="navbar-brand text-white ml-5" routerLink='/users'>Users</a>
-    <a class="navbar-brand text-white" routerLink='/'> Projects</a>
-  </ul>
-  <div *ngIf="isLoggedIn()" class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav ml-auto" style="padding-right: 7%">
-      <li class="nav-item dropdown mr-5">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <img height="25" class="rounded" [src]="profilePic">
-        </a>
-        <div  class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="nav-link text-dark" style="cursor: pointer;" (click)="routeProfile()">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="nav-link navbar-right text-dark" style="cursor: pointer;" (click)="logout()">Logout</a>
-        </div>
-      </li>
-    </ul>
+    <ul class="col-5 mt-2">
+      <a class="navbar-brand text-white" routerLink='/users'>Users</a>
+      <a class="navbar-brand text-white ml-4" routerLink='/'> Projects</a>
 
+    </ul>
+    <div *ngIf="isLoggedIn()" class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav ml-auto" style="padding-right: 7%">
+        <li class="nav-item dropdown mr-5">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <img height="25" class="rounded" [src]="profilePic">
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="nav-link text-dark" style="cursor: pointer;" (click)="routeProfile()">Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="nav-link navbar-right text-dark" style="cursor: pointer;" (click)="logout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
