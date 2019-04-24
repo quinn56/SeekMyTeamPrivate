@@ -21,11 +21,15 @@ export class HomeComponent {
     showMore: boolean;
     selectedPost: Post;
     
-    // Post to keep track of edits without changing before save
+    /* Post to keep track of edits without changing before save */
     editPost: Post;
-    
+
+    /* Keeps track of a new post */ 
     newPost: Post;
+    
+    /* Filter variables */
     searchText: string;
+    filterSkills: string[];
 
     /* Post modal variables */
     isOP: boolean;
@@ -48,6 +52,7 @@ export class HomeComponent {
     ngOnInit() {
         this.showMore = true;
         this.LastEvaluatedKey = null;
+        this.filterSkills = [];
 
         this.newPost = {
             name: "",
@@ -243,5 +248,15 @@ export class HomeComponent {
             ownerEmail: "",
             skills: []
         };
+    }
+
+    filterAddSkill(skill: string) {
+        if (!this.filterSkills.includes(skill)) {
+            this.filterSkills.push(skill);
+        }
+    }
+
+    filterDeleteSkill(idx: number) {
+        this.filterSkills.splice(idx, 1);
     }
 }

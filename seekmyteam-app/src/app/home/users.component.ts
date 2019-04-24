@@ -8,6 +8,15 @@ import { Router } from '@angular/router';
 export class UsersComponent {
     users: any[];
     searchText: string;
+    filterSkills: string[];
+
+    SKILLS_ARRAY: string[] = [
+        'Web Development',
+        'Backend Development',
+        'Full Stack Development',
+        'Project Management',
+        'Database Management'
+    ];
 
     constructor(
         private user_utils: UserUtilsService,
@@ -16,6 +25,7 @@ export class UsersComponent {
 
     ngOnInit() {
         this.users = [];
+        this.filterSkills = [];
 
         this.user_utils.getAllUsers().subscribe((data) => {
             this.parseUsers(data.users);
@@ -42,5 +52,15 @@ export class UsersComponent {
 
     buildPic(email: string) {
         return this.user_utils.buildProfilePicUrl(email);
+    }
+
+    filterAddSkill(skill: string) {
+        if (!this.filterSkills.includes(skill)) {
+            this.filterSkills.push(skill);
+        }
+    }
+
+    filterDeleteSkill(idx: number) {
+        this.filterSkills.splice(idx, 1);
     }
 }

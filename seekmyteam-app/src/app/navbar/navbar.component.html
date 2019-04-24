@@ -1,10 +1,12 @@
 <!-- NAV BAR  -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <ul class="navbar-nav mr-auto" style="padding-left: 4%">
-    <a class="navbar-brand" routerLink='/'><img src="assets/small.png" height="25" width="25" class="m-0"></a>
-    <a class="navbar-brand text-white mr-5" routerLink='/'>SeekMyTeam</a>
-    <a class="navbar-brand text-white ml-5" routherLink='/users'>Users</a>
-    <a class="navbar-brand text-white" routherLink='/'> Projects</a>
+    <div routerLink='/'>
+      <a class="navbar-brand"><img src="assets/small.png" height="25" width="25" class="m-0"></a>
+      <a class="navbar-brand text-white mr-5">SeekMyTeam</a>
+    </div>
+    <a class="navbar-brand text-white ml-5" routerLink='/users'>Users</a>
+    <a class="navbar-brand text-white" routerLink='/'> Projects</a>
   </ul>
   <div *ngIf="isLoggedIn()" class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav ml-auto" style="padding-right: 7%">
