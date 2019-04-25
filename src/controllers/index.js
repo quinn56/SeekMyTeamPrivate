@@ -63,9 +63,34 @@ router.get('/userPosts', auth, function(req, res) {
         if (err) {
             console.log(err);
         } else {    
-            console.log(data.Items);
             res.status(200).json({
                 "posts": data.Items,
+            });
+        }
+    });
+});
+
+router.get('/appliedPosts', function (req, res) {
+    var email = req.query.email;
+    var params = {
+        TableName : process.env.USERS_TABLE,
+        Key : { 
+          "Email" : {'S' : email}
+        }
+    };
+
+    database.getItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
+            res.json({
+                posts: JSON.parse(data.Item.AppliedPosts.S)
             });
         }
     });

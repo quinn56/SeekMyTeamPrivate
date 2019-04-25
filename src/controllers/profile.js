@@ -158,11 +158,14 @@ router.post('/markApplied', auth, function(req, res) {
             } 
             var arr = JSON.parse(data.Item.AppliedPosts.S);
             
-            // Avoid duplicate applies
-            if (arr.includes(project)) {
-                res.status(200).end();
-                return;
-            }
+            /* Check for duplicates */
+            arr.forEach(element => {
+                if (JSON.parse(project).name === element.name) {
+                    res.status(200).end();
+                    return;
+                }
+            });
+
             arr.push(project);
 
             params = {

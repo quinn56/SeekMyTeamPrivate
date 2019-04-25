@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
+import { Post } from 'src/app/home/home.component';
 
 interface ApplyPayload {
   owner: string,
@@ -50,6 +51,10 @@ export class PostUtilsService {
 
   public fetchUserPosts(email: string): Observable<any> {
     return this.getUserPosts(email);
+  }
+
+  public fetchAppliedPosts(email: string): Observable<any> {
+    return this.getAppliedPosts(email);
   }
 
   public apply(owner: string, applicant: string): Observable<any> {
@@ -183,7 +188,15 @@ export class PostUtilsService {
     return requestedData;
   }
 
-  filterPosts() {
+  private getAppliedPosts(email: string): Observable<any> {
+    let base = this.http.get('/api/appliedPosts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {email: email}});
+    
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+    return requestedData;
   }
 
   private getToken(): string {

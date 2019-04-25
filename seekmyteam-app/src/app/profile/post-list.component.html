@@ -5,65 +5,56 @@
 
             <div class="card text-center mb-3">
                 <div class="card-header">
-                    <h1 class="text-center"><b>{{title}}</b></h1>
+                    <h2 class="text-center"><b>{{title}}</b></h2>
                 </div>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-6 border-right btn-hover" (click)="toggleMyPosts()">
-                            <br><h4>My Projects</h4><br>
+                            <br>
+                            <h4>My Projects</h4><br>
                         </div>
                         <div class="col-6 border-left btn-hover" (click)="toggleAppliedPosts()">
-                            <br><h4>Applied Projects</h4><br>
+                            <br>
+                            <h4>Applied Projects</h4><br>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Posting cards -->
-            <div style="cursor: pointer;" class="card text-center mb-3"
-                *ngFor="let post of posts | filter:searchText:'name'; let idx = index" (click)="displayPost(post)"
-                data-toggle="modal" data-target="#postModal">
-                <div class="card-header text-left">
-                    <h4>{{post.name}}</h4>
-                </div>
-                <div class="card-body text-left">
-                    <h6>{{post.description}}</h6>
-                    <div class="form-group mt-3 mb-0">
-                        <button type="button" class="btn btn-outline-info mr-2"
-                            *ngFor="let item of post.skills; let i = index">{{item}}</button>
+            <!-- User Posting cards -->
+            <div *ngIf="!showApplied">
+                <div style="cursor: pointer;" class="card text-center mb-3"
+                    *ngFor="let post of userPosts; let idx = index"
+                    (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
+                    <div class="card-header text-left">
+                        <h4>{{post.name}}</h4>
+                    </div>
+                    <div class="card-body text-left">
+                        <h6>{{post.description}}</h6>
+                        <div class="form-group mt-3 mb-0">
+                            <button type="button" class="btn btn-outline-info mr-2"
+                                *ngFor="let item of post.skills; let i = index">{{item}}</button>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="card-footer text-muted">
-                    2 days ago
-                </div> -->
             </div>
-            <!-- <div *ngIf="!showApplied" style="cursor: pointer;" class="card text-center mb-3">
-                <div class="card-header text-left">
-                    <h4>post</h4>
-                </div>
-                <div class="card-body text-left">
-                    <h6>description</h6>
 
-                </div>
-            </div> -->
-
-
-            <div style="cursor: pointer;" class="card text-center mb-3"
-                *ngFor="let post of posts | filter:searchText:'name'; let idx = index" (click)="displayPost(post)"
-                data-toggle="modal" data-target="#postModal">
-                <div class="card-header text-left">
-                    <h4>{{post.name}}</h4>
-                </div>
-                <div class="card-body text-left">
-                    <h6>{{post.description}}</h6>
-                    <div class="form-group mt-3 mb-0">
-                        <button type="button" class="btn btn-outline-info mr-2"
-                            *ngFor="let item of post.skills; let i = index">{{item}}</button>
+            <!-- Applied Posting Cards -->
+            <div *ngIf="showApplied">
+                <div style="cursor: pointer;" class="card text-center mb-3"
+                    *ngFor="let post of appliedPosts let idx = index" (click)="displayPost(post)"
+                    data-toggle="modal" data-target="#postModal">
+                    <div class="card-header text-left">
+                        <h4>{{post.name}}</h4>
+                    </div>
+                    <div class="card-body text-left">
+                        <h6>{{post.description}}</h6>
+                        <div class="form-group mt-3 mb-0">
+                            <button type="button" class="btn btn-outline-info mr-2"
+                                *ngFor="let item of post.skills; let i = index">{{item}}</button>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="card-footer text-muted">
-                    2 days ago
-                </div> -->
             </div>
 
 
@@ -124,7 +115,6 @@
                                 data-dismiss="modal">Delete</button>
                             <button class="btn btn-secondary pl-6 pr-6" (click)='clearEdit()'
                                 data-dismiss="modal">Close</button>
-                            <!-- <button *ngIf="!isOP && showApply" (click)="apply()" class="btn btn-primary pl-6 pr-6" data-dismiss="modal">Apply</button> -->
                             <button *ngIf="isOP" (click)="saveSelectedPost()" data-dismiss="modal"
                                 class="btn btn-success pl-6 pr-6">Save</button>
                         </div>

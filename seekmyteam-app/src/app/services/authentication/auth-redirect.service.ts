@@ -10,8 +10,7 @@ export class AuthRedirectService implements CanActivate{
 
   canActivate() {
     if (this.auth_guard.isLoggedIn()) {
-      /* Change this to home page when implemented */
-      this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
+      this.router.navigateByUrl('/');
       return false;
     } 
     return true;

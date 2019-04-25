@@ -20,6 +20,7 @@ export class LoginComponent {
 
   login() {
     this.auth.login(this.credentials).subscribe(() => {
+      location.reload();
       this.router.navigateByUrl('/');
     }, (err) => {
         if (err.status == 400) {

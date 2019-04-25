@@ -3,15 +3,18 @@ import { UserUtilsService } from '../services/users/user-utils.service';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Post } from '../home/home.component';
+import { post } from 'selenium-webdriver/http';
 
 @Component({
   templateUrl: './post-list.component.html'
 })
 export class PostListComponent {
     getEmail: string;
-    posts: Post[];
+    userPosts: Post[];
+    appliedPosts: Post[];
     searchText: string;
     selectedPost: Post;
+    
 
     /* Keeps track of which list to show */
     showApplied: boolean;
@@ -39,6 +42,8 @@ export class PostListComponent {
     ngOnInit() {
         this.showApplied = false;
         this.title = 'My Projects';
+        this.userPosts = [];
+        this.appliedPosts = [];
 
         this.selectedPost = {
             name: "",
@@ -56,18 +61,17 @@ export class PostListComponent {
             skills: []
         };
 
-        this.posts = [];
 
         this.loadUserPosts();
     }
 
     loadUserPosts() {
-        this.posts = [];
+        this.userPosts = [];
         this.route.params.subscribe(params => {
             this.getEmail = params['email'];
 
             this.post_utils.fetchUserPosts(this.getEmail).subscribe((data) => {
-                this.parsePosts(data.posts);
+                this.userPosts = this.parsePosts(data.posts);
             }, (err) => {
                 console.log(err);
             });
@@ -76,8 +80,20 @@ export class PostListComponent {
         });
     }
 
-    parsePosts(data) {
-        console.log(data);
+    loadAppliedPosts() {
+        this.appliedPosts = [];
+        this.post_utils.fetchAppliedPosts(this.getEmail).subscribe((data) => {
+            this.appliedPosts = this.parseAppliedPosts(data.posts);
+            console.log(this.appliedPosts);
+        }, (err) => {
+            console.log(err);
+        });
+    }
+
+
+    parsePosts(data): Post[] {
+        var arr: Post[] = [];
+
         data.forEach((item) => {
             let parse: Post = {
                 name: item.Name.S,
@@ -89,8 +105,18 @@ export class PostListComponent {
             if (parse.description === ' ') {
                 parse.description = '';
             }
-            this.posts.push(parse); 
+            arr.push(parse); 
         })
+        return arr;
+    }
+
+    parseAppliedPosts(posts): Post[] {
+        var arr: Post[] = [];
+
+        posts.forEach(element => {
+            arr.push(JSON.parse(element));
+        });
+        return arr;
     }
 
     checkOP() {
@@ -148,21 +174,29 @@ export class PostListComponent {
     }
     deletePost(idx:number) {
         this.post_utils.delete(this.selectedPost.name).subscribe(data => {  
-            this.posts.splice(idx,1);
+            this.userPosts.splice(idx,1);
         }, (err) => {
             console.log(err);
         });
     }
 
     toggleMyPosts() {
+        if (!this.showApplied) {
+            return;
+        }
+
         this.loadUserPosts();
         this.title = 'My Projects';
         this.showApplied = false;
     }
 
     toggleAppliedPosts() {
+        if (this.showApplied) {
+            return;
+        }
+
         this.title = 'Applied Projects';
-        // this.loadAppliedPosts(); NEED TO WRITE BACKEND FOR THIS
+        this.loadAppliedPosts();
         this.showApplied = true;
     }
 }

@@ -204,7 +204,7 @@ export class HomeComponent {
     apply() {
         this.post_utils.apply(this.selectedPost.ownerEmail, this.user_utils.getCurrentUserDetails().email).subscribe(data => {
             this.showApply = false;
-            this.user_utils.markApplied(this.selectedPost.name).subscribe((ret) => {
+            this.user_utils.markApplied(JSON.stringify(this.selectedPost)).subscribe((ret) => {
             }, (err) => {
                 console.log(err);
             }) 

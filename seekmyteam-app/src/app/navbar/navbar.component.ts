@@ -20,7 +20,8 @@ export class NavbarComponent implements OnChanges {
     private authGuard: AuthGuardService,
     private user_utils: UserUtilsService,
     private router: Router
-  ) { }
+  ) {
+   }
 
   ngOnInit() {
     this.currentEmail = this.user_utils.getCurrentUserDetails().email;
@@ -38,6 +39,11 @@ export class NavbarComponent implements OnChanges {
   routeProfile() {
     this.currentEmail = this.user_utils.getCurrentUserDetails().email;
     this.router.navigateByUrl('/profile/' + this.currentEmail);
+  }
+
+  routeMyProjects() {
+    this.currentEmail = this.user_utils.getCurrentUserDetails().email;
+    this.router.navigateByUrl('/profile/' + this.currentEmail + '/posts');
   }
 
   logout() {
