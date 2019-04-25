@@ -1,57 +1,39 @@
-<!-- NAV BAR  --> 
+<!-- NAV BAR  -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-0 container-fluid">
-    <div class="row w-100">
-      <ul class="col-8 mt-2" style="cursor: pointer;" routerLink="/">
-        <img class=" mt-0 mr-4 p-0 ml-3" src="assets/small.png" height="40" width="30">
-        <a class="navbar-brand text-white">SeekMyTeam</a>
-        <a *ngIf="isLoggedIn()" class="nav-item text-white ml-2" routerLink='/users'>Users</a>
-        <a *ngIf="isLoggedIn()" class="nav-item text-white ml-4" routerLink='/'> Projects</a>
+  <div class="row w-100">
+    <ul class="col-8 mt-2" style="cursor: pointer;" routerLink="/">
+      <img class=" mt-0 mr-4 p-0 ml-3" src="assets/small.png" height="40" width="30">
+      <a class="navbar-brand text-white">SeekMyTeam</a>
+      <a *ngIf="isLoggedIn()" class="nav-item text-white ml-2" routerLink='/users'>Users</a>
+      <a *ngIf="isLoggedIn()" class="nav-item text-white ml-4" routerLink='/'> Projects</a>
+    </ul>
+    <div *ngIf="isLoggedIn()" class="collapse navbar-collapse col-4" id="navbarColor01">
+      <ul class="navbar-nav ml-auto" style="padding-right: 7%">
+        <li class="nav-item dropdown mr-5">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="img-fluid img" [src]='profilePic'>
+            <!-- <img class="img-fluid img" src="assets/wakanda.jpg"> -->
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="nav-link text-dark" style="cursor: pointer;" (click)="routeProfile()">Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="nav-link navbar-right text-dark" style="cursor: pointer;" (click)="logout()">Logout</a>
+          </div>
+        </li>
       </ul>
-      <div *ngIf="isLoggedIn()" class="collapse navbar-collapse col-4" id="navbarColor01">
-        <ul class="navbar-nav ml-auto" style="padding-right: 7%">
-          <li class="nav-item dropdown mr-5">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <div class="image">
-                <img class="img-fluid img" [src]='profilePic'>
-              </div>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="nav-link text-dark" style="cursor: pointer;" (click)="routeProfile()">Profile</a>
-              <div class="dropdown-divider"></div>
-              <a class="nav-link navbar-right text-dark" style="cursor: pointer;" (click)="logout()">Logout</a>
-            </div>
-          </li>
-        </ul>
-      </div>
     </div>
-  </nav>
-  
-  <style>
-    .my-center {
-      position: absolute;
-      width: 35%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+  </div>
+</nav>
 
-    .image {
-        position: relative;
-        /* overflow: hidden; */
-        /* padding-bottom: 25%; */
-        height: 6vh;
-        /* max-height:  */
-    }
-    
-    .image img {
-        position: absolute;
-        width: 5%;
-        border-radius: 20%;
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        object-fit: cover;
-        object-position: center;
-    }
-  </style>
+<style>
+  .img {
+    width: 35px;
+    height: 35px;
+    border-radius: 20%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    object-position: center;
+  }
+</style>
