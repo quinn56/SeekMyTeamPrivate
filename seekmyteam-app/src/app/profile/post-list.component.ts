@@ -12,7 +12,10 @@ export class PostListComponent {
     posts: Post[];
     searchText: string;
     selectedPost: Post;
-    showApply: boolean;
+
+    /* Keeps track of which list to show */
+    showApplied: boolean;
+    title: string;
 
     SKILLS_ARRAY: string[] = [
         'Web Development',
@@ -34,6 +37,9 @@ export class PostListComponent {
     ) {}
 
     ngOnInit() {
+        this.showApplied = false;
+        this.title = 'My Projects';
+
         this.selectedPost = {
             name: "",
             description: "",
@@ -52,6 +58,11 @@ export class PostListComponent {
 
         this.posts = [];
 
+        this.loadUserPosts();
+    }
+
+    loadUserPosts() {
+        this.posts = [];
         this.route.params.subscribe(params => {
             this.getEmail = params['email'];
 
@@ -141,5 +152,17 @@ export class PostListComponent {
         }, (err) => {
             console.log(err);
         });
+    }
+
+    toggleMyPosts() {
+        this.loadUserPosts();
+        this.title = 'My Projects';
+        this.showApplied = false;
+    }
+
+    toggleAppliedPosts() {
+        this.title = 'Applied Projects';
+        // this.loadAppliedPosts(); NEED TO WRITE BACKEND FOR THIS
+        this.showApplied = true;
     }
 }

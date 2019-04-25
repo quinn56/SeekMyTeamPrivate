@@ -5,15 +5,15 @@
 
             <div class="card text-center mb-3">
                 <div class="card-header">
-                    <h1 class="text-center"><b>H1B1 virusjeet</b></h1>
+                    <h1 class="text-center"><b>{{title}}</b></h1>
                 </div>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-6 border-right btn-hover">
-                            <br><h4>little piggy</h4><br>
+                        <div class="col-6 border-right btn-hover" (click)="toggleMyPosts()">
+                            <br><h4>My Projects</h4><br>
                         </div>
-                        <div class="col-6 border-left btn-hover">
-                            <br><h4>little jeety</h4><br>
+                        <div class="col-6 border-left btn-hover" (click)="toggleAppliedPosts()">
+                            <br><h4>Applied Projects</h4><br>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     2 days ago
                 </div> -->
             </div>
-            <div style="cursor: pointer;" class="card text-center mb-3">
+            <!-- <div *ngIf="!showApplied" style="cursor: pointer;" class="card text-center mb-3">
                 <div class="card-header text-left">
                     <h4>post</h4>
                 </div>
@@ -45,10 +45,7 @@
                     <h6>description</h6>
 
                 </div>
-                <!-- <div class="card-footer text-muted">
-                        2 days ago
-                    </div> -->
-            </div>
+            </div> -->
 
 
             <div style="cursor: pointer;" class="card text-center mb-3"
