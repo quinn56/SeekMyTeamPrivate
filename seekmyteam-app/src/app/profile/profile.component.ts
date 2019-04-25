@@ -84,7 +84,7 @@ export class ProfileComponent {
       }, (err) => {
         if (err.status === 401) {
           console.log('user with that email not found');
-          this.router.navigateByUrl('/');
+          // this.router.navigateByUrl('/');
         }
         console.error(err);
       });
