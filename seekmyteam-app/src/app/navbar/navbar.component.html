@@ -1,9 +1,9 @@
 <!-- NAV BAR  -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-0 container-fluid">
   <div class="row w-100">
-    <ul class="col-8 mt-2" style="cursor: pointer;" routerLink="/">
-      <img class=" mt-0 mr-4 p-0 ml-3" src="assets/small.png" height="40" width="30">
-      <a class="navbar-brand text-white">SeekMyTeam</a>
+    <ul class="col-8 mt-2">
+      <img class=" mt-0 mr-4 p-0 ml-3 paddingDiv" src="assets/small.png" height="40" width="30" routerLink='/' style="cursor:pointer">
+      <a class="navbar-brand text-white" routerLink="/">SeekMyTeam</a>
       <a *ngIf="isLoggedIn()" class="nav-item text-white ml-2" routerLink='/users'>Users</a>
       <a *ngIf="isLoggedIn()" class="nav-item text-white ml-4" routerLink='/'> Projects</a>
     </ul>
@@ -36,4 +36,7 @@
     object-fit: cover;
     object-position: center;
   }
+  .paddingDiv:focus {
+  outline: 0;
+}
 </style>
