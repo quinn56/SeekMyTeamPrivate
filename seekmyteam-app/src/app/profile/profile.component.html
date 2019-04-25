@@ -48,14 +48,14 @@
 
       <div class="row mt-3 ml-2 mr-2">
         <div class="col-8">
-          <h5>Description</h5>
-          <textarea readonly class="form-control" [(ngModel)]="details.description" rows="3"></textarea>
+          <h5><b>Description</b></h5>
+          <h6>{{details.description}}</h6>
         </div>
       </div>
       <br><br>
       <div class="row ml-2">
         <div class="col-8">
-          <h5>Skills</h5>
+          <h5><b>Skills</b></h5>
           <button type="button" class="btn btn-outline-info mr-2"
             *ngFor="let item of details.skills; let idx = index">{{item}}</button>
         </div>

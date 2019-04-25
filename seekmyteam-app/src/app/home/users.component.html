@@ -20,16 +20,18 @@
 
                 <div class="col-sm-8 mt-2">
                     <br>
-                    <button type="button" class="btn btn-outline-info mr-2"
+                    <!-- <button type="button" class="btn btn-outline-info mr-2"
+                        *ngFor="let item of filterSkills; let i = index"
+                        (click)="filterDeleteSkill(i)">{{item}}</button> -->
+                    <button type="button" class="btn btn-warning m-1 form-control text-truncate"
                         *ngFor="let item of filterSkills; let i = index"
                         (click)="filterDeleteSkill(i)">{{item}}</button>
+
                 </div>
             </div>
         </div>
-        <div class="col-9 pl-3 pr-3">
-            <!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
+        <!-- <div class="col-9 pl-3 pr-3">
 
-            <!-- User cards -->
             <div style="cursor: pointer;" class="card text-center mb-3"
                 *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index"
                 (click)="routeProfile(user)">
@@ -48,7 +50,38 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+
+        <div class="col-9">
+            <div class="row mr-5">
+                <div class="offset-md-1 card col-md-5 offset-sm-1 col-sm-10 mt-4" *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" style="cursor: pointer;" (click)="routeProfile(user)">
+                    <div class="card-header text-left">
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="img-fluid rounded" [src]='buildPic(user.email)'>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <h5><b>{{user.name}}</b></h5>
+                                <h6>{{user.email}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6>{{user.description}}</h6>
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of user.skills; let i = index">{{item}}</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
         </div>
+        <!--  -->
+
     </div>
 </div>
 
@@ -60,7 +93,7 @@
         height: 6vh;
         /* max-height:  */
     }
-    
+
     .image img {
         position: absolute;
         width: 5%;
