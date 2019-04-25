@@ -10,7 +10,7 @@
 
                 <div class="form-group mt-3">
                     <h6>Filter By Skills</h6>
-                    <select class="form-control p-1" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                    <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
                         <option value="Select a skill" disabled>Select a skill</option>
                         <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
                             {{skill}}

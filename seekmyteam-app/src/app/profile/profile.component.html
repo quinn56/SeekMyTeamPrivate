@@ -6,7 +6,8 @@
       <!-- Beginning of inner content -->
       <div class="row mt-4 ml-3">
         <div class="col-3 mb-3">
-          <div class="image" *ngIf="isCurrentUser" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
+          <div class="image" *ngIf="isCurrentUser" style="cursor: pointer;" data-toggle="modal"
+            data-target="#profileModal">
             <img class="img-fluid img rounded" [src]="fileDataUrl">
           </div>
           <div class="image" *ngIf="!isCurrentUser">
@@ -19,13 +20,15 @@
           <h2 class="mt-3">{{ details?.name }}</h2>
           <h5 class="mt-3">{{ details?.email }}</h5>
         </div>
-        <div *ngIf="isCurrentUser" class="offset-3 col-4 text-right" style="cursor: pointer;" data-toggle="modal"
-          data-target="#profileModal">
+        <div *ngIf="isCurrentUser" class="offset-5 col-3 text-right">
           <br><br>
-          <a class="text-dark">
+          <a style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
             <img src="assets/settings.svg" height="25">
             &nbsp;Edit
           </a>
+        </div>
+        <div *ngIf="!isCurrentUser" class="offset-5 col-3 text-right">
+            <button class="btn btn-success pl-3 pr-3" (click)='loadInvite()' data-toggle="modal" data-target="#inviteModal"><b>Invite User</b></button>
         </div>
         <div class="col-10">
           <div class="row ml-1 mb-2">
@@ -36,12 +39,6 @@
             <a style="cursor:pointer;" (click)="directLinkedin()">
               <img src="assets/linkedin.svg" height="30">
             </a>
-          </div>
-        </div>
-        <div *ngIf="!isCurrentUser" class="col-10">
-          <div class="row ml-1 mb-2">
-            <button class="btn btn-success" (click)='loadInvite()' data-toggle="modal" data-target="#inviteModal">Invite
-              User</button>
           </div>
         </div>
       </div>
@@ -138,19 +135,21 @@
               <div class="form-group mt-3">
                 <h5>My Projects</h5>
                 <select class="form-control" id="selectedProject" #inv (change)="selectProject(inv.value)">
-                    <option value="Select a project" disabled>Select a project</option>
-                    <option *ngFor="let proj of ownedProjects" value={{proj}}>
-                        {{proj}}
-                    </option>
-                    <option value="test">test</option>
+                  <option value="Select a project" disabled>Select a project</option>
+                  <option *ngFor="let proj of ownedProjects" value={{proj}}>
+                    {{proj}}
+                  </option>
+                  <option value="test">test</option>
                 </select>
               </div>
             </div>
             <div class="modal-footer mb-0">
-                <button class="btn btn-secondary ml-auto mr-2" (click)='resetSelectedProject()' data-dismiss="modal">Close</button>
-                <button type="button" [disabled]="selectedProject === 'Select a project' || selectedProject === undefined" (click)="invite(selectedProject)" data-dismiss="modal" class="btn btn-success mr-3">Invite</button>
-              </div>
-          </div>                               
+              <button class="btn btn-secondary ml-auto mr-2" (click)='resetSelectedProject()'
+                data-dismiss="modal">Close</button>
+              <button type="button" [disabled]="selectedProject === 'Select a project' || selectedProject === undefined"
+                (click)="invite(selectedProject)" data-dismiss="modal" class="btn btn-success mr-3">Invite</button>
+            </div>
+          </div>
         </div>
       </div>
       <!-- End Invite modal -->

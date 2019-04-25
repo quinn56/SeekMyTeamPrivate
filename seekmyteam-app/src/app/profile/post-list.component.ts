@@ -13,6 +13,14 @@ export class PostListComponent {
     searchText: string;
     selectedPost: Post;
     showApply: boolean;
+
+    SKILLS_ARRAY: string[] = [
+        'Web Development',
+        'Backend Development',
+        'Full Stack Development',
+        'Project Management',
+        'Database Management'
+    ];
     
     // Post to keep track of edits without changing before save
     editPost: Post;
@@ -98,6 +106,26 @@ export class PostListComponent {
         this.editPost.ownerName = this.selectedPost.ownerName;
         this.editPost.skills = this.selectedPost.skills.slice();
     }
+    
+    selectedAddSkill(skill: string) {
+        if (!this.editPost.skills.includes(skill)) {
+            this.editPost.skills.push(skill);
+        }
+    }
+
+    selectedDeleteSkill(idx: number) {
+        this.editPost.skills.splice(idx, 1);
+    }
+
+    saveSelectedPost() {
+        this.selectedPost = this.editPost;
+        this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills)).subscribe(data => {
+            location.reload();
+        }, (err) => {
+            console.log(err);
+        })
+    }
+
     clearEdit() {
         this.editPost = {
             name: "",
@@ -106,5 +134,12 @@ export class PostListComponent {
             ownerEmail: "",
             skills: []
         };
+    }
+    deletePost(idx:number) {
+        this.post_utils.delete(this.selectedPost.name).subscribe(data => {  
+            this.posts.splice(idx,1);
+        }, (err) => {
+            console.log(err);
+        });
     }
 }

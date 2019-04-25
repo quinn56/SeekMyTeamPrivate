@@ -17,10 +17,12 @@
                         </option>
                     </select>
                 </div>
-                       
-                <div  class="col-sm-8 mt-2">
+
+                <div class="col-sm-8 mt-2">
                     <br>
-                    <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of filterSkills; let i = index" (click)="filterDeleteSkill(i)">{{item}}</button>
+                    <button type="button" class="btn btn-outline-info mr-2"
+                        *ngFor="let item of filterSkills; let i = index"
+                        (click)="filterDeleteSkill(i)">{{item}}</button>
                 </div>
             </div>
         </div>
@@ -28,18 +30,46 @@
             <!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
 
             <!-- User cards -->
-            <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" (click)="routeProfile(user)">
+            <div style="cursor: pointer;" class="card text-center mb-3"
+                *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index"
+                (click)="routeProfile(user)">
                 <div class="card-header text-left">
-                    <img class="rounded-circle" height="40" [src]='buildPic(user.email)'>
+                    <div class="image">
+                        <img class="img-fluid img" [src]='buildPic(user.email)'>
+                    </div>
+                    <br>
                     <h4>{{user.name}}</h4>
                 </div>
                 <div class="card-body text-left">
                     <h6>{{user.description}}</h6>
                     <div class="form-group mt-3 mb-0">
-                        <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of user.skills; let i = index">{{item}}</button>
+                        <button type="button" class="btn btn-outline-info mr-2"
+                            *ngFor="let item of user.skills; let i = index">{{item}}</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .image {
+        position: relative;
+        /* overflow: hidden; */
+        /* padding-bottom: 25%; */
+        height: 6vh;
+        /* max-height:  */
+    }
+    
+    .image img {
+        position: absolute;
+        width: 5%;
+        border-radius: 20%;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        object-fit: cover;
+        object-position: center;
+    }
+</style>
