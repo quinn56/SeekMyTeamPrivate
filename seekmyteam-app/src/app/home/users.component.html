@@ -55,7 +55,7 @@
         <div class="col-9">
             <div class="row mr-5">
                 <div class="offset-md-1 card col-md-5 offset-sm-1 col-sm-10 mt-4" *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" style="cursor: pointer;" (click)="routeProfile(user)">
-                    <div class="card-header text-left">
+                    <div class="card-header mt-3 text-left">
                         <div class="row">
                             <div class="col-6">
                                 <img class="img-fluid rounded" [src]='buildPic(user.email)'>
@@ -69,19 +69,14 @@
                     <div class="card-body">
                         <h6>{{user.description}}</h6>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer mb-3">
                         <div class="form-group">
                             <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of user.skills; let i = index">{{item}}</button>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
-        <!--  -->
-
     </div>
 </div>
 
