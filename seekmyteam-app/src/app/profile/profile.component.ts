@@ -56,7 +56,8 @@ export class ProfileComponent {
     private post_utils: PostUtilsService,
     private auth: AuthenticationService,
     private route: ActivatedRoute,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) {}
 
   ngOnInit() { 
@@ -84,8 +85,8 @@ export class ProfileComponent {
         this.handleSpaces();
       }, (err) => {
         if (err.status === 401) {
-          this.alert.error('User not found');
-          // this.router.navigateByUrl('/');
+          this.alert.error('Profile not found for requested user', true);
+          this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
         }
         console.error(err);
       });
@@ -225,6 +226,7 @@ export class ProfileComponent {
   invite(proj: string) {
     this.post_utils.invite(this.user_utils.getCurrentUserDetails().email, this.getEmail, proj ).subscribe((data) => {
       this.selectedProject = '';
+      console.log('succesful invite');
       this.alert.success('Successfully invited user to work on project');
     }, (err) => {
         console.log(err);
