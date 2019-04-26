@@ -13,15 +13,18 @@ import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
+import { UsersComponent } from './home/users.component';
+import { PostListComponent } from './profile/post-list.component';
+import { AlertComponent } from './alerts/alert.component';
 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthRedirectService } from './services/authentication/auth-redirect.service';
 import { UserUtilsService } from './services/users/user-utils.service';
 import { PostUtilsService } from './services/posts/post-utils.service';
+import { AlertService } from './services/alerts/alert.service';
+ 
 import { FilterPipe } from './services/pipes/filter.pipe';
-import { UsersComponent } from './home/users.component';
-import { PostListComponent } from './profile/post-list.component';
 import { SkillsPipe } from './services/pipes/skills.pipe';
 
 const appRoutes: Routes = [
@@ -57,6 +60,7 @@ const appRoutes: Routes = [
     HomeComponent,
     UsersComponent,
     PostListComponent,
+    AlertComponent,
     FilterPipe,
     SkillsPipe
   ],
@@ -72,7 +76,8 @@ const appRoutes: Routes = [
     AuthRedirectService,
     AuthenticationService,
     UserUtilsService,
-    PostUtilsService
+    PostUtilsService,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ import { AuthenticationService, LoginPayload } from '../services/authentication/
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
 import { Router } from '@angular/router';
 import { UserUtilsService } from '../services/users/user-utils.service';
+import { AlertService } from '../services/alerts/alert.service';
 
 @Component({
   templateUrl: './login.component.html'
@@ -14,8 +15,7 @@ export class LoginComponent {
   };
 
   constructor(private auth: AuthenticationService,
-     private auth_guard: AuthGuardService,
-     private user_utils: UserUtilsService,
+     private alert: AlertService,
      private router: Router) {}
 
   login() {
@@ -24,13 +24,13 @@ export class LoginComponent {
       this.router.navigateByUrl('/');
     }, (err) => {
         if (err.status == 400) {
-            console.log('no user with that email found');
-        } else if (err.status == 401) {
-            this.router.navigateByUrl('/confirm/' + this.credentials.email);
+            this.alert.error('No user with that email found');
+        } else if (err.status == 401) {  
+          this.router.navigateByUrl('/confirm/' + this.credentials.email);
         } else if (err.status == 402) {
-            console.log('incorrect password');
+            this.alert.error('Incorrect password');
         } else {
-            console.log('server error: could not login');
+            this.alert.error('Server error: Could not login');
         }
     });
   }

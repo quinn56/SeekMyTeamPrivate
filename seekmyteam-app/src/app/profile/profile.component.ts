@@ -3,6 +3,7 @@ import { UserUtilsService, UserProfile, UserDetails } from '../services/users/us
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/authentication/authentication.service';
+import { AlertService } from '../services/alerts/alert.service';
 
 @Component({
   templateUrl: './profile.component.html'
@@ -55,7 +56,7 @@ export class ProfileComponent {
     private post_utils: PostUtilsService,
     private auth: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router
+    private alert: AlertService
   ) {}
 
   ngOnInit() { 
@@ -83,7 +84,7 @@ export class ProfileComponent {
         this.handleSpaces();
       }, (err) => {
         if (err.status === 401) {
-          console.log('user with that email not found');
+          this.alert.error('User not found');
           // this.router.navigateByUrl('/');
         }
         console.error(err);
@@ -143,7 +144,7 @@ export class ProfileComponent {
         console.log('successfully deleted profile');
         this.auth.logout();
       }, (err) => {
-        console.log('could not delete profile');
+        this.alert.error('Could not delete profile');
       }) 
     }
   }
@@ -160,7 +161,7 @@ export class ProfileComponent {
       this.details.linkedin
     ).subscribe(res => {
       this.uploadFile();
-      console.log('successfully updated profile');
+      this.alert.success('Successfully updated profile');
     }, (err) => {
       console.log(err);
     }) 
@@ -224,6 +225,7 @@ export class ProfileComponent {
   invite(proj: string) {
     this.post_utils.invite(this.user_utils.getCurrentUserDetails().email, this.getEmail, proj ).subscribe((data) => {
       this.selectedProject = '';
+      this.alert.success('Successfully invited user to work on project');
     }, (err) => {
         console.log(err);
     });

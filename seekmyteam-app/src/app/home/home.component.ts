@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
-import { Router } from '@angular/router';
+import { AlertService } from '../services/alerts/alert.service';
 
 export interface Post {
     name: string,
@@ -46,6 +47,7 @@ export class HomeComponent {
     constructor(
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
+        private alert: AlertService,
         private router: Router
     ) { }
     
@@ -146,7 +148,7 @@ export class HomeComponent {
 
     addNewPost() {
         if (this.newPost.name.length === 0) {
-            console.log('Post must have a name');
+            this.alert.error('Post must have a name');
             return;
         }
 
@@ -155,9 +157,9 @@ export class HomeComponent {
                 this.ngOnInit();    // Repopulate list automatically??
             }, (err) => {
                 if (err.status == 401) {
-                    console.log('a project with that name already exists')
+                    this.alert.error('A project with that name already exists')
                 } else {
-                    console.log('server error: could not create post');
+                    this.alert.error('Server error: Could not create post');
                 }
             });
         }, (err) => {
