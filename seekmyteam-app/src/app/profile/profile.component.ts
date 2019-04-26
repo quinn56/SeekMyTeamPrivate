@@ -142,7 +142,7 @@ export class ProfileComponent {
       console.log('cannot delete another users profile');
     } else {
       this.user_utils.deleteProfile(this.user_utils.getCurrentUserDetails().email).subscribe(res => {
-        console.log('successfully deleted profile');
+        this.alert.success('Successfully deleted profile');
         this.auth.logout();
       }, (err) => {
         this.alert.error('Could not delete profile');
