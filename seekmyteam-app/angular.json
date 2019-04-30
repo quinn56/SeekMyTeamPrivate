@@ -20,12 +20,20 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/img"
             ],
             "styles": [
-              "src/styles.css"
+              "src/css/plugins.min.css",
+              "src/style.css",
+              "src/css/responsive-style.css",
+              "src/css/colors/color-1.css",
+              "src/css/custom.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/js/plugins.min.js",
+              "src/js/main.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

@@ -27,27 +27,27 @@ import { AlertService } from './services/alerts/alert.service';
 import { FilterPipe } from './services/pipes/filter.pipe';
 import { SkillsPipe } from './services/pipes/skills.pipe';
 
-const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuardService]},
-  { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
-  { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
-  { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
-  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
-  { path: '**', redirectTo: '/' }
-];
-
 // const appRoutes: Routes = [
-//     { path: '', component: HomeComponent, canActivate: [] },
-//   { path: 'users', component: UsersComponent, canActivate: []},
-//   { path: 'login', component: LoginComponent, canActivate: []},
-//   { path: 'register', component: RegisterComponent, canActivate: [] },
-//   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
-//   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
-//   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
+//   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+//   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService]},
+//   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
+//   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
+//   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
+//   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
+//   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
 //   { path: '**', redirectTo: '/' }
 // ];
+
+const appRoutes: Routes = [
+    { path: '', component: HomeComponent, canActivate: [] },
+  { path: 'users', component: UsersComponent, canActivate: []},
+  { path: 'login', component: LoginComponent, canActivate: []},
+  { path: 'register', component: RegisterComponent, canActivate: [] },
+  { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
+  { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
+  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
+  { path: '**', redirectTo: '/' }
+];
 
 @NgModule({
   declarations: [
