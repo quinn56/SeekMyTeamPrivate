@@ -1,4 +1,4 @@
-# SeekMyTeam [![Build Status](https://travis-ci.com/quinn56/SeekMyTeam.svg?branch=master)](https://travis-ci.com/quinn56/SeekMyTeam)
+# SeekMyTeamPrivate [![Build Status](https://travis-ci.com/quinn56/SeekMyTeamPrivate.svg?branch=master)](https://travis-ci.com/quinn56/SeekMyTeamPrivate)
 
 SeekMyTeam is a Node.js and Angular powered webapp that allows for Purdue students to seek projects they can work on or for existing teams to find new qualified students to best further their ideas. This can be used as an incubator to facilitate growth of new startups at Purdue.
 
