@@ -31,6 +31,7 @@ export class HomeComponent {
     /* Filter variables */
     searchText: string;
     filterSkills: string[];
+    ownerText: string;
 
     /* Post modal variables */
     isOP: boolean;
