@@ -10,3 +10,44 @@ Author URI  : https://themeforest.net/user/themelooks
 You can write your custom css styles in this file...
 
 */
+
+.my-btn-white,
+.my-btn-white.disabled:hover,
+.my-btn-white.disabled:focus,
+.my-btn-white.disabled.focus,
+.my-btn-white[disabled]:hover,
+.my-btn-white[disabled]:focus,
+.my-btn-white[disabled].focus {
+    color: #fff;
+    background-color: transparent;
+    border-color: #fff;
+}
+
+.my-btn-white.disabled:hover:before,
+.my-btn-white.disabled:focus:before,
+.my-btn-white.disabled.focus:before,
+.my-btn-white[disabled]:hover:before,
+.my-btn-white[disabled]:focus:before,
+.my-btn-white[disabled].focus:before {
+    opacity: 0;
+}
+
+.my-btn-white:hover,
+.my-btn-white:focus,
+.my-btn-white.focus,
+.my-btn-white:active,
+.my-btn-white:active:hover,
+.my-btn-white:active:focus,
+.my-btn-white:active.focus,
+.my-btn-white.active,
+.my-btn-white.active:hover,
+.my-btn-white.active:focus,
+.my-btn-white.active.focus,
+.open > .dropdown-toggle.my-btn-white,
+.open > .dropdown-toggle.my-btn-white:hover,
+.open > .dropdown-toggle.my-btn-white:focus,
+.open > .dropdown-toggle.my-btn-white.focus {
+    color: #fff;
+    background-color: #d0dee7;
+    border-color: #d0dee7;
+}
