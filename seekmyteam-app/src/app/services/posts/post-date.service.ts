@@ -14,13 +14,13 @@ export class PostDateService {
         let elapsedHrs = (elapsed / (1000 * 60 * 60));
 
         if (elapsedHrs / 24 < 1) {
-            if (elapsed < 1)
+            if (Math.round(elapsedHrs % 24) < 1)
                 return "< 1 hour ago";
-            else if (elapsed < 24) {
-                return Math.round(elapsed) + " hours ago";
+            else {
+                return Math.round(elapsedHrs % 24) + " hours ago";
             }
         } else {
-            let days = Math.round(elapsed / 24);
+            let days = Math.round(elapsedHrs / 24);
             return days + " day(s) ago";
         }
     }
