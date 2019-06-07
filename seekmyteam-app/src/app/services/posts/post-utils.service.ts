@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
-import { Post } from 'src/app/home/home.component';
 
 interface ApplyPayload {
   owner: string,
@@ -23,7 +22,8 @@ interface CreatePayload {
   name: string, 
   description: string,
   skills: string,
-  ownerName: string
+  ownerName: string,
+  date: string
 }
 
 interface UpdatePayload {
@@ -88,7 +88,8 @@ export class PostUtilsService {
       name: name,
       description: description,
       skills: skills,
-      ownerName: ownerName
+      ownerName: ownerName,
+      date: Date.now().toString()
     }
 
     return this.postCreate(payload);
