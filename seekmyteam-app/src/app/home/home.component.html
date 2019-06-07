@@ -228,6 +228,9 @@
                                             <div class="activity--content">
                                                 <p>{{post.description}}</p>
                                             </div>
+                                            <div>
+                                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of post.skills; let i = index" (click)="selectedDeleteSkill(i)">{{item}}</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Activity Item End -->
@@ -239,11 +242,11 @@
                     </div>
 
                     <!-- Load More Button Start -->
-                    <div class="load-more--btn pt--30 text-center">
+                    <!-- <div class="load-more--btn pt--30 text-center">
                         <a href="#" class="btn btn-animate">
                             <span>See More Activities<i class="fa ml--10 fa-caret-right"></i></span>
                         </a>
-                    </div>
+                    </div> -->
                     <!-- Load More Button End -->
                 </div>
                 <!-- Main Content End -->
