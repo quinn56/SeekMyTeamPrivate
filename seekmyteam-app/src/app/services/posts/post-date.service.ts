@@ -15,13 +15,13 @@ export class PostDateService {
         let hourstr: string;
 
         if (elapsed < 1)
-            return "Posted less 1 hr ago";
+            return "< 1 hour ago";
         else if (elapsed < 24) {
-            return "Posted " + Math.round(elapsed) + " hrs ago";
+            return Math.round(elapsed) + " hours ago";
         }
         else {
             let days = Math.round(elapsed / 24);
-            return "Posted " + days + " day(s) ago";
+            return days + " day(s) ago";
         }
     }
 }
