@@ -10,7 +10,7 @@ export interface Post {
     ownerName: string,
     ownerEmail: string,
     skills: string[],
-    date: number
+    date: string
 }
 
 @Component({
@@ -64,7 +64,7 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: ""
         };
         this.selectedPost = {
             name: "",
@@ -72,7 +72,7 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: ""
         };
 
         this.editPost = {
@@ -81,7 +81,7 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: ""
         };
 
         this.posts = [{
@@ -89,7 +89,8 @@ export class HomeComponent {
             ownerEmail: 'abc@abc.com',
             ownerName: 'Brian',
             description: 'A game',
-            skills: []
+            skills: [],
+            date: ""
         }];
         
         this.post_utils.fetchPosts(null).subscribe(data => {
@@ -115,7 +116,7 @@ export class HomeComponent {
                 ownerName: item.OwnerName.S,
                 ownerEmail: item.OwnerEmail.S,
                 skills: JSON.parse(item.Skills.S),
-                date: parseInt(item.Date.S)
+                date: this.date_func.buildDate(parseInt(item.Date.S))
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -197,7 +198,7 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: ""
         };
     }
     
@@ -265,7 +266,7 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: ""
         };
     }
 
