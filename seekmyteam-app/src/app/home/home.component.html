@@ -51,7 +51,7 @@
             </div> -->
 
 <!-- Modal -->
-<!-- <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
+ <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -99,11 +99,11 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div> 
 <!-- End of modal -->
 
 <!-- The coolest of Modals -->
-<!-- <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="false">
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="false">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -155,7 +155,7 @@
                     </div>
                     </div>
                 </div>
-            </div> -->
+            </div> 
 <!-- End of cool modal -->
 <!-- <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-info pl-6 pr-6">Load more</button> 
         </div>
@@ -213,12 +213,12 @@
                         <div class="activity--list">
                             <!-- Activity Items Start -->
                             <ul class="activity--items nav">
-                                <li *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
+                                <li *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills' | filter:ownerText:'ownerName'; let idx = index">
                                     <!-- Activity Item Start -->
                                     <div class="activity--item">
                                         <div class="activity--info fs--14">
                                             <div class="activity--header">
-                                                <p><a>{{post.name}}</a> posted by <a>{{post.ownerName}}</a></p>
+                                                <p><a style="cursor: pointer;" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">{{post.name}}</a> posted by <a style="cursor: pointer" (click)="routeProfile(post)">{{post.ownerName}}</a></p>
                                             </div>
 
                                             <div class="activity--meta fs--12">

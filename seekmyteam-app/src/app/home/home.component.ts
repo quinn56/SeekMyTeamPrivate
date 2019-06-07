@@ -80,7 +80,13 @@ export class HomeComponent {
             skills: []
         };
 
-        this.posts = [];
+        this.posts = [{
+            name: 'Banana Boat',
+            ownerEmail: 'abc@abc.com',
+            ownerName: 'Brian',
+            description: 'A game',
+            skills: []
+        }];
         
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
@@ -191,6 +197,10 @@ export class HomeComponent {
     
     profileRedirect() {
         this.router.navigateByUrl('/profile/' + this.selectedPost.ownerEmail);
+    }
+    
+    routeProfile(post: Post) {
+        this.router.navigateByUrl('/profile/' + post.ownerEmail);
     }
 
 
