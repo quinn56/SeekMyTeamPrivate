@@ -11,15 +11,15 @@ export class PostDateService {
         // var hours: number = Math.abs(today - date) / 36e5;
         let now = Date.now();
         let elapsed = now - date;
-        elapsed = (elapsed / (1000 * 60 * 60)) % 24;
-        let hourstr: string;
+        let elapsedHrs = (elapsed / (1000 * 60 * 60));
 
-        if (elapsed < 1)
-            return "< 1 hour ago";
-        else if (elapsed < 24) {
-            return Math.round(elapsed) + " hours ago";
-        }
-        else {
+        if (elapsedHrs / 24 < 1) {
+            if (elapsed < 1)
+                return "< 1 hour ago";
+            else if (elapsed < 24) {
+                return Math.round(elapsed) + " hours ago";
+            }
+        } else {
             let days = Math.round(elapsed / 24);
             return days + " day(s) ago";
         }
