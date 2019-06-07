@@ -3,7 +3,7 @@ import { UserUtilsService } from '../services/users/user-utils.service';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Post } from '../home/home.component';
-import { post } from 'selenium-webdriver/http';
+import { PostDateService } from '../services/posts/post-date.service';
 
 @Component({
   templateUrl: './post-list.component.html'
@@ -36,7 +36,8 @@ export class PostListComponent {
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private date_func: PostDateService
     ) {}
 
     ngOnInit() {
@@ -50,7 +51,9 @@ export class PostListComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: 0,
+            age: ""
         };
 
         this.editPost = {
@@ -58,7 +61,9 @@ export class PostListComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: 0,
+            age: ""
         };
 
 
@@ -100,7 +105,9 @@ export class PostListComponent {
                 description: item.Description.S,
                 ownerName: item.OwnerName.S,
                 ownerEmail: item.OwnerEmail.S,
-                skills: JSON.parse(item.Skills.S)
+                skills: JSON.parse(item.Skills.S),
+                date: parseInt(item.Date.S),
+                age: this.date_func.buildDate(parseInt(item.Date.S))
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -169,7 +176,9 @@ export class PostListComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: 0,
+            age: ""
         };
     }
     deletePost(idx:number) {
