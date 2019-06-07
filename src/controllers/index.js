@@ -102,6 +102,7 @@ router.post('/createPost', auth, function(req, res) {
     var ownerName = req.body.ownerName;
     var ownerEmail = req.payload.email;
     var skills = req.body.skills;
+    var date = req.body.date;
 
     var postList = [];
 
@@ -123,7 +124,8 @@ router.post('/createPost', auth, function(req, res) {
                 'Description' : {'S' : description},
                 'OwnerName': {'S': ownerName},
                 'OwnerEmail': {'S': ownerEmail},
-                'Skills': {'S': skills}
+                'Skills': {'S': skills},
+                'Date': {'S': date}
             };
         
             var postParams = { 

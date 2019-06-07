@@ -9,7 +9,8 @@ export interface Post {
     description: string,
     ownerName: string,
     ownerEmail: string,
-    skills: string[]
+    skills: string[],
+    date: number
 }
 
 @Component({
@@ -62,14 +63,16 @@ export class HomeComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now()
         };
         this.selectedPost = {
             name: "",
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now()
         };
 
         this.editPost = {
@@ -77,7 +80,8 @@ export class HomeComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now()
         };
 
         this.posts = [{
@@ -110,7 +114,8 @@ export class HomeComponent {
                 description: item.Description.S,
                 ownerName: item.OwnerName.S,
                 ownerEmail: item.OwnerEmail.S,
-                skills: JSON.parse(item.Skills.S)
+                skills: JSON.parse(item.Skills.S),
+                date: parseInt(item.Date.S)
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -191,7 +196,8 @@ export class HomeComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now()
         };
     }
     
@@ -202,7 +208,6 @@ export class HomeComponent {
     routeProfile(post: Post) {
         this.router.navigateByUrl('/profile/' + post.ownerEmail);
     }
-
 
     checkOP() {
         if (this.selectedPost) { 
@@ -259,7 +264,8 @@ export class HomeComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now()
         };
     }
 
