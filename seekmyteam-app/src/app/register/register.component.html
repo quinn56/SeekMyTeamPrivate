@@ -101,8 +101,31 @@
 
                     <div class="action text-uppercase">
                       <a class="btn btn-white">Log In</a>
-                      <a class="btn btn-primary" >Sign Up</a>
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#registerModal" >Sign Up</a>
                     </div>
+
+                    <!-- Register Modal -->
+                    <div id="registerModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                    
+                        <!-- Modal Content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                        <!-- Modal Content End-->
+                    
+                      </div>
+                    </div>
+                    <!-- Register Modal End-->
 
                   </div>
                   <!-- Banner Content End -->
@@ -177,24 +200,6 @@
                 <!-- Feature Item Start -->
                 <div class="feature--item bg-default text-center">
                     <div class="title">
-                        <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">40,000</span>+</h2>
-                    </div>
-
-                    <div class="sub-title">
-                        <h3 class="h2 fs--16">Number Of Students</h3>
-                    </div>
-
-                    <div class="desc">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    </div>
-                </div>
-                <!-- Feature Item End -->
-            </div>
-
-            <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
-                <!-- Feature Item Start -->
-                <div class="feature--item bg-default text-center">
-                    <div class="title">
                         <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">11</span></h2>
                     </div>
 
@@ -202,27 +207,9 @@
                         <h3 class="h2 fs--16">Number Of Schools</h3>
                     </div>
 
-                    <div class="desc">
+                    <!-- <div class="desc">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    </div>
-                </div>
-                <!-- Feature Item End -->
-            </div>
-
-            <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
-                <!-- Feature Item Start -->
-                <div class="feature--item bg-default text-center">
-                    <div class="title">
-                        <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">1090</span></h2>
-                    </div>
-
-                    <div class="sub-title">
-                        <h3 class="h2 fs--16">Purdue Organizations</h3>
-                    </div>
-
-                    <div class="desc">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- Feature Item End -->
             </div>
@@ -238,9 +225,45 @@
                         <h3 class="h2 fs--16">Number Of Majors Offered</h3>
                     </div>
 
-                    <div class="desc">
+                    <!-- <div class="desc">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
+                </div>
+                <!-- Feature Item End -->
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
+                <!-- Feature Item Start -->
+                <div class="feature--item bg-default text-center">
+                    <div class="title">
+                        <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">1090</span></h2>
                     </div>
+
+                    <div class="sub-title">
+                        <h3 class="h2 fs--16">Number Of Organizations</h3>
+                    </div>
+
+                    <!-- <div class="desc">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
+                </div>
+                <!-- Feature Item End -->
+            </div>
+
+            <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
+                <!-- Feature Item Start -->
+                <div class="feature--item bg-default text-center">
+                    <div class="title">
+                        <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">40,000</span>+</h2>
+                    </div>
+
+                    <div class="sub-title">
+                        <h3 class="h2 fs--16">Number Of Purdue Students</h3>
+                    </div>
+
+                    <!-- <div class="desc">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
                 </div>
                 <!-- Feature Item End -->
             </div>
@@ -531,7 +554,15 @@
               <!-- Text Widget End -->
             </div>
             <!-- Widget End -->
+          </div>
 
+          <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
+          </div>
+
+          <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
+          </div>
+
+          <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
             <!-- Widget Start -->
             <div class="widget">
               <h2 class="h4 fw--700 widget--title">Subscribe To Our Newsletter</h2>
@@ -556,191 +587,8 @@
               <!-- Newsletter Widget End -->
             </div>
             <!-- Widget End -->
-          </div>
 
-          <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
-            <!-- Widget Start -->
-            <div class="widget">
-              <h2 class="h4 fw--700 widget--title">Recent Post</h2>
 
-              <!-- Recent Posts Widget Start -->
-              <div class="recent-posts--widget">
-                <ul class="nav">
-                  <li>
-                    <p class="date fw--300">
-                      <a href="#"><i class="fa mr--8 fa-file-text-o"></i>19 Jan 2017</a>
-                    </p>
-                    <p class="title fw--700">
-                      <a href="blog-details.html">I look at you and see the rest of my life in front</a>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="date fw--300">
-                      <a href="#"><i class="fa mr--8 fa-file-text-o"></i>19 Jan 2017</a>
-                    </p>
-                    <p class="title fw--700">
-                      <a href="blog-details.html">If I know what love is, it is because of you</a>
-                    </p>
-                  </li>
-                </ul>
-              </div>
-              <!-- Recent Posts Widget End -->
-            </div>
-            <!-- Widget End -->
-
-            <!-- Widget Start -->
-            <div class="widget">
-              <h2 class="h4 fw--700 widget--title">Catagories</h2>
-
-              <!-- Nav Widget Start -->
-              <div class="nav--widget">
-                <ul class="nav fw--700">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-folder-o"></i>
-                      <span class="text">Social Media</span>
-                      <span class="count">(26)</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-folder-o"></i>
-                      <span class="text">Business Studies</span>
-                      <span class="count">(06)</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-folder-o"></i>
-                      <span class="text">Technology</span>
-                      <span class="count">(34)</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <!-- Nav Widget End -->
-            </div>
-            <!-- Widget End -->
-          </div>
-
-          <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
-            <!-- Widget Start -->
-            <div class="widget">
-              <h2 class="h4 fw--700 widget--title">Recent Active Members</h2>
-
-              <!-- Recent Active Members Widget Start -->
-              <div class="recent-active-members--widget style--1">
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/01.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/02.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/03.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/04.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/05.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/06.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/07.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/08.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/09.jpg"
-                      alt=""></a>
-                </div>
-
-                <div class="img">
-                  <a href="member-activity-personal.html"><img src="img/widgets-img/recent-active-members/10.jpg"
-                      alt=""></a>
-                </div>
-              </div>
-              <!-- Recent Active Members Widget End -->
-            </div>
-            <!-- Widget End -->
-
-            <!-- Widget Start -->
-            <div class="widget">
-              <h2 class="h4 fw--700 widget--title">Useful Links</h2>
-
-              <!-- Links Widget Start -->
-              <div class="links--widget">
-                <ul class="nav">
-                  <li><a href="#">Register</a></li>
-                  <li><a href="#">Login</a></li>
-                  <li><a href="#">Membership Levels</a></li>
-                  <li><a href="#">Shop</a></li>
-                  <li><a href="#">Contact</a></li>
-                </ul>
-              </div>
-              <!-- Links Widget End -->
-            </div>
-            <!-- Widget End -->
-          </div>
-
-          <div class="col-md-3 col-xs-6 col-xxs-12 pb--60">
-            <!-- Widget Start -->
-            <div class="widget">
-              <h2 class="h4 fw--700 widget--title">Forums</h2>
-
-              <!-- Links Widget Start -->
-              <div class="links--widget">
-                <ul class="nav">
-                  <li><a href="sub-forums.html">User Interface Design</a></li>
-                  <li><a href="sub-forums.html">Front-End Engineering</a></li>
-                  <li><a href="sub-forums.html">Web Development</a></li>
-                  <li><a href="sub-forums.html">Social Media Marketing</a></li>
-                  <li><a href="sub-forums.html">Content Marketing</a></li>
-                </ul>
-              </div>
-              <!-- Links Widget End -->
-            </div>
-            <!-- Widget End -->
-
-            <!-- Widget Start -->
-            <div class="widget">
-              <h2 class="h4 fw--700 widget--title">Tags</h2>
-
-              <!-- Tags Widget Start -->
-              <div class="tags--widget">
-                <ul class="nav">
-                  <li><a href="#">BuddyPress</a></li>
-                  <li><a href="#">HTML</a></li>
-                  <li><a href="#">Music</a></li>
-                  <li><a href="#">Technology</a></li>
-                  <li><a href="#">Movies</a></li>
-                  <li><a href="#">Photography</a></li>
-                  <li><a href="#">WordPress</a></li>
-                </ul>
-              </div>
-              <!-- Tags Widget End -->
-            </div>
-            <!-- Widget End -->
           </div>
         </div>
       </div>
