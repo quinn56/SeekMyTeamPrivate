@@ -15,6 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './home/users.component';
 import { PostListComponent } from './profile/post-list.component';
+import { TeamPageComponent } from './team-page/team-page.component';
 import { AlertComponent } from './alerts/alert.component';
 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
@@ -36,6 +37,7 @@ import { SkillsPipe } from './services/pipes/skills.pipe';
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
 //   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
 //   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
+//   { path: 'project/:name', component: TeamPageComponent, canActivate: [AuthGuardService] },
 //   { path: '**', redirectTo: '/' }
 // ];
 
@@ -47,6 +49,7 @@ const appRoutes: Routes = [
   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
+  { path: 'project/:name', component: TeamPageComponent, canActivate: [] },
   { path: '**', redirectTo: '/' }
 ];
 
@@ -61,6 +64,7 @@ const appRoutes: Routes = [
     HomeComponent,
     UsersComponent,
     PostListComponent,
+    TeamPageComponent,
     AlertComponent,
     FilterPipe,
     SkillsPipe

@@ -16,6 +16,32 @@ router.use('/login', require('./login'));
 router.use('/profile', auth, require('./profile'));
 router.use('/users', auth, require('./users'));
 
+router.get('/post/:name', auth, function(req, res) {
+    var name = req.params.name;
+    var params = {
+        TableName : process.env.POSTS_TABLE,
+        Key : { 
+          "Name" : {'S' : name}
+        }
+    };
+
+    database.getItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
+            res.status(200).json({
+                "post": data.Item
+            });
+        }
+    });
+});
+
 router.get('/posts', auth, function(req, res) {
     var params = {
         TableName: process.env.POSTS_TABLE,
