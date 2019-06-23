@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { AlertService } from '../services/alerts/alert.service';
+import { PostDateService } from '../services/posts/post-date.service';
 
 export interface Post {
     name: string,
@@ -10,7 +11,8 @@ export interface Post {
     ownerName: string,
     ownerEmail: string,
     skills: string[],
-    date: number
+    date: number,
+    age: string
 }
 
 @Component({
@@ -32,6 +34,7 @@ export class HomeComponent {
     /* Filter variables */
     searchText: string;
     filterSkills: string[];
+    ownerText: string;
 
     /* Post modal variables */
     isOP: boolean;
@@ -49,7 +52,8 @@ export class HomeComponent {
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
         private alert: AlertService,
-        private router: Router
+        private router: Router,
+        private date_func: PostDateService
     ) { }
     
     ngOnInit() {
@@ -63,7 +67,8 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: 0,
+            age: ""
         };
         this.selectedPost = {
             name: "",
@@ -71,7 +76,8 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: 0,
+            age: ""
         };
 
         this.editPost = {
@@ -80,13 +86,15 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: 0,
+            age: ""
         };
 
         this.posts = [];
         
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
+            this.sortPosts();
             this.LastEvaluatedKey = data.key; 
             this.checkMorePosts();
         }, (err) => {
@@ -100,6 +108,23 @@ export class HomeComponent {
         }
     }
 
+    sortPosts() {
+        this.posts.sort(this.compare);
+    }
+
+    compare(a, b) {
+        const A = a.date;
+        const B = b.date;
+      
+        let comparison = 0;
+        if (A > B) {
+          comparison = -1;
+        } else if (A < B) {
+          comparison = 1;
+        }
+        return comparison;
+      }
+
     parsePosts(data) {
         data.forEach((item) => {
             let parse: Post = {
@@ -108,7 +133,8 @@ export class HomeComponent {
                 ownerName: item.OwnerName.S,
                 ownerEmail: item.OwnerEmail.S,
                 skills: JSON.parse(item.Skills.S),
-                date: parseInt(item.Date.S)
+                date: parseInt(item.Date.S),
+                age: this.date_func.buildDate(parseInt(item.Date.S))
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -190,12 +216,17 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: 0,
+            age: ""
         };
     }
     
     profileRedirect() {
         this.router.navigateByUrl('/profile/' + this.selectedPost.ownerEmail);
+    }
+    
+    routeProfile(post: Post) {
+        this.router.navigateByUrl('/profile/' + post.ownerEmail);
     }
 
     checkOP() {
@@ -254,7 +285,8 @@ export class HomeComponent {
             ownerName: "",
             ownerEmail: "",
             skills: [],
-            date: Date.now()
+            date: 0,
+            age: ""
         };
     }
 

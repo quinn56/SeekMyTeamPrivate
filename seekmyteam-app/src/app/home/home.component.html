@@ -1,4 +1,4 @@
-<div class="container-fluid wrapper">
+<!-- <div class="container-fluid wrapper">
     <div class="row pr-3" style="height: 100vh">
         <div class="col-3 bg-secondary">
             <div style="position: sticky; position: -webkit-sticky; top: 0">
@@ -25,21 +25,22 @@
             </div>
         </div>
         <div class="col-9 pl-3 pr-3">
-            <!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
 
-            <!-- Create New post Card -->
-            <div class="card mb-4 mt-2">
+             -->
+<!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
+
+<!-- Create New post Card -->
+<!-- <div class="card mb-4 mt-2">
                 <div style="cursor: pointer" class="card-header text-center" data-toggle="modal" data-target="#newPostModal">
                     <a href="#" class="text-dark mr-2 font-weight-light">Create New Post</a>
                     <img src="assets/writing.svg" height="30" alt="a responsive img" class="float-right mr-2">
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Posting cards -->
-            <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
+<!-- Posting cards -->
+<!-- <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
                 <div class="card-header text-left">
                     <h4>{{post.name}}</h4>
-                    <!-- <img src="assets/jeetsball.jpg" alt=""> -->
                 </div>
                 <div class="card-body text-left">
                     <h6>{{post.description}}</h6>
@@ -47,13 +48,10 @@
                         <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of post.skills; let i = index">{{item}}</button>
                     </div>
                 </div>
-                <!-- <div class="card-footer text-muted">
-                    2 days ago
-                </div> -->
-            </div>
-          
-            <!-- Modal -->
-            <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
+            </div> -->
+
+<!-- Modal -->
+ <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -101,11 +99,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- End of modal -->
+            </div> 
+<!-- End of modal -->
 
-            <!-- The coolest of Modals -->
-            <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="false">
+<!-- The coolest of Modals -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="false">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -157,9 +155,9 @@
                     </div>
                     </div>
                 </div>
-            </div>
-            <!-- End of cool modal -->
-            <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-info pl-6 pr-6">Load more</button> 
+            </div> 
+<!-- End of cool modal -->
+<!-- <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-info pl-6 pr-6">Load more</button> 
         </div>
     </div>
 </div>
@@ -185,4 +183,128 @@
     height:auto; /* just added this line */
 }
 
-</style>
+</style> -->
+
+<!-- Preloader Start -->
+<div id="preloader">
+    <div class="preloader--inner"></div>
+</div>
+<!-- Preloader End -->
+
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <!-- Page Wrapper Start -->
+    <section class="page--wrapper pt--40 pb--20">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content Start -->
+                <div class="main--content col-md-8 pb--60">
+                    <div class="main--content-inner drop--shadow">
+                        <!-- Content Nav Start -->
+                        <div class="content--nav pb--30">
+                            <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
+                                <li class="active"><a href="group-home.html">Projects</a></li>
+                                <li><a routerLink="/users">Members</a></li>
+                            </ul>
+                        </div>
+                        <!-- Content Nav End -->
+
+                        <!-- Activity List Start -->
+                        <div class="activity--list">
+                            <!-- Activity Items Start -->
+                            <ul class="activity--items nav">
+                                <li *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills' | filter:ownerText:'ownerName'; let idx = index">
+                                    <!-- Activity Item Start -->
+                                    <div class="activity--item">
+                                        <div class="activity--info fs--14">
+                                            <div class="activity--header">
+                                                <p><a style="cursor: pointer;" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">{{post.name}}</a> posted by <a style="cursor: pointer" (click)="routeProfile(post)">{{post.ownerName}}</a></p>
+                                            </div>
+
+                                            <div class="activity--meta fs--12">
+                                                <p><i class="fa mr--8 fa-clock-o"></i>{{post.age}}</p>
+                                            </div>
+
+                                            <div class="activity--content">
+                                                <p>{{post.description}}</p>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of post.skills; let i = index" (click)="selectedDeleteSkill(i)">{{item}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Activity Item End -->
+                                </li>
+                            </ul>
+                            <!-- Activity Items End -->
+                        </div>
+                        <!-- Activity List End -->
+                    </div>
+
+                    <!-- Load More Button Start -->
+                    <!-- <div class="load-more--btn pt--30 text-center">
+                        <a href="#" class="btn btn-animate">
+                            <span>See More Activities<i class="fa ml--10 fa-caret-right"></i></span>
+                        </a>
+                    </div> -->
+                    <!-- Load More Button End -->
+                </div>
+                <!-- Main Content End -->
+
+                <!-- Main Sidebar Start -->
+                <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Find A Project</h2>
+
+                        <!-- Buddy Finder Widget Start -->
+                        <div class="buddy-finder--widget">
+                            <h2 class="h4 fw--700 widget--title">Project Name</h2>
+                            <label>
+                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by project name">
+                            </label>
+                        </div>
+                        <!-- Buddy Finder Widget End -->
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Filter By Skills</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select a skill</option>
+                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                    {{skill}}
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <!-- Widget End -->
+                    
+                    <!-- Widget Start -->
+                    <div class="widget">
+                            <!-- Buddy Finder Widget Start -->
+                            <div class="buddy-finder--widget">
+                                <h2 class="h4 fw--700 widget--title">Owner Name</h2>
+                                <label>
+                                    <input class="form-control" [(ngModel)]="ownerText" placeholder="Search by owner name">
+                                </label>
+                            </div>
+                            <!-- Buddy Finder Widget End -->
+                        </div>
+                        <!-- Widget End -->
+                </div>
+                <!-- Main Sidebar End -->
+            </div>
+        </div>
+    </section>
+    <!-- Page Wrapper End -->
+</div>
+<!-- Wrapper End -->
+
+<!-- Back To Top Button Start -->
+<div id="backToTop">
+    <a href="#" class="btn"><i class="fa fa-caret-up"></i></a>
+</div>
+<!-- Back To Top Button End -->
