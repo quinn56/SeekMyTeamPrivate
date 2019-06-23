@@ -50,7 +50,8 @@ export class PostListComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now() //added to fix compile errors
         };
 
         this.editPost = {
@@ -58,7 +59,8 @@ export class PostListComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now() //added to fix compile errors
         };
 
 
@@ -100,7 +102,8 @@ export class PostListComponent {
                 description: item.Description.S,
                 ownerName: item.OwnerName.S,
                 ownerEmail: item.OwnerEmail.S,
-                skills: JSON.parse(item.Skills.S)
+                skills: JSON.parse(item.Skills.S),
+                date: Date.now() //added to fix compile errors
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -169,7 +172,8 @@ export class PostListComponent {
             description: "",
             ownerName: "",
             ownerEmail: "",
-            skills: []
+            skills: [],
+            date: Date.now() //added to fix compile errors
         };
     }
     deletePost(idx:number) {

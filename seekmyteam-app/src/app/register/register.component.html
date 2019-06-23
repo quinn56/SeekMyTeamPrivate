@@ -62,7 +62,8 @@
   }
 </style> -->
 
-
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="src/jquery-bootstrap-modal-steps.js"></script>
 
 <!-- Preloader Start -->
 <div id="preloader">
@@ -102,20 +103,22 @@
                       <a class="btn btn-white my-btn-white">Learn More</a>
                       <a routerLink="/login" class="btn btn-primary" >Already
                         have an account? Login Here</a>
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+                        New here? Click to reigster</a>
                     </div>
 
                   </div>
                   <!-- Banner Content End -->
                 </div>
 
-                <div class="invisible col-md-4 col-md-offset-1 col-xs-8 col-xs-offset-2 col-xxs-12">
+                <!-- <div class="invisible col-md-4 col-md-offset-1 col-xs-8 col-xs-offset-2 col-xxs-12"> -->
                   <!-- Widget Start -->
-                  <div class="widget">
-                    <h2 class="h4 fw--700 widget--title">Dont have an account? Sign up today</h2>
+                  <!-- <div class="widget"> -->
+                    <!-- <h2 class="h4 fw--700 widget--title">Dont have an account? Sign up today</h2> -->
 
                     <!-- Register Widget Start -->
-                    <div class="buddy-finder--widget">
-                      <form action="#">
+                    <!-- <div class="buddy-finder--widget">
+                      <form (submit)="register()"">
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
@@ -152,11 +155,11 @@
                           </div>
                         </div>
                       </form>
-                    </div>
+                    </div> -->
                     <!-- Buddy Finder Widget End -->
-                  </div>
+                  <!-- </div> -->
                   <!-- Widget End -->
-                </div>
+                <!-- </div> -->
               </div>
             </div>
           </div>
@@ -167,6 +170,90 @@
     <!-- Banner Slider End -->
   </section>
   <!-- Banner Section End -->
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form (submit)="register()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                  <div class="form-group">
+                    <label> Name
+                      <input type="text" name="name" placeholder="Name" [(ngModel)]="credentials.name" class="form-control" required>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label> Email
+                      <input type="text" name="email" placeholder="Email" [(ngModel)]="credentials.email" class="form-control" required>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label> Password
+                      <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password" class="form-control" required>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label> School
+                      <input type="text" name="school" placeholder="School" [(ngModel)]="credentials.school" class="form-control" required>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label> Major
+                      <input type="text" name="major" placeholder="Major" [(ngModel)]="credentials.major" class="form-control" required>
+                    </label>
+                  </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" (click)="register()" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Register</button>
+          </div>
+        </div>
+      </form>
+    </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form (submit)="confirm()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm email</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo"> -->
+
+          <div class="form-group">
+            <input type="text" class="form-control" name="code" placeholder="Enter confirmation PIN here"
+              [(ngModel)]="confirmCredentials.code">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Confirm</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          <div *ngIf="notRegistered == true"> 
+            <p>Not Registered</p>
+          </div>
+          <div *ngIf="serverError == true"> 
+            <p>Server Error</p>
+          </div>
+          <div *ngIf="invalidCode == true"> 
+            <p>Invalid Code</p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
   <!-- How It Works Section Start -->
   <section class="section pt--70 pb--40">

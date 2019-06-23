@@ -33,8 +33,7 @@
             "scripts": [
               "src/js/plugins.min.js",
               "src/js/main.js"
-            ],
-            "es5BrowserSupport": true
+            ]
           },
           "configurations": {
             "production": {
