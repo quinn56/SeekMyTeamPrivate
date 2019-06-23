@@ -49,6 +49,10 @@ export class PostUtilsService {
     }
   }
 
+  public fetchPost(key: string): Observable<any> {
+    return this.getPost(key);
+  }
+
   public fetchUserPosts(email: string): Observable<any> {
     return this.getUserPosts(email);
   }
@@ -165,6 +169,17 @@ export class PostUtilsService {
     return requestedData;
   }
 
+  private getPost(key: string): Observable<any> {
+    let base = this.http.get('/api/post/' + key, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+    
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
   private getPosts(key: string): Observable<any> {
     let base = this.http.get('/api/posts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {ExclusiveStartKey: key}});
     
