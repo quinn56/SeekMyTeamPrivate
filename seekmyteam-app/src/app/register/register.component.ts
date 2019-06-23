@@ -22,10 +22,14 @@ export class RegisterComponent {
         code: ''
     };
 
+    moreInfo: Object = {
+        description: '',
+        
+    }
+
     notRegistered: boolean = false;
     serverError: boolean = false;
     invalidCode: boolean = false;
-    mydata: any;
 
     constructor(private auth: AuthenticationService,
         private auth_guard: AuthGuardService,
@@ -57,10 +61,8 @@ export class RegisterComponent {
             }, (err) => {
                 if (err.status == 401) {
                     console.log('a user with that email already exists');
-                    //this.alreadyRegistered = true;
                 } else {
                     console.log('server error: failed to register');
-                    //this.serverError = true;
                 }
             });
         }
@@ -95,5 +97,14 @@ export class RegisterComponent {
                 this.serverError = true;
             }
         });
+    }
+
+    skipMoreInfo() {
+        this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
+    }
+
+    submitMoreInfo(info: Object) {
+        this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
+        
     }
 }

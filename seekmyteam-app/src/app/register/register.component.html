@@ -38,7 +38,7 @@
 
 </form> -->
 
-<!-- <style>
+<style>
   #bg {
     background-image: url("assets/main.jpg");
     height: 100vh;
@@ -60,7 +60,15 @@
     /* height: 40%; */
     width: 20%;
   }
-</style> -->
+  
+  #invalidCode {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+    padding-top: 10px;
+  }
+</style>
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="src/jquery-bootstrap-modal-steps.js"></script>
@@ -104,7 +112,7 @@
                       <a routerLink="/login" class="btn btn-primary" >Already
                         have an account? Login Here</a>
                       <a class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
-                        New here? Click to reigster</a>
+                        New here? Click to register</a>
                     </div>
 
                   </div>
@@ -230,30 +238,50 @@
           </button>
         </div>
         <div class="modal-body">
-          <!-- <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo"> -->
-
+          <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo">
+          
           <div class="form-group">
             <input type="text" class="form-control" name="code" placeholder="Enter confirmation PIN here"
               [(ngModel)]="confirmCredentials.code">
           </div>
           <div class="modal-footer">
+            <div id="invalidCode" *ngIf="invalidCode == true">
+              <p>Invalid code</p>
+            </div>
             <button type="submit" class="btn btn-primary">Confirm</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-          <div *ngIf="notRegistered == true"> 
-            <p>Not Registered</p>
-          </div>
-          <div *ngIf="serverError == true"> 
-            <p>Server Error</p>
-          </div>
-          <div *ngIf="invalidCode == true"> 
-            <p>Invalid Code</p>
-          </div>
+          </div> 
         </div>
       </div>
     </form>
   </div>
 </div>
+
+<!-- More Info Modal -->
+<div class="modal fade" id="moreInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form (submit)="submitMoreInfo()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">More Info</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">            
+              <div class="form-group">
+                  <label> Description
+                    <input type="text" name="name" placeholder="Name" [(ngModel)]="credentials.name" class="form-control" required>
+                  </label>
+                </div>
+            <div class="modal-footer">             
+              <button type="button" (click)="skipMoreInfo()" class="btn btn-secondary" data-dismiss="modal">Skip for now</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div> 
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- How It Works Section Start -->
   <section class="section pt--70 pb--40">
