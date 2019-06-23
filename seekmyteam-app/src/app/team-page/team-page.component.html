@@ -61,13 +61,6 @@
 </div>
 <!-- End of post edit modal -->
 
-
-<!-- Preloader Start -->
-<div id="preloader">
-    <div class="preloader--inner"></div>
-</div>
-<!-- Preloader End -->
-
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Cover Header Start -->
@@ -79,7 +72,7 @@
             </div>
 
             <div class="cover--user-name">
-                <h2 style="cursor: pointer;" class="h3 fw--600" data-toggle="modal" data-target="#postModal">
+                <h2 style="cursor: pointer;" class="h3 fw--600" (click)="displayPost()" data-toggle="modal" data-target="#postModal">
                     {{post.name}}</h2>
             </div>
 
