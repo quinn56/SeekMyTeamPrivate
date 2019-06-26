@@ -1,43 +1,3 @@
-<!-- <form (submit)="register()">
-
-  <div class="container-fluid p-0" id="bg">
-    //<img src="assets/image.png" class="img-fluid">
-    <div class="my-center text-center">
-      <div class="row">
-        <div class="offset-3 col-6 rounded" style="background: rgba(185, 182, 182, 0.6); ">
-          <div class="row">
-            <div class="offset-1 col-10">
-              <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo">
-
-              <div class="form-group">
-                <input type="text" class="form-control" name="name" placeholder="Enter your name"
-                  [(ngModel)]="credentials.name">
-              </div>
-              <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Enter email"
-                  [(ngModel)]="credentials.email">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password"
-                  [(ngModel)]="credentials.password">
-              </div>
-              <button type="submit" class="btn btn-primary">Register!</button>
-              <div class="my-4 mb-3">
-                <p>Already have an account?<a routerLink="/login"> Login Now!</a></p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-
-
-</form> -->
-
 <style>
   #bg {
     background-image: url("assets/main.jpg");
@@ -68,10 +28,50 @@
     float: left;
     padding-top: 10px;
   }
-</style>
 
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="src/jquery-bootstrap-modal-steps.js"></script>
+  #validCode {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+    padding-top: 10px;
+  }
+
+  #required {
+    color: red;
+    display: inline-block;
+  }
+  
+  #nameField {
+    display: inline-block;
+    width: 70%;
+  }
+
+  #emailField {
+    display: inline-block;
+    width: 60%;
+    padding-right: 3%;
+  }
+
+  #passwordField {
+    display: inline-block;
+    width: 40%;
+    padding-right: 3%;
+    position: fixed;
+  }
+
+  #schoolField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+  }
+  #majorField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+</style>
 
 <!-- Preloader Start -->
 <div id="preloader">
@@ -110,7 +110,6 @@
                     </div>
 
                     <div class="action text-uppercase">
-                      <a class="btn btn-white my-btn-white">Learn More</a>
                       <a routerLink="/login" class="btn btn-primary" >Already
                         have an account? Login Here</a>
                       <a class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
@@ -119,56 +118,6 @@
                   </div>
                   <!-- Banner Content End -->
                 </div>
-
-                <!-- <div class="invisible col-md-4 col-md-offset-1 col-xs-8 col-xs-offset-2 col-xxs-12"> -->
-                  <!-- Widget Start -->
-                  <!-- <div class="widget"> -->
-                    <!-- <h2 class="h4 fw--700 widget--title">Dont have an account? Sign up today</h2> -->
-
-                    <!-- Register Widget Start -->
-                    <!-- <div class="buddy-finder--widget">
-                      <form (submit)="register()"">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label> Name
-                                <input type="text" name="email" placeholder="Name" class="form-control" required>
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label> Purdue Email Address
-                                <input type="text" name="email" placeholder="Email" class="form-control" required>
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label> Password
-                                <input type="text" name="email" placeholder="Password" class="form-control" required>
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label> Confirm Password
-                                <input type="text" name="email" placeholder="Confirm Password" class="form-control"
-                                  required>
-                              </label>
-                            </div>
-                          </div>
-
-                          <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary">Register</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div> -->
-                    <!-- Buddy Finder Widget End -->
-                  <!-- </div> -->
-                  <!-- Widget End -->
-                <!-- </div> -->
               </div>
             </div>
           </div>
@@ -262,7 +211,7 @@
 <!-- Register Modal -->
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <form (submit)="register()">
+      <form class="needs-validation" novalidate (submit)="register()">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Register</h5>
@@ -271,35 +220,65 @@
             </button>
           </div>
           <div class="modal-body">
-                  <div class="form-group">
-                    <label> Name
-                      <input type="text" name="name" placeholder="Name" [(ngModel)]="credentials.name" class="form-control" required>
+            <div class="form-group">
+              <span id="nameField" >
+                  <label> Name
+                      <input type="text" id="name" name="name" placeholder="Name" [formControl]="nameForm" [(ngModel)]="credentials.name" class="form-control" required>
                     </label>
+                    <div id="required" *ngIf="nameForm.touched && nameForm.errors"  class="invalid-feedback">
+                        Please enter a name
+                    </div>
+              </span>         
+            </div>
+            <div class="form-group">
+              <span id="emailField">
+                <label> Email
+                  <input type="text" name="email" placeholder="Email" [formControl]="emailForm" [(ngModel)]="credentials.email" class="form-control" required>
+                </label>
+                <div *ngIf="emailForm.errors">
+                  <div id="required" *ngIf="emailForm.touched && emailForm.errors.required" class="invalid-feedback">
+                    Please enter an email
+                </div>
+                <div id="required" *ngIf="emailForm.value !== '' && emailForm.errors.emailDomain !== null" class="invalid-feedback">
+                    Must be a Purdue email
+                </div>
+                </div>
+                
+              </span>
+              <span id="passwordField">
+                <label> Password
+                    <input type="password" name="password" placeholder="Password" [formControl]="passwordForm" [(ngModel)]="credentials.password" class="form-control" required>
+                  </label>
+                  <div id="required" *ngIf="passwordForm.touched && passwordForm.errors" class="invalid-feedback">
+                      Please enter a password
                   </div>
-                  <div class="form-group">
-                    <label> Email
-                      <input type="text" name="email" placeholder="Email" [(ngModel)]="credentials.email" class="form-control" required>
-                    </label>
+              </span>
+            </div>
+            <div class="form-group">
+              <span id="schoolField">
+                <label > School
+                    <input type="text" name="school" placeholder="School" [formControl]="schoolForm" [(ngModel)]="credentials.school" class="form-control" required>
+                  </label>
+                  <div id="required" *ngIf="schoolForm.touched && schoolForm.errors" class="invalid-feedback">
+                      Please enter your school
                   </div>
-                  <div class="form-group">
-                    <label> Password
-                      <input type="password" name="password" placeholder="Password" [(ngModel)]="credentials.password" class="form-control" required>
-                    </label>
+              </span> 
+              <span id="majorField">
+                <label> Major
+                    <input type="text" name="major" placeholder="Major" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                  </label>
+                  <div id="required" *ngIf="majorForm.touched && majorForm.errors" class="invalid-feedback">
+                      Please enter your major
                   </div>
-                  <div class="form-group">
-                    <label> School
-                      <input type="text" name="school" placeholder="School" [(ngModel)]="credentials.school" class="form-control" required>
-                    </label>
-                  </div>
-                  <div class="form-group">
-                    <label> Major
-                      <input type="text" name="major" placeholder="Major" [(ngModel)]="credentials.major" class="form-control" required>
-                    </label>
-                  </div>
+                </span>    
+            </div>
+            <div class="form-group">
+              
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" (click)="register()" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Register</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>      
+            <button type="submit" [disabled]="nameForm.errors || emailForm.errors || passwordForm.errors || schoolForm.errors || majorForm.errors" (click)="register()" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Register</button>
           </div>
         </div>
       </form>
@@ -318,17 +297,21 @@
           </button>
         </div>
         <div class="modal-body">
-          <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo">
+          <!-- <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo"> -->
           
           <div class="form-group">
-            <input type="text" class="form-control" name="code" placeholder="Enter confirmation PIN here"
+            <input type="text" style="width: 40%" class="form-control" name="code" placeholder="Enter confirmation PIN here"
               [(ngModel)]="confirmCredentials.code">
           </div>
           <div class="modal-footer">
             <div id="invalidCode" *ngIf="invalidCode == true">
               <p>Invalid code</p>
             </div>
-            <button type="submit" class="btn btn-primary">Confirm</button>
+            <div id="validCode" *ngIf="validCode">
+              <p>Account Verified!</p>
+            </div>
+            <button *ngIf="!validCode" type="submit" class="btn btn-primary">Confirm</button>
+            <button *ngIf="validCode" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href=#moreInfoModal>More About Me</button>
           </div> 
         </div>
       </div>
@@ -342,17 +325,39 @@
       <form (submit)="submitMoreInfo()">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">More Info</h5>
+            <h5 class="modal-title">More About You</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">            
               <div class="form-group">
-                  <label> Description
-                    <input type="text" name="name" placeholder="Name" [(ngModel)]="credentials.name" class="form-control" required>
+                <div>
+                  <label>
+                    <p style="font-size: 14px">Description</p>
+                    <input type="text" name="description" placeholder="What are you interested in?" [(ngModel)]="moreInfo.description" class="form-control" required>
                   </label>
                 </div>
+                <br>
+                <label>
+                    <p style="font-size: 14px">Select your skills</p>
+                </label>
+                <div *ngFor="let skill of SKILLS_ARRAY" class="form-check">
+                    <label class="form-check-label" for="defaultCheck">
+                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck">
+                      {{skill}}
+                    </label>  
+                </div>
+                <br>            
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span style="font-size: 14px" class="input-group-text">Upload a profile picture</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                    </div>
+                </div>
+              </div>
             <div class="modal-footer">             
               <button type="button" (click)="skipMoreInfo()" class="btn btn-secondary" data-dismiss="modal">Skip for now</button>
               <button type="submit" class="btn btn-primary">Submit</button>
