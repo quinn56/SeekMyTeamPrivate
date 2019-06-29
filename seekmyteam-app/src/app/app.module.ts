@@ -13,7 +13,6 @@ import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
-import { UsersComponent } from './home/users.component';
 import { PostListComponent } from './profile/post-list.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { AlertComponent } from './alerts/alert.component';
@@ -31,7 +30,6 @@ import { SkillsPipe } from './services/pipes/skills.pipe';
 
 // const appRoutes: Routes = [
 //   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
-//   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService]},
 //   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
 //   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
@@ -43,7 +41,6 @@ import { SkillsPipe } from './services/pipes/skills.pipe';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [] },
-  { path: 'users', component: UsersComponent, canActivate: []},
   { path: 'login', component: LoginComponent, canActivate: []},
   { path: 'register', component: RegisterComponent, canActivate: [] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
@@ -62,7 +59,6 @@ const appRoutes: Routes = [
     ProfileComponent,
     NavbarComponent,
     HomeComponent,
-    UsersComponent,
     PostListComponent,
     TeamPageComponent,
     AlertComponent,

@@ -60,13 +60,20 @@
                         <!-- Content Nav Start -->
                         <div class="content--nav pb--30">
                             <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
-                                <li class="active"><a>Projects</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'projects'" class="active"><a
+                                        (click)="changeSelection('projects')">Projects</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'projects'"><a
+                                        (click)="changeSelection('projects')">Projects</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'users'" class="active"><a
+                                        (click)="changeSelection('users')">Users</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'users'"><a
+                                        (click)="changeSelection('users')">Users</a></li>
                             </ul>
                         </div>
                         <!-- Content Nav End -->
 
                         <!-- Activity List Start -->
-                        <div class="activity--list">
+                        <div *ngIf="currentSelection === 'projects'" class="activity--list">
                             <!-- Activity Items Start -->
                             <ul class="activity--items nav">
                                 <li
@@ -101,12 +108,83 @@
                             <!-- Activity Items End -->
                         </div>
                         <!-- Activity List End -->
+
+                        <!-- Filter Nav Start -->
+                        <div *ngIf="currentSelection === 'users'" class="filter--nav pb--60 clearfix">
+                            <div class="filter--link float--left">
+                                <h2 class="h4">All Users: {{users.length}}</h2>
+                            </div>
+
+                            <div class="filter--options float--right">
+                                <label>
+                                    <span class="fs--14 ff--primary fw--500 text-darker">Show By :</span>
+
+                                    <select name="activityfilter" class="form-control form-sm"
+                                        data-trigger="selectmenu">
+                                        <option value="alphabetical">Alphabetical</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Filter Nav End -->
+
+                        <!-- Member Items Start -->
+                        <div *ngIf="currentSelection === 'users'" class="member--items">
+                            <div class="row gutter--15 AdjustRow">
+                                <div class="col-md-3 col-xs-6 col-xxs-12">
+                                    <!-- Member Item Start -->
+                                    <div class="member--item online">
+                                        <div class="img img-circle">
+                                            <a href="member-activity-personal.html" class="btn-link">
+                                                <img src="img/members-img/member-01.jpg" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="name">
+                                            <h3 class="h6 fs--12">
+                                                <a href="member-activity-personal.html" class="btn-link">Rosa R.
+                                                    Secor</a>
+                                            </h3>
+                                        </div>
+
+                                        <div class="activity">
+                                            <p><i class="fa mr--8 fa-clock-o"></i>Active 5 monts ago</p>
+                                        </div>
+
+                                        <div class="actions">
+                                            <ul class="nav">
+                                                <li>
+                                                    <a href="#" title="Send Message" class="btn-link"
+                                                        data-toggle="tooltip" data-placement="bottom">
+                                                        <i class="fa fa-envelope-o"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="Add Friend" class="btn-link"
+                                                        data-toggle="tooltip" data-placement="bottom">
+                                                        <i class="fa fa-user-plus"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="Media" class="btn-link" data-toggle="tooltip"
+                                                        data-placement="bottom">
+                                                        <i class="fa fa-folder-o"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Member Item End -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Main Content End -->
 
-                <!-- Main Sidebar Start -->
-                <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                <!-- Project Main Sidebar Start -->
+                <div *ngIf="currentSelection === 'projects'" class="main--sidebar col-md-4 pb--60"
+                    data-trigger="stickyScroll">
                     <!-- Widget Start -->
                     <div class="widget">
                         <h2 class="h4 fw--700 widget--title">Find A Project</h2>
@@ -115,8 +193,7 @@
                         <div class="buddy-finder--widget">
                             <h2 class="h4 fw--700 widget--title">Project Name</h2>
                             <label>
-                                <input class="form-control" [(ngModel)]="searchText"
-                                    placeholder="Search by project name">
+                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by name">
                             </label>
                         </div>
                         <!-- Buddy Finder Widget End -->
@@ -149,8 +226,70 @@
                         <!-- Buddy Finder Widget End -->
                     </div>
                     <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Advertisements</h2>
+
+                        <!-- Ad Widget Start -->
+                        <div class="ad--widget">
+                            <a href="#">
+                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
+                            </a>
+                        </div>
+                        <!-- Ad Widget End -->
+                    </div>
+                    <!-- Widget End -->
                 </div>
-                <!-- Main Sidebar End -->
+                <!-- Project Main Sidebar End -->
+
+                <!-- User Main Sidebar Start -->
+                <div *ngIf="currentSelection === 'users'" class="main--sidebar col-md-4 pb--60"
+                    data-trigger="stickyScroll">
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Find A User</h2>
+
+                        <!-- Buddy Finder Widget Start -->
+                        <div class="buddy-finder--widget">
+                            <h2 class="h4 fw--700 widget--title">User Name</h2>
+                            <label>
+                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by name">
+                            </label>
+                        </div>
+                        <!-- Buddy Finder Widget End -->
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Filter By Skills</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select a skill</option>
+                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                    {{skill}}
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Advertisements</h2>
+
+                        <!-- Ad Widget Start -->
+                        <div class="ad--widget">
+                            <a href="#">
+                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
+                            </a>
+                        </div>
+                        <!-- Ad Widget End -->
+                    </div>
+                    <!-- Widget End -->
+                </div>
+                <!-- User Main Sidebar End -->
             </div>
         </div>
     </section>

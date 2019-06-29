@@ -20,10 +20,15 @@ export interface Post {
     templateUrl: './home.component.html'
 })
 export class HomeComponent {
-    /* Home variables */
+    currentSelection: string; // Current topic to be displayed 
+    
+    /* Home project variables */
     posts: Post[];
     private LastEvaluatedKey: any;
     showMore: boolean;
+
+    /* Home user variables */
+    users: any[];
 
     /* Keeps track of a new post */
     newPost: Post;
@@ -53,6 +58,7 @@ export class HomeComponent {
         this.showMore = true;
         this.LastEvaluatedKey = null;
         this.filterSkills = [];
+        this.currentSelection = 'projects'
 
         this.newPost = {
             name: "",
@@ -66,15 +72,29 @@ export class HomeComponent {
         };
 
         this.posts = [];
-
+        this.users = [];
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
             this.sortPosts();
             this.LastEvaluatedKey = data.key;
             this.checkMorePosts();
+
+            this.user_utils.getAllUsers().subscribe(arr => {
+                this.parseUsers(arr.users);
+            }, (err) => {
+                console.error(err);
+            })
         }, (err) => {
             console.error(err);
         });
+    }
+
+    changeSelection(topic: string) {
+        this.currentSelection = topic;
+    }
+
+    buildPic(email: string) {
+        return this.user_utils.buildProfilePicUrl(email);
     }
 
     addSpaces() {
@@ -99,7 +119,17 @@ export class HomeComponent {
         }
         return comparison;
     }
-
+    parseUsers(data) {
+        data.forEach((item) => {
+            let parse = {
+                name: item.name,
+                description: item.description,
+                email: item.email,
+                skills: JSON.parse(item.skills)
+            };
+            this.users.push(parse); 
+        })
+    }
     parsePosts(data) {
         data.forEach((item) => {
             let parse: Post = {
