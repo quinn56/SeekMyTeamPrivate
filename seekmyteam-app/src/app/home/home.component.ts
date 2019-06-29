@@ -12,7 +12,8 @@ export interface Post {
     ownerEmail: string,
     skills: string[],
     date: number,
-    age: string
+    age: string,
+    members: string[]
 }
 
 @Component({
@@ -60,7 +61,8 @@ export class HomeComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
 
         this.posts = [];
@@ -107,7 +109,8 @@ export class HomeComponent {
                 ownerEmail: item.OwnerEmail.S,
                 skills: JSON.parse(item.Skills.S),
                 date: parseInt(item.Date.S),
-                age: this.date_func.buildDate(parseInt(item.Date.S))
+                age: this.date_func.buildDate(parseInt(item.Date.S)),
+                members: JSON.parse(item.Members.S)
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -174,7 +177,8 @@ export class HomeComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
     }
 

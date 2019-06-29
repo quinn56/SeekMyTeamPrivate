@@ -12,7 +12,7 @@ import { Post } from '../home/home.component';
 export class TeamPageComponent {
     getName: string; // Name of project to display
     post: Post;      // Post retrieved by name
-    currentSelection: string; // Current topic to be displayed 
+    currentSelection: string; // Current topic to be displayed (post info, members, etc.)
 
     /* Post to keep track of edits without changing before save */
     editPost: Post;
@@ -38,7 +38,8 @@ export class TeamPageComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
 
         this.editPost = {
@@ -48,7 +49,8 @@ export class TeamPageComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
 
         this.route.params.subscribe(params => {
@@ -64,7 +66,7 @@ export class TeamPageComponent {
         });
     }
 
-    parsePost(item) {
+    parsePost(item): Post {
         return {
             name: item.Name.S,
             description: item.Description.S,
@@ -72,7 +74,8 @@ export class TeamPageComponent {
             ownerEmail: item.OwnerEmail.S,
             skills: JSON.parse(item.Skills.S),
             date: parseInt(item.Date.S),
-            age: this.date_func.buildDate(parseInt(item.Date.S))
+            age: this.date_func.buildDate(parseInt(item.Date.S)),
+            members: JSON.parse(item.Members.S)
         };
     }
 
@@ -137,7 +140,7 @@ export class TeamPageComponent {
 
     savePost() {
         this.post = this.editPost;
-        this.post_utils.update(this.post.name, this.post.description, JSON.stringify(this.post.skills)).subscribe(data => {
+        this.post_utils.update(this.post.name, this.post.description, JSON.stringify(this.post.skills), JSON.stringify(this.post.members)).subscribe(data => {
             location.reload();
         }, (err) => {
             console.log(err);
@@ -152,7 +155,8 @@ export class TeamPageComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
     }
 }

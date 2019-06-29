@@ -143,15 +143,18 @@ router.post('/createPost', auth, function(req, res) {
         if (err) {
             res.status(500).end();
         } else {
-            postList = JSON.parse(data.Item.Posts.S); 
-    
+            postList = JSON.parse(data.Item.Posts.S);
+            var arr = [ownerEmail]; 
+            var members = JSON.stringify(arr);
+            
             var postItem = {
                 'Name': {'S': name},
                 'Description' : {'S' : description},
                 'OwnerName': {'S': ownerName},
                 'OwnerEmail': {'S': ownerEmail},
                 'Skills': {'S': skills},
-                'Date': {'S': date}
+                'Date': {'S': date},
+                'Members': {'S' : members}
             };
         
             var postParams = { 
@@ -211,11 +214,13 @@ router.post('/updatePost', auth, function(req, res) {
     var name = req.body.name;
     var description = req.body.description;
     var skills = req.body.skills;
+    var members = req.body.members;
     
     var params = {
         ExpressionAttributeNames: {
          "#C": 'Description',
-         '#S': 'Skills'
+         '#S': 'Skills',
+         '#M': 'Members'
         }, 
         ExpressionAttributeValues: {
          ":c": {
@@ -223,6 +228,9 @@ router.post('/updatePost', auth, function(req, res) {
           },
           ":s": {
             'S': skills
+          },
+          ":m": {
+            'S': members
           }
         }, 
         Key: {
@@ -231,7 +239,7 @@ router.post('/updatePost', auth, function(req, res) {
           }
         }, 
         TableName: process.env.POSTS_TABLE, 
-        UpdateExpression: "SET #C = :c, #S = :s"
+        UpdateExpression: "SET #C = :c, #S = :s, #M = :m"
     };
 
     database.updateItem(params, function(err, data) {
