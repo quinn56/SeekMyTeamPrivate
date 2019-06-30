@@ -131,25 +131,24 @@
                         <!-- Member Items Start -->
                         <div *ngIf="currentSelection === 'users'" class="member--items">
                             <div class="row gutter--15 AdjustRow">
-                                <div class="col-md-3 col-xs-6 col-xxs-12">
+                                <div *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" class="col-md-3 col-xs-6 col-xxs-12">
                                     <!-- Member Item Start -->
-                                    <div class="member--item online">
+                                    <div (click)="routeProfileString(user.email)" class="member--item online">
                                         <div class="img img-circle">
-                                            <a href="member-activity-personal.html" class="btn-link">
-                                                <img src="img/members-img/member-01.jpg" alt="">
+                                            <a class="btn-link">
+                                                <img src="buildPic(user.email)" alt="">
                                             </a>
                                         </div>
 
                                         <div class="name">
                                             <h3 class="h6 fs--12">
-                                                <a href="member-activity-personal.html" class="btn-link">Rosa R.
-                                                    Secor</a>
+                                                <a class="btn-link">{{user.name}}</a>
                                             </h3>
                                         </div>
 
-                                        <div class="activity">
+                                        <!-- <div class="activity">
                                             <p><i class="fa mr--8 fa-clock-o"></i>Active 5 monts ago</p>
-                                        </div>
+                                        </div> -->
 
                                         <div class="actions">
                                             <ul class="nav">

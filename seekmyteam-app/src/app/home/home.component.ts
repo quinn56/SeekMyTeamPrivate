@@ -215,6 +215,10 @@ export class HomeComponent {
     routeProfile(post: Post) {
         this.router.navigateByUrl('/profile/' + post.ownerEmail);
     }
+    
+    routeProfileString(str: string) {
+        this.router.navigateByUrl('/profile/' + str);
+    }
 
     routeProject(post: Post) {
         this.router.navigateByUrl('/project/' + post.name);
