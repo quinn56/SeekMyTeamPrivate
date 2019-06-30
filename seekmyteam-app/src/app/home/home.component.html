@@ -133,10 +133,10 @@
                             <div class="row gutter--15 AdjustRow">
                                 <div *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" class="col-md-3 col-xs-6 col-xxs-12">
                                     <!-- Member Item Start -->
-                                    <div (click)="routeProfileString(user.email)" class="member--item online">
+                                    <div style="cursor: pointer;" (click)="routeProfileString(user.email)" class="member--item online">
                                         <div class="img img-circle">
                                             <a class="btn-link">
-                                                <img src="buildPic(user.email)" alt="">
+                                                <img [src]="buildPic(user.email)" alt="">
                                             </a>
                                         </div>
 

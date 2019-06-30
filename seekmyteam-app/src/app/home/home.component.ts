@@ -78,18 +78,25 @@ export class HomeComponent {
             this.sortPosts();
             this.LastEvaluatedKey = data.key;
             this.checkMorePosts();
+        }, (err) => {
+            console.error(err);
+        });
 
-            this.user_utils.getAllUsers().subscribe(arr => {
-                this.parseUsers(arr.users);
-            }, (err) => {
-                console.error(err);
-            })
+        this.user_utils.getAllUsers().subscribe(arr => {
+            this.parseUsers(arr.users);
         }, (err) => {
             console.error(err);
         });
     }
 
+    resetFilters() {
+        this.filterSkills = [];
+        this.searchText = '';
+        this.ownerText = '';
+    }
+
     changeSelection(topic: string) {
+        this.resetFilters();
         this.currentSelection = topic;
     }
 
