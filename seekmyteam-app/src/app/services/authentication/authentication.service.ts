@@ -19,6 +19,7 @@ export interface RegisterPayload {
   name: string;
   school: string;
   major: string;
+  minor: string;
 }
 
 export interface ConfirmPayload {

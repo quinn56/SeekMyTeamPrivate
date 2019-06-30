@@ -28,7 +28,10 @@ router.post('/', function(req, res) {
         'Skills': {'S': JSON.stringify(empty)},
         'Image': {'S': ' '},
         'Facebook': {'S': ' '},
-        'Linkedin': {'S': ' '}
+        'Linkedin': {'S': ' '},
+        'Major': {'S': req.body.major},
+        'Minor': {'S': req.body.minor},
+        'School': {'S': req.body.school}
     };
 
     var params = { 
