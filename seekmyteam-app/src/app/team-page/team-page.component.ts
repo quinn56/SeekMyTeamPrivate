@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { AlertService } from '../services/alerts/alert.service';
@@ -13,6 +13,7 @@ export class TeamPageComponent {
     getName: string; // Name of project to display
     post: Post;      // Post retrieved by name
     currentSelection: string; // Current topic to be displayed (post info, members, etc.)
+    members: any[];             // Cantians user information for members of this project
 
     /* Post to keep track of edits without changing before save */
     editPost: Post;
@@ -25,12 +26,14 @@ export class TeamPageComponent {
         private post_utils: PostUtilsService,
         private alert: AlertService,
         private route: ActivatedRoute,
+        private router: Router,
         private date_func: PostDateService,
         private user_utils: UserUtilsService
     ) { }
 
     ngOnInit() {
         this.currentSelection = 'home';
+        this.members = [];
         this.post = {
             name: "",
             description: "",
@@ -58,6 +61,7 @@ export class TeamPageComponent {
 
             this.post_utils.fetchPost(this.getName).subscribe((data) => {
                 this.post = this.parsePost(data.post);
+                this.loadMembers();
             }, (err) => {
                 console.log(err);
             });
@@ -77,6 +81,14 @@ export class TeamPageComponent {
             age: this.date_func.buildDate(parseInt(item.Date.S)),
             members: JSON.parse(item.Members.S)
         };
+    }
+
+    loadMembers() {
+        this.post.members.forEach(member => {
+            this.user_utils.getProfile(member).subscribe(data => {
+                this.members.push(data.user);
+            })
+        });
     }
 
     changeSelection(topic: string) {
@@ -126,6 +138,10 @@ export class TeamPageComponent {
         }, (err) => {
             console.log(err);
         });
+    }
+
+    routeProfileString(str: string) {
+        this.router.navigateByUrl('/profile/' + str);
     }
 
     selectedAddSkill(skill: string) {
