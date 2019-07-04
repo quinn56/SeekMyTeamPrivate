@@ -21,7 +21,7 @@
     width: 20%;
   }
   
-  #invalidCode {
+  #invalidText {
     color: red;
     font-weight: bold;
     font-size: 14px;
@@ -119,7 +119,7 @@
                     </div>
 
                     <div class="action text-uppercase">
-                      <a routerLink="/login" class="btn btn-primary" >Already
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Already
                         have an account? Login Here</a>
                       <a class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
                         New here? Click to register</a>
@@ -217,6 +217,49 @@
   </section>
   <!-- Features Section End -->
 
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form (submit)="login()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirm email</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span style="display: inline-block; width: 50%; padding-right: 3%">
+              <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Email"
+                    [(ngModel)]="loginCredentials.email">
+              </div>
+            </span>
+            <span style="display: inline-block; width: 50%">
+              <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password"
+                  [(ngModel)]="loginCredentials.password">
+              </div>
+            </span>
+            <div class="modal-footer">
+              <div id="invalidText" *ngIf="invalidLoginEmail">
+                <p>Please confirm your email first</p>
+              </div>
+              <div id="invalidText" *ngIf="invalidLoginEmail">
+                  <p>No user with that email found</p>
+                </div>
+              <div id="invalidText" *ngIf="invalidLoginPassword">
+                <p>Incorrect password</p>
+              </div>
+              <button *ngIf="!unconfirmedEmail" type="submit" class="btn btn-primary">Login</button>
+              <button *ngIf="unconfirmedEmail" class="btn btn-primary" (click)="resendCode()" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Confirm Email</button>
+            </div> 
+          </div>
+        </div>
+      </form>
+    </div>
+</div>
+
 <!-- Register Modal -->
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -298,7 +341,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>      
             <button type="submit" [disabled]="nameForm.errors || emailForm.errors || passwordForm.errors || schoolForm.errors || majorForm.errors" (click)="register()" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Register</button>
-            <div id="invalidCode" *ngIf="invalidEmail == true">
+            <div id="invalidText" *ngIf="invalidEmail == true">
                 <p>A user with that email already exists</p>
             </div>
           </div>
@@ -319,14 +362,15 @@
           </button>
         </div>
         <div class="modal-body">
-          <!-- <img src="assets/logo.png" class="text-center mt-4 mb-4 rounded" id="pic_logo"> -->
-          
+          <div *ngIf="unconfirmedEmail">
+            <p>Confirmation code was resent. Please enter the code to confirm your account</p>
+          </div>      
           <div class="form-group">
             <input type="text" style="width: 40%" class="form-control" name="code" placeholder="Enter confirmation PIN here"
               [(ngModel)]="confirmCredentials.code">
           </div>
           <div class="modal-footer">
-            <div id="invalidCode" *ngIf="invalidCode == true">
+            <div id="invalidText" *ngIf="invalidCode == true">
               <p>Invalid code</p>
             </div>
             <div id="validCode" *ngIf="validCode">
