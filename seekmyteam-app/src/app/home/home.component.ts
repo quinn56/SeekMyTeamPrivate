@@ -12,33 +12,31 @@ export interface Post {
     ownerEmail: string,
     skills: string[],
     date: number,
-    age: string
+    age: string,
+    members: string[]
 }
 
 @Component({
-  templateUrl: './home.component.html'
+    templateUrl: './home.component.html'
 })
 export class HomeComponent {
-    /* Home variables */    
+    currentSelection: string; // Current topic to be displayed 
+    
+    /* Home project variables */
     posts: Post[];
-    private LastEvaluatedKey: any; 
+    private LastEvaluatedKey: any;
     showMore: boolean;
-    selectedPost: Post;
-    
-    /* Post to keep track of edits without changing before save */
-    editPost: Post;
 
-    /* Keeps track of a new post */ 
+    /* Home user variables */
+    users: any[];
+
+    /* Keeps track of a new post */
     newPost: Post;
-    
+
     /* Filter variables */
     searchText: string;
     filterSkills: string[];
     ownerText: string;
-
-    /* Post modal variables */
-    isOP: boolean;
-    showApply: boolean; 
 
     SKILLS_ARRAY: string[] = [
         'Web Development',
@@ -55,11 +53,12 @@ export class HomeComponent {
         private router: Router,
         private date_func: PostDateService
     ) { }
-    
+
     ngOnInit() {
         this.showMore = true;
         this.LastEvaluatedKey = null;
         this.filterSkills = [];
+        this.currentSelection = 'projects'
 
         this.newPost = {
             name: "",
@@ -68,40 +67,43 @@ export class HomeComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
-        };
-        this.selectedPost = {
-            name: "",
-            description: "",
-            ownerName: "",
-            ownerEmail: "",
-            skills: [],
-            date: 0,
-            age: ""
-        };
-
-        this.editPost = {
-            name: "",
-            description: "",
-            ownerName: "",
-            ownerEmail: "",
-            skills: [],
-            date: 0,
-            age: ""
+            age: "",
+            members: []
         };
 
         this.posts = [];
-        
+        this.users = [];
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
             this.sortPosts();
-            this.LastEvaluatedKey = data.key; 
+            this.LastEvaluatedKey = data.key;
             this.checkMorePosts();
         }, (err) => {
             console.error(err);
         });
+
+        this.user_utils.getAllUsers().subscribe(arr => {
+            this.parseUsers(arr.users);
+        }, (err) => {
+            console.error(err);
+        });
     }
-    
+
+    resetFilters() {
+        this.filterSkills = [];
+        this.searchText = '';
+        this.ownerText = '';
+    }
+
+    changeSelection(topic: string) {
+        this.resetFilters();
+        this.currentSelection = topic;
+    }
+
+    buildPic(email: string) {
+        return this.user_utils.buildProfilePicUrl(email);
+    }
+
     addSpaces() {
         if (this.newPost.description.length === 0) {
             this.newPost.description = ' ';
@@ -115,16 +117,26 @@ export class HomeComponent {
     compare(a, b) {
         const A = a.date;
         const B = b.date;
-      
+
         let comparison = 0;
         if (A > B) {
-          comparison = -1;
+            comparison = -1;
         } else if (A < B) {
-          comparison = 1;
+            comparison = 1;
         }
         return comparison;
-      }
-
+    }
+    parseUsers(data) {
+        data.forEach((item) => {
+            let parse = {
+                name: item.name,
+                description: item.description,
+                email: item.email,
+                skills: JSON.parse(item.skills)
+            };
+            this.users.push(parse); 
+        })
+    }
     parsePosts(data) {
         data.forEach((item) => {
             let parse: Post = {
@@ -134,19 +146,20 @@ export class HomeComponent {
                 ownerEmail: item.OwnerEmail.S,
                 skills: JSON.parse(item.Skills.S),
                 date: parseInt(item.Date.S),
-                age: this.date_func.buildDate(parseInt(item.Date.S))
+                age: this.date_func.buildDate(parseInt(item.Date.S)),
+                members: JSON.parse(item.Members.S)
             };
             if (parse.description === ' ') {
                 parse.description = '';
             }
-            this.posts.push(parse); 
+            this.posts.push(parse);
         })
     }
 
     fetchMore() {
         this.post_utils.fetchPosts(this.LastEvaluatedKey).subscribe(data => {
             this.posts = this.posts.concat(data.posts);
-            this.LastEvaluatedKey = data.key; 
+            this.LastEvaluatedKey = data.key;
             this.checkMorePosts();
         }, (err) => {
             console.error(err);
@@ -156,25 +169,9 @@ export class HomeComponent {
     checkMorePosts() {
         if (!this.LastEvaluatedKey) {
             this.showMore = false;
-        } else { 
+        } else {
             this.showMore = true;
         }
-    }
-
-    displayPost(item) {
-        this.selectedPost = item;
-        this.copyEditPost();
-
-        this.showApply = true;
-        this.checkOP();
-    }
-
-    copyEditPost() {
-        this.editPost.name = this.selectedPost.name;
-        this.editPost.description = this.selectedPost.description;
-        this.editPost.ownerEmail = this.selectedPost.ownerEmail;
-        this.editPost.ownerName = this.selectedPost.ownerName;
-        this.editPost.skills = this.selectedPost.skills.slice();
     }
 
     addNewPost() {
@@ -195,7 +192,7 @@ export class HomeComponent {
             });
         }, (err) => {
             console.error(err);
-        });        
+        });
     }
 
     addSkill(skill: string) {
@@ -217,77 +214,21 @@ export class HomeComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
     }
-    
-    profileRedirect() {
-        this.router.navigateByUrl('/profile/' + this.selectedPost.ownerEmail);
-    }
-    
+
     routeProfile(post: Post) {
         this.router.navigateByUrl('/profile/' + post.ownerEmail);
     }
-
-    checkOP() {
-        if (this.selectedPost) { 
-            if (this.selectedPost.ownerEmail === this.user_utils.getCurrentUserDetails().email) {
-                this.isOP = true;
-            } else {
-                this.isOP = false;
-            }
-        }
+    
+    routeProfileString(str: string) {
+        this.router.navigateByUrl('/profile/' + str);
     }
 
-    apply() {
-        this.post_utils.apply(this.selectedPost.ownerEmail, this.user_utils.getCurrentUserDetails().email).subscribe(data => {
-            this.showApply = false;
-            this.user_utils.markApplied(JSON.stringify(this.selectedPost)).subscribe((ret) => {
-            }, (err) => {
-                console.log(err);
-            }) 
-        }, (err) => {
-            console.log(err);
-        });
-    }
-
-    deletePost(idx:number) {
-        this.post_utils.delete(this.selectedPost.name).subscribe(data => {  
-            this.posts.splice(idx,1);
-        }, (err) => {
-            console.log(err);
-        });
-    }
-
-    selectedAddSkill(skill: string) {
-        if (!this.editPost.skills.includes(skill)) {
-            this.editPost.skills.push(skill);
-        }
-    }
-
-    selectedDeleteSkill(idx: number) {
-        this.editPost.skills.splice(idx, 1);
-    }
-
-    saveSelectedPost() {
-        this.selectedPost = this.editPost;
-        this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills)).subscribe(data => {
-            location.reload();
-        }, (err) => {
-            console.log(err);
-        })
-    }
-
-    clearEdit() {
-        this.editPost = {
-            name: "",
-            description: "",
-            ownerName: "",
-            ownerEmail: "",
-            skills: [],
-            date: 0,
-            age: ""
-        };
+    routeProject(post: Post) {
+        this.router.navigateByUrl('/project/' + post.name);
     }
 
     filterAddSkill(skill: string) {

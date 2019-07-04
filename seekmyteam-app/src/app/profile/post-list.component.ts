@@ -53,7 +53,8 @@ export class PostListComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
 
         this.editPost = {
@@ -63,7 +64,8 @@ export class PostListComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
 
 
@@ -107,7 +109,8 @@ export class PostListComponent {
                 ownerEmail: item.OwnerEmail.S,
                 skills: JSON.parse(item.Skills.S),
                 date: parseInt(item.Date.S),
-                age: this.date_func.buildDate(parseInt(item.Date.S))
+                age: this.date_func.buildDate(parseInt(item.Date.S)),
+                members: JSON.parse(item.Members.S)
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -163,7 +166,7 @@ export class PostListComponent {
 
     saveSelectedPost() {
         this.selectedPost = this.editPost;
-        this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills)).subscribe(data => {
+        this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills), JSON.stringify(this.selectedPost.members)).subscribe(data => {
             location.reload();
         }, (err) => {
             console.log(err);
@@ -178,7 +181,8 @@ export class PostListComponent {
             ownerEmail: "",
             skills: [],
             date: 0,
-            age: ""
+            age: "",
+            members: []
         };
     }
     deletePost(idx:number) {

@@ -1,8 +1,65 @@
-<!-- Preloader Start -->
-<div id="preloader">
-    <div class="preloader--inner"></div>
+<!-- Post Edit Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ editPost.name }}</h4><br>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h6 class="text-left">{{ post.ownerName }}</h6>
+                        <p class="text-left">{{ post.ownerEmail }}</p>
+                    </div>
+                    <div class="col-sm-8 border-left">
+                        <h6>Project Description</h6>
+                        <p *ngIf="!isOP">{{ post.description }}</p>
+                        <textarea *ngIf="isOP" [(ngModel)]="editPost.description" rows="3"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div *ngIf="isOP" class="col-sm-4">
+                        <div class="form-group">
+                            <h6>Skills Needed</h6>
+                            <select class="form-control" id="selectedSkill" #sk (change)="selectedAddSkill(sk.value)">
+                                <option value="Select a skill" disabled>Select a skill</option>
+                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                    {{skill}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="isOP" class="col-sm-8 mt-2">
+                        <br>
+                        <button type="button" class="btn btn-outline-info mr-2"
+                            *ngFor="let item of editPost.skills; let i = index"
+                            (click)="selectedDeleteSkill(i)">{{item}}</button>
+                    </div>
+                    <div *ngIf="!isOP" class="col-sm-8 mt-2">
+                        <br>
+                        <button type="button" class="btn btn-outline-info mr-2"
+                            *ngFor="let item of post.skills; let i = index">{{item}}</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="isOP" (click)="deletePost()" class="btn btn-danger mr-auto"
+                    data-dismiss="modal">Delete</button>
+                <button class="btn btn-secondary pl-6 pr-6" (click)='clearEdit()' data-dismiss="modal">Close</button>
+                <button *ngIf="!isOP && showApply" (click)="apply()" class="btn btn-primary pl-6 pr-6"
+                    data-dismiss="modal">Apply</button>
+                <button *ngIf="isOP" (click)="saveSelectedPost()" data-dismiss="modal"
+                    class="btn btn-success pl-6 pr-6">Save</button>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- Preloader End -->
+<!-- End of post edit modal -->
 
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -15,31 +72,12 @@
             </div>
 
             <div class="cover--user-name">
-                <h2 class="h3 fw--600">{{post.name}}</h2>
+                <h2 style="cursor: pointer;" class="h3 fw--600" (click)="displayPost()" data-toggle="modal" data-target="#postModal">
+                    {{post.name}}</h2>
             </div>
 
             <div class="cover--user-activity">
                 <p><i class="fa mr--8 fa-clock-o"></i>{{post.age}}</p>
-            </div>
-
-            <div class="cover--avatars">
-                <ul class="nav">
-                    <li>
-                        <a href="member-activity-personal.html" data-overlay="0.3" data-overlay-color="primary">
-                            <img src="img/group-img/admin-avatar-01.jpg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="member-activity-personal.html" data-overlay="0.3" data-overlay-color="primary">
-                            <img src="img/group-img/admin-avatar-02.jpg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="member-activity-personal.html" data-overlay="0.3" data-overlay-color="primary">
-                            <img src="img/group-img/admin-avatar-03.jpg" alt="">
-                        </a>
-                    </li>
-                </ul>
             </div>
 
             <div class="cover--user-desc fw--400 fs--18 fstyle--i text-darkest">
@@ -59,10 +97,14 @@
                         <!-- Content Nav Start -->
                         <div class="content--nav pb--30">
                             <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
-                                <li style="cursor: pointer;" *ngIf="currentSelection === 'home'" class="active"><a (click)="changeSelection('home')">Home</a></li>
-                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'home'"><a (click)="changeSelection('home')">Home</a></li>
-                                <li style="cursor: pointer;" *ngIf="currentSelection === 'members'" class="active"><a (click)="changeSelection('members')">Members</a></li>
-                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'members'"><a (click)="changeSelection('members')">Members</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'home'" class="active"><a
+                                        (click)="changeSelection('home')">Home</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'home'"><a
+                                        (click)="changeSelection('home')">Home</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'members'" class="active"><a
+                                        (click)="changeSelection('members')">Members</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'members'"><a
+                                        (click)="changeSelection('members')">Members</a></li>
                             </ul>
                         </div>
                         <!-- Content Nav End -->

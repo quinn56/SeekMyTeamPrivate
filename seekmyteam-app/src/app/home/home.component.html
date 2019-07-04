@@ -1,195 +1,52 @@
-<!-- <div class="container-fluid wrapper">
-    <div class="row pr-3" style="height: 100vh">
-        <div class="col-3 bg-secondary">
-            <div style="position: sticky; position: -webkit-sticky; top: 0">
-                <br>
-                <h3 class="text-center">Filter</h3>
-                <hr class="border-bottom mb-2">
-                <h6>Search By Project Name</h6>
-                <input class="form-control" [(ngModel)]="searchText" placeholder="Search">
+<!-- New Post Modal -->
+<div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">What project is on your mind?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter project name"
+                        [(ngModel)]="newPost.name">
+                </div>
 
-                <div class="form-group mt-3">
-                    <h6>Filter By Skills</h6>
-                    <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea type="text" class="form-control" rows="2" name="description"
+                        placeholder="Enter project description" [(ngModel)]="newPost.description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectSkill">Skills Needed</label>
+                    <select class="form-control" id="selectSkill" #s (change)="addSkill(s.value)">
                         <option value="Select a skill" disabled>Select a skill</option>
                         <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
                             {{skill}}
                         </option>
                     </select>
                 </div>
-                       
-                <div  class="col-sm-8 mt-2">
-                    <br>
-                    <button type="button" class="btn btn-warning m-1 form-control text-truncate" *ngFor="let item of filterSkills; let i = index" (click)="filterDeleteSkill(i)">{{item}}</button>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-outline-info mr-2"
+                        *ngFor="let item of newPost.skills; let idx = index"
+                        (click)="deleteSkill(idx)">{{item}}</button>
                 </div>
+
             </div>
-        </div>
-        <div class="col-9 pl-3 pr-3">
-
-             -->
-<!-- <input class="form-control" [(ngModel)]="searchText" placeholder="Search"> -->
-
-<!-- Create New post Card -->
-<!-- <div class="card mb-4 mt-2">
-                <div style="cursor: pointer" class="card-header text-center" data-toggle="modal" data-target="#newPostModal">
-                    <a href="#" class="text-dark mr-2 font-weight-light">Create New Post</a>
-                    <img src="assets/writing.svg" height="30" alt="a responsive img" class="float-right mr-2">
-                </div>
-            </div> -->
-
-<!-- Posting cards -->
-<!-- <div style="cursor: pointer;" class="card text-center mb-3" *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
-                <div class="card-header text-left">
-                    <h4>{{post.name}}</h4>
-                </div>
-                <div class="card-body text-left">
-                    <h6>{{post.description}}</h6>
-                    <div class="form-group mt-3 mb-0">
-                        <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of post.skills; let i = index">{{item}}</button>
-                    </div>
-                </div>
-            </div> -->
-
-<!-- Modal -->
- <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">What project is on your mind?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter project name"
-                                    [(ngModel)]="newPost.name">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea type="text" class="form-control" rows="2" name="description" placeholder="Enter project description"
-                                    [(ngModel)]="newPost.description"></textarea>   
-                            </div>        
-
-                            <div class="form-group">
-                                <label for="selectSkill">Skills Needed</label>
-                                <select class="form-control" id="selectSkill" #s (change)="addSkill(s.value)">
-                                    <option value="Select a skill" disabled>Select a skill</option>
-                                    <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
-                                        {{skill}}
-                                    </option>
-                                </select>
-                            </div>
-
-                            
-
-                            <div *ngIf="isOP" class="form-group">
-                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of newPost.skills; let idx = index" (click)="deleteSkill(idx)">{{item}}</button>
-                            </div>
-                            <div *ngIf="!isOP" class="form-group">
-                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of newPost.skills; let idx = index" >{{item}}</button>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" (click)="clearNewPost()" data-dismiss="modal">Close</button>
-                            <button type="button" (click)="addNewPost()" data-dismiss="modal" class="btn btn-primary">Post</button>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-<!-- End of modal -->
-
-<!-- The coolest of Modals -->
-<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="false">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">{{ editPost.name }}</h4><br>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <h6 class="text-left">{{ selectedPost.ownerName }}</h6> 
-                                <p class="text-left">{{ selectedPost.ownerEmail }}</p>
-                            </div>
-                            <div class="col-sm-8 border-left">
-                                <h6>Project Description</h6>
-                                <p *ngIf="!isOP">{{ selectedPost.description }}</p>
-                                <textarea *ngIf="isOP" [(ngModel)]="editPost.description" rows="3" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div *ngIf="isOP" class="col-sm-4">
-                                <div class="form-group">
-                                    <h6>Skills Needed</h6>
-                                    <select class="form-control" id="selectedSkill" #sk (change)="selectedAddSkill(sk.value)">
-                                        <option value="Select a skill" disabled>Select a skill</option>
-                                        <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
-                                            {{skill}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div *ngIf="isOP" class="col-sm-8 mt-2">
-                                <br>
-                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of editPost.skills; let i = index" (click)="selectedDeleteSkill(i)">{{item}}</button>
-                            </div>
-                            <div *ngIf="!isOP" class="col-sm-8 mt-2">
-                                <br>
-                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of selectedPost.skills; let i = index" >{{item}}</button>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button *ngIf="isOP" (click)="deletePost()" class="btn btn-danger mr-auto" data-dismiss="modal">Delete</button>
-                        <button class="btn btn-secondary pl-6 pr-6" (click)='clearEdit()' data-dismiss="modal">Close</button>
-                        <button *ngIf="!isOP && showApply" (click)="apply()" class="btn btn-primary pl-6 pr-6" data-dismiss="modal">Apply</button>
-                        <button *ngIf="isOP" (click)="saveSelectedPost()" data-dismiss="modal" class="btn btn-success pl-6 pr-6">Save</button>
-                    </div>
-                    </div>
-                </div>
-            </div> 
-<!-- End of cool modal -->
-<!-- <button *ngIf="showMore" (click)="fetchMore()" class="btn btn-info pl-6 pr-6">Load more</button> 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="clearNewPost()"
+                    data-dismiss="modal">Close</button>
+                <button type="button" (click)="addNewPost()" data-dismiss="modal" class="btn btn-primary">Post</button>
+            </div>
         </div>
     </div>
 </div>
-
-<style>
-.btn-overflow{
-    width:120px;
-    color: #0079c1;
-    height: 2em; 
-    line-height: 1em; 
-    font-size: 20px;
-    font-weight: 400;
-    text-overflow: ellipsis;
-    margin-bottom: 12px;
-    cursor: pointer;
-    word-break: break-all;
-    overflow:hidden;
-    white-space: nowrap;
-}
-.btn-overflow:hover{
-    overflow: visible; 
-    white-space: normal;
-    height:auto; /* just added this line */
-}
-
-</style> -->
-
-<!-- Preloader Start -->
-<div id="preloader">
-    <div class="preloader--inner"></div>
-</div>
-<!-- Preloader End -->
+<!-- End of modal -->
 
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -203,22 +60,32 @@
                         <!-- Content Nav Start -->
                         <div class="content--nav pb--30">
                             <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
-                                <li class="active"><a href="group-home.html">Projects</a></li>
-                                <li><a routerLink="/users">Members</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'projects'" class="active"><a
+                                        (click)="changeSelection('projects')">Projects</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'projects'"><a
+                                        (click)="changeSelection('projects')">Projects</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'users'" class="active"><a
+                                        (click)="changeSelection('users')">Users</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'users'"><a
+                                        (click)="changeSelection('users')">Users</a></li>
                             </ul>
                         </div>
                         <!-- Content Nav End -->
 
                         <!-- Activity List Start -->
-                        <div class="activity--list">
+                        <div *ngIf="currentSelection === 'projects'" class="activity--list">
                             <!-- Activity Items Start -->
                             <ul class="activity--items nav">
-                                <li *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills' | filter:ownerText:'ownerName'; let idx = index">
+                                <li
+                                    *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills' | filter:ownerText:'ownerName'; let idx = index">
                                     <!-- Activity Item Start -->
                                     <div class="activity--item">
                                         <div class="activity--info fs--14">
                                             <div class="activity--header">
-                                                <p><a style="cursor: pointer;" (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">{{post.name}}</a> posted by <a style="cursor: pointer" (click)="routeProfile(post)">{{post.ownerName}}</a></p>
+                                                <p><a style="cursor: pointer;"
+                                                        (click)="routeProject(post)">{{post.name}}</a>
+                                                    posted by <a style="cursor: pointer"
+                                                        (click)="routeProfile(post)">{{post.ownerName}}</a></p>
                                             </div>
 
                                             <div class="activity--meta fs--12">
@@ -229,7 +96,9 @@
                                                 <p>{{post.description}}</p>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-outline-info mr-2" *ngFor="let item of post.skills; let i = index" (click)="selectedDeleteSkill(i)">{{item}}</button>
+                                                <button type="button" class="btn btn-outline-info mr-2"
+                                                    *ngFor="let item of post.skills; let i = index"
+                                                    (click)="selectedDeleteSkill(i)">{{item}}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -239,20 +108,82 @@
                             <!-- Activity Items End -->
                         </div>
                         <!-- Activity List End -->
-                    </div>
 
-                    <!-- Load More Button Start -->
-                    <!-- <div class="load-more--btn pt--30 text-center">
-                        <a href="#" class="btn btn-animate">
-                            <span>See More Activities<i class="fa ml--10 fa-caret-right"></i></span>
-                        </a>
-                    </div> -->
-                    <!-- Load More Button End -->
+                        <!-- Filter Nav Start -->
+                        <div *ngIf="currentSelection === 'users'" class="filter--nav pb--60 clearfix">
+                            <div class="filter--link float--left">
+                                <h2 class="h4">All Users: {{users.length}}</h2>
+                            </div>
+
+                            <div class="filter--options float--right">
+                                <label>
+                                    <span class="fs--14 ff--primary fw--500 text-darker">Show By :</span>
+
+                                    <select name="activityfilter" class="form-control form-sm"
+                                        data-trigger="selectmenu">
+                                        <option value="alphabetical">Alphabetical</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Filter Nav End -->
+
+                        <!-- Member Items Start -->
+                        <div *ngIf="currentSelection === 'users'" class="member--items">
+                            <div class="row gutter--15 AdjustRow">
+                                <div *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" class="col-md-3 col-xs-6 col-xxs-12">
+                                    <!-- Member Item Start -->
+                                    <div style="cursor: pointer;" (click)="routeProfileString(user.email)" class="member--item online">
+                                        <div class="img img-circle">
+                                            <a class="btn-link">
+                                                <img [src]="buildPic(user.email)" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="name">
+                                            <h3 class="h6 fs--12">
+                                                <a class="btn-link">{{user.name}}</a>
+                                            </h3>
+                                        </div>
+
+                                        <!-- <div class="activity">
+                                            <p><i class="fa mr--8 fa-clock-o"></i>Active 5 monts ago</p>
+                                        </div> -->
+
+                                        <div class="actions">
+                                            <ul class="nav">
+                                                <li>
+                                                    <a href="#" title="Send Message" class="btn-link"
+                                                        data-toggle="tooltip" data-placement="bottom">
+                                                        <i class="fa fa-envelope-o"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="Add Friend" class="btn-link"
+                                                        data-toggle="tooltip" data-placement="bottom">
+                                                        <i class="fa fa-user-plus"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="Media" class="btn-link" data-toggle="tooltip"
+                                                        data-placement="bottom">
+                                                        <i class="fa fa-folder-o"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Member Item End -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Main Content End -->
 
-                <!-- Main Sidebar Start -->
-                <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                <!-- Project Main Sidebar Start -->
+                <div *ngIf="currentSelection === 'projects'" class="main--sidebar col-md-4 pb--60"
+                    data-trigger="stickyScroll">
                     <!-- Widget Start -->
                     <div class="widget">
                         <h2 class="h4 fw--700 widget--title">Find A Project</h2>
@@ -261,7 +192,7 @@
                         <div class="buddy-finder--widget">
                             <h2 class="h4 fw--700 widget--title">Project Name</h2>
                             <label>
-                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by project name">
+                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by name">
                             </label>
                         </div>
                         <!-- Buddy Finder Widget End -->
@@ -281,21 +212,83 @@
                         </label>
                     </div>
                     <!-- Widget End -->
-                    
+
                     <!-- Widget Start -->
                     <div class="widget">
-                            <!-- Buddy Finder Widget Start -->
-                            <div class="buddy-finder--widget">
-                                <h2 class="h4 fw--700 widget--title">Owner Name</h2>
-                                <label>
-                                    <input class="form-control" [(ngModel)]="ownerText" placeholder="Search by owner name">
-                                </label>
-                            </div>
-                            <!-- Buddy Finder Widget End -->
+                        <!-- Buddy Finder Widget Start -->
+                        <div class="buddy-finder--widget">
+                            <h2 class="h4 fw--700 widget--title">Owner Name</h2>
+                            <label>
+                                <input class="form-control" [(ngModel)]="ownerText" placeholder="Search by owner name">
+                            </label>
                         </div>
-                        <!-- Widget End -->
+                        <!-- Buddy Finder Widget End -->
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Advertisements</h2>
+
+                        <!-- Ad Widget Start -->
+                        <div class="ad--widget">
+                            <a href="#">
+                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
+                            </a>
+                        </div>
+                        <!-- Ad Widget End -->
+                    </div>
+                    <!-- Widget End -->
                 </div>
-                <!-- Main Sidebar End -->
+                <!-- Project Main Sidebar End -->
+
+                <!-- User Main Sidebar Start -->
+                <div *ngIf="currentSelection === 'users'" class="main--sidebar col-md-4 pb--60"
+                    data-trigger="stickyScroll">
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Find A User</h2>
+
+                        <!-- Buddy Finder Widget Start -->
+                        <div class="buddy-finder--widget">
+                            <h2 class="h4 fw--700 widget--title">User Name</h2>
+                            <label>
+                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by name">
+                            </label>
+                        </div>
+                        <!-- Buddy Finder Widget End -->
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Filter By Skills</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select a skill</option>
+                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                    {{skill}}
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Advertisements</h2>
+
+                        <!-- Ad Widget Start -->
+                        <div class="ad--widget">
+                            <a href="#">
+                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
+                            </a>
+                        </div>
+                        <!-- Ad Widget End -->
+                    </div>
+                    <!-- Widget End -->
+                </div>
+                <!-- User Main Sidebar End -->
             </div>
         </div>
     </section>
