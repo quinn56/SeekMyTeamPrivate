@@ -1,24 +1,17 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { AuthenticationService, RegisterPayload, ConfirmPayload } from '../services/authentication/authentication.service';
+import { AuthenticationService, RegisterPayload, ConfirmPayload, LoginPayload } from '../services/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { majors } from '../../data/majors';
+import { AlertService } from '../services/alerts/alert.service';
 
 class MoreInfo {
     description: any;
     skills: string[];
     image: Object;
-}
-
-class SelectedSkills {
-    wd: boolean;
-    bd: boolean;
-    fsd: false;
-    pm: false;
-    dm: false;
 }
 
 @Component({
@@ -47,13 +40,10 @@ export class RegisterComponent {
         image: null
     }
 
-    // skills: SelectedSkills = {
-    //     wd: false,
-    //     bd: false,
-    //     fsd: false,
-    //     pm: false,
-    //     dm: false
-    // }
+    loginCredentials: LoginPayload = {
+        email: '',
+        password: ''
+    };
 
     skills: any[] = [
         { name: 'Web Development', selected: false}, 
@@ -70,6 +60,9 @@ export class RegisterComponent {
     invalidCode: boolean = false;
     validCode: boolean = false;
     invalidEmail: boolean = false;
+    invalidLoginEmail: boolean = false;
+    invalidLoginPassword: boolean = false;
+    unconfirmedEmail: boolean = false;
 
     nameForm: FormControl;
     emailForm: FormControl;
@@ -85,7 +78,8 @@ export class RegisterComponent {
         private user_utils: UserUtilsService,
         private router: Router,
         private route: ActivatedRoute,
-        private formBuilder: FormBuilder) { }
+        private formBuilder: FormBuilder,
+        private alert: AlertService) { }
 
     ngOnInit() { 
         this.nameForm = new FormControl(['', Validators.required]);
@@ -95,6 +89,25 @@ export class RegisterComponent {
         this.majorForm = new FormControl(['', Validators.required]);
         this.minorForm = new FormControl(['']);
      }
+
+    login() {
+        this.invalidLoginEmail = false;
+        this.invalidLoginPassword = false;
+        this.auth.login(this.loginCredentials).subscribe(() => {
+            location.reload();
+            this.router.navigateByUrl('');
+        }, (err) => {
+            if (err.status == 400) {
+                this.invalidLoginEmail = true;
+            } else if (err.status == 401) {
+                this.unconfirmedEmail = true;
+            } else if (err.status == 402) {
+                this.invalidLoginPassword = true;
+            } else {
+                console.log('Server error: Could not login')
+            }
+        });
+    }
 
     initConfirm() {
         this.confirmCredentials.email = this.credentials.email;
@@ -164,6 +177,10 @@ export class RegisterComponent {
         });
     }
 
+    resendCode() {
+
+    }
+
     skipMoreInfo() {
         this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
     }
@@ -174,8 +191,6 @@ export class RegisterComponent {
             this.moreInfo.description = ' ';
         }
         this.assembleSkills();
-        // console.log(this.moreInfo.description);
-        // console.log(this.moreInfo.skills)
         this.user_utils.updateProfile(this.moreInfo.description,
         JSON.stringify(this.moreInfo.skills), 'facebook.com', 'linkedin.com').subscribe(res => {
             console.log("uploaded correctly");
