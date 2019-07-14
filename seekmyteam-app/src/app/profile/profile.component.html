@@ -18,17 +18,11 @@
                 </div>
     
                 <div class="cover--user-name">
-                    <!-- <h2 class="h3 fw--600">Shengqi Wang</h2> -->
                     <h2 class="h3 fw--600">{{ details?.name }}</h2>
                 </div>
     
-                <div class="cover--user-activity">
-                    <!-- <p><i class="fa mr--8 fa-clock-o"></i>Active 1 year 9 monts ago</p> -->
-                </div>
-    
                 <div class="cover--user-desc fw--400 fs--18 fstyle--i text-darkest">
-                    <!-- <p>Sample description. Love to grow avocados :)</p> -->
-                    <p [(ngModel)]="editDetails.description"></p>
+                    <p [(ngModel)]="details.description"></p>
                 </div>
             </div>
         </div>
@@ -45,122 +39,128 @@
                             <div class="content--nav pb--30">
                                 <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
                                     <!-- <li class="active"><a href="member-activity-personal.html">Activity</a></li> -->
-                                    <li><a href="member-profile.html">Profile</a></li>
-                                    <li><a href="member-groups.html">Teams</a></li>
+                                    <li><a>Profile</a></li>
                                 </ul>
                             </div>
                             <!-- Content Nav End -->
     
-                            <!-- Activity List Start -->
-                            <div class="activity--list">
-                                <!-- Activity Items Start -->
-                                <ul class="activity--items nav">
-                                    <li>
-                                        <!-- Activity Item Start -->
-                                        <div class="activity--item">
-                                            <div class="activity--avatar">
-                                                <a href="member-activity-personal.html">
-                                                    <img src="img/activity-img/avatar-01.jpg" alt="">
-                                                </a>
-                                            </div>
-    
-                                            <div class="activity--info fs--14">
-                                                <div class="activity--header">
-                                                    <p><a href="member-activity-personal.html">Eileen K. Ruiz</a> posted an
-                                                        update</p>
-                                                </div>
-    
-                                                <div class="activity--meta fs--12">
-                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                                </div>
-    
-                                                <div class="activity--content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam
-                                                        quo deserunt a suscipit perferendis dicta at eveniet officiis!</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Activity Item End -->
-                                    </li>
-    
-                                    <li>
-                                        <!-- Activity Item Start -->
-                                        <div class="activity--item">
-                                            <div class="activity--avatar">
-                                                <a href="member-activity-personal.html">
-                                                    <img src="img/activity-img/avatar-01.jpg" alt="">
-                                                </a>
-                                            </div>
-    
-                                            <div class="activity--info fs--14">
-                                                <div class="activity--header">
-                                                    <p><a href="member-activity-personal.html">Eileen K. Ruiz</a> posted an
-                                                        update in the group <a href="group-home.html">Crazy Music Lovers</a>
-                                                    </p>
-                                                </div>
-    
-                                                <div class="activity--meta fs--12">
-                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                                </div>
-    
-                                                <div class="activity--content">
-                                                    <div class="gallery--embed" data-trigger="gallery_popup">
-                                                        <ul class="nav AdjustRow">
-                                                            <li>
-                                                                <a href="img/activity-img/gallery-embed-01.jpg">
-                                                                    <img src="img/activity-img/gallery-embed-01.jpg" alt="">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="img/activity-img/gallery-embed-02.jpg">
-                                                                    <img src="img/activity-img/gallery-embed-02.jpg" alt="">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="img/activity-img/gallery-embed-03.jpg">
-                                                                    <img src="img/activity-img/gallery-embed-03.jpg" alt="">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="img/activity-img/gallery-embed-04.jpg"
-                                                                    data-overlay="0.5">
-                                                                    <img src="img/activity-img/gallery-embed-04.jpg" alt="">
-                                                                    <span>24+ More</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Activity Item End -->
-                                    </li>
-                                    <li>
-                                        <!-- Activity Item Start -->
-                                        <div class="activity--item">
-                                            <div class="activity--avatar">
-                                                <a href="member-activity-personal.html">
-                                                    <img src="img/activity-img/avatar-01.jpg" alt="">
-                                                </a>
-                                            </div>
-    
-                                            <div class="activity--info fs--14">
-                                                <div class="activity--header">
-                                                    <p><a href="member-activity-personal.html">Eileen K. Ruiz</a> joined the
-                                                        group <a href="group-home.html">Crazy Music Lovers</a></p>
-                                                </div>
-    
-                                                <div class="activity--meta fs--12">
-                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Activity Item End -->
-                                    </li>
-                                </ul>
-                                <!-- Activity Items End -->
+                            <!-- Profile Details Start -->
+                            <div class="profile--details fs--14">
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">About Me</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <table class="table">
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Full Name</th>
+                                                <td><a href="#" class="btn-link">Eileen K. Ruiz</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Skill</th>
+                                                <td>Graphic Design, Font-End Development, Web Development</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Date of Birth</th>
+                                                <td>19<sup>th</sup> January 2017</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">Biography</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <p>Hello ! I’m <a href="#">Eileen K. Ruiz</a>. Senior web developer of themelooks.com from last 5 years many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing</p>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">Work Experience</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <dl>
+                                            <dt>
+                                                <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
+                                                <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at Sydney</small></p>
+                                            </dt>
+                                            <dd>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                            </dd>
+
+                                            <dt>
+                                                <p class="h6 fw--700 text-darkest">Font-End Developer 2012 - 2014</p>
+                                                <p><small class="fw--400 fs--12 text-darker">Themeforest.net at Australia</small></p>
+                                            </dt>
+                                            <dd>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                            </dd>
+
+                                            <dt>
+                                                <p class="h6 fw--700 text-darkest">Web Developer 2014 - Still Now</p>
+                                                <p><small class="fw--400 fs--12 text-darker">Codecanyon.net at Sydney</small></p>
+                                            </dt>
+                                            <dd>
+                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour which don't look even slightly believable.</p>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
+
+                                <!-- Profile Item Start -->
+                                <div class="profile--item">
+                                    <div class="profile--heading">
+                                        <h3 class="h4 fw--700">
+                                            <span class="mr--4">Contact</span>
+                                            <i class="ml--10 text-primary fa fa-caret-right"></i>
+                                        </h3>
+                                    </div>
+
+                                    <div class="profile--info">
+                                        <table class="table">
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Phone</th>
+                                                <td><a href="tel:+16105598246">+1610-559-8246</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">E-mail</th>
+                                                <td><a href="mailto:demo@fakemail.com">demo@example.com</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Website</th>
+                                                <td><a href="#">example.com</a></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="fw--700 text-darkest">Address</th>
+                                                <td>123 Lorem St., California, United States</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Profile Item End -->
                             </div>
-                            <!-- Activity List End -->
+                            <!-- Profile Details End -->
                         </div>
     
                     </div>
@@ -174,7 +174,6 @@
                             <!-- Text Widget Start -->
                             <div class="text--widget">
                                 <p><b>Email</b></p>
-                                <!-- <p style="margin-left: 5px">shengqiw97@gmail.com</p> -->
                                 <p style="margin-left: 5px">{{ details?.email }}</p>
                                 <p><b>phone</b></p>
                                 <p style="margin-left: 5px">978-171-5853</p>

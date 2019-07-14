@@ -15,6 +15,8 @@ export class TeamPageComponent {
     currentSelection: string; // Current topic to be displayed (post info, members, etc.)
     members: any[];             // Cantians user information for members of this project
 
+    allUsers: any[] // Holds list of users that you can add from 
+
     /* Post to keep track of edits without changing before save */
     editPost: Post;
 
@@ -156,7 +158,7 @@ export class TeamPageComponent {
 
     savePost() {
         this.post = this.editPost;
-        this.post_utils.update(this.post.name, this.post.description, JSON.stringify(this.post.skills), JSON.stringify(this.post.members)).subscribe(data => {
+        this.post_utils.update(this.post).subscribe(data => {
             location.reload();
         }, (err) => {
             console.log(err);
@@ -174,5 +176,38 @@ export class TeamPageComponent {
             age: "",
             members: []
         };
+    }
+
+    addMember(email) {
+        this.post.members.push(email);
+        this.post_utils.update(this.post).subscribe((res) => {
+            console.log("successfully added member");
+        }, (err) => {
+            console.log(err);
+        })
+    }
+
+    buildPic(email) {
+        return this.user_utils.buildProfilePicUrl(email);
+    }
+
+    fetchUsers() {
+        this.user_utils.getAllUsers().subscribe(arr => {
+            this.parseUsers(arr.users);
+        }, (err) => {
+            console.error(err);
+        });
+    }
+
+    parseUsers(data) {
+        data.forEach((item) => {
+            let parse = {
+                name: item.name,
+                description: item.description,
+                email: item.email,
+                skills: JSON.parse(item.skills)
+            };
+            this.allUsers.push(parse); 
+        })
     }
 }

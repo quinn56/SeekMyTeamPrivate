@@ -14,6 +14,7 @@ export class NavbarComponent implements OnChanges {
   isCollapsed: Boolean = true;
   currentEmail: string;
   searchText: string;
+  userInitials: string;
   
   constructor(
     private auth: AuthenticationService,
@@ -26,6 +27,7 @@ export class NavbarComponent implements OnChanges {
   ngOnInit() {
     this.currentEmail = this.user_utils.getCurrentUserDetails().email;
     this.profilePic = this.user_utils.buildProfilePicUrl(this.currentEmail);
+    this.buildInitials()
   }
 
   isLoggedIn() {
@@ -48,5 +50,19 @@ export class NavbarComponent implements OnChanges {
 
   logout() {
     this.auth.logout();
+  }
+
+  buildInitials() {
+    this.user_utils.getProfile(this.currentEmail).subscribe((profile) => {
+      let name: string = profile.user.name;
+
+      if (name.split(' ').length > 1) {
+        this.userInitials = name.split(' ')[0].charAt(0) + name.split(' ')[1].charAt(0);
+      } else {
+        this.userInitials = name.charAt(0);
+      }
+    }, (err) => { 
+      console.log(err)
+    })
   }
 }

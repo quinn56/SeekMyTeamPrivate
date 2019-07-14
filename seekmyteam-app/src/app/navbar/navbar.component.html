@@ -40,15 +40,14 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle rounded-circle" data-toggle="dropdown" style="position: relative; background-color: lightgrey;margin-top:30%;padding:0; width: 50px;height: 50px;position: relative;overflow: hidden;border-radius: 50%;">
                                 <!-- <img src="assets/posty.png" style="height:100%; width:auto;"> -->
-                                <h3 class="" style="position:absolute; height:100%; width:100%;text-align: center; margin:0;margin-top: 20%">SW</h3>
+                                <h3 class="" style="position:absolute; height:100%; width:100%;text-align: center; margin:0;margin-top: 20%">{{userInitials}}</h3>
                                 <!-- <i class="fa fa-caret-down"></i> -->
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a href="blog-sidebar-right.html" style="color: black;">Veiw Profile</a></li>
+                                <li><a (click)="routeProfile()" style="color: black; cursor: pointer;">View Profile</a></li>
                                 <hr>
-                                <!-- <li><a href="blog-sidebar-left.html">settings</a></li> -->
-                                <li><a href="blog-details.html" style="color: gray;">Sign out</a></li>
+                                <li><a (click)="logout()" style="color: gray;">Sign out</a></li>
                             </ul>
                         </li>
                        

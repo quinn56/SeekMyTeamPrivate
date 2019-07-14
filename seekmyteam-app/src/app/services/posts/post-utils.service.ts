@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
+import { Post } from 'src/app/home/home.component';
 
 interface ApplyPayload {
   owner: string,
@@ -100,12 +101,12 @@ export class PostUtilsService {
     return this.postCreate(payload);
   }
 
-  public update(name: string, description: string, skills: string, members: string): Observable<any> {
+  public update(post: Post): Observable<any> {
     let payload: UpdatePayload = {
-      name: name,
-      description: description,
-      skills: skills,
-      members: members
+      name: post.name,
+      description: post.description,
+      skills: JSON.stringify(post.skills),
+      members: JSON.stringify(post.members)
     };
     
     return this.postUpdate(payload);

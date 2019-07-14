@@ -71,6 +71,7 @@ export class ProfileComponent {
       this.isCurrentUser = this.checkCurrentUser();
 
       this.user_utils.getProfile(this.getEmail).subscribe(profile => {
+        alert("fetched profile" + profile.user);
         this.details.email = profile.user.email;
         this.details.name = profile.user.name;
         this.details.description = profile.user.description;
