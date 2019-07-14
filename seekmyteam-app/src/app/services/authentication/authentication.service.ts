@@ -88,6 +88,18 @@ export class AuthenticationService {
     return requestedData;
   }
 
+  private requestResendCode(email: string): Observable<any> {
+    let base = this.http.post('/api/register/resendCode', email);
+
+    const requestedData = base.pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
   public login(user: LoginPayload): Observable<any> { 
     return this.requestLogin(user);
   }
