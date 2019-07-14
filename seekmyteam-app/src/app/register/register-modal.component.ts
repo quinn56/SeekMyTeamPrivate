@@ -21,6 +21,7 @@ class MoreInfo {
 export class RegisterModalComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
+    unconfirmedEmail: boolean;
 
     credentials: RegisterPayload = {
         email: '',
