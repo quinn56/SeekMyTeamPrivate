@@ -62,7 +62,6 @@ export class RegisterModalComponent implements OnInit {
     invalidCode: boolean = false;
     validCode: boolean = false;
     invalidEmail: boolean = false;
-    unconfirmedEmail: boolean = false;
 
     nameForm: FormControl;
     emailForm: FormControl;
