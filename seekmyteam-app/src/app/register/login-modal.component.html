@@ -70,7 +70,7 @@
   }
 </style>
   
-<a class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</a>
+<a class="btn btn-white" data-toggle="modal" data-target="#loginModal">Login</a>
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true" data-backdrop="false">
@@ -79,7 +79,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Login</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" (click)="clearFields()" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

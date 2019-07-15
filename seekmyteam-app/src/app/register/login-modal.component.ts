@@ -38,4 +38,12 @@ export class LoginModalComponent implements OnInit {
         }
     });
   }
+
+  clearFields() {
+    this.loginCredentials.email = '';
+    this.loginCredentials.password = '';
+    this.invalidLoginEmail = false;
+    this.invalidLoginPassword = false;
+    this.unconfirmedEmail = false;
+  }
 }
