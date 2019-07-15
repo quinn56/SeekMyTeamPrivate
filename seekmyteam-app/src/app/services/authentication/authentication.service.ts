@@ -43,7 +43,7 @@ export class AuthenticationService {
   public logout(): void {
     this.token = '';
     window.localStorage.removeItem('jwt-token');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/register');
   }
 
   private requestLogin(user: LoginPayload): Observable<any> {

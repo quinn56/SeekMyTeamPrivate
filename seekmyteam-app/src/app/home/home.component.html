@@ -114,26 +114,17 @@
                             <div class="filter--link float--left">
                                 <h2 class="h4">All Users: {{users.length}}</h2>
                             </div>
-
-                            <div class="filter--options float--right">
-                                <label>
-                                    <span class="fs--14 ff--primary fw--500 text-darker">Show By :</span>
-
-                                    <select name="activityfilter" class="form-control form-sm"
-                                        data-trigger="selectmenu">
-                                        <option value="alphabetical">Alphabetical</option>
-                                    </select>
-                                </label>
-                            </div>
                         </div>
                         <!-- Filter Nav End -->
 
                         <!-- Member Items Start -->
                         <div *ngIf="currentSelection === 'users'" class="member--items">
                             <div class="row gutter--15 AdjustRow">
-                                <div *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index" class="col-md-3 col-xs-6 col-xxs-12">
+                                <div *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index"
+                                    class="col-md-3 col-xs-6 col-xxs-12">
                                     <!-- Member Item Start -->
-                                    <div style="cursor: pointer;" (click)="routeProfileString(user.email)" class="member--item online">
+                                    <div style="cursor: pointer;" (click)="routeProfileString(user.email)"
+                                        class="member--item online">
                                         <div class="img img-circle">
                                             <a class="btn-link">
                                                 <img [src]="buildPic(user.email)" alt="">
@@ -183,6 +174,11 @@
                                 </option>
                             </select>
                         </label>
+                        <div>
+                            <button type="button" class="btn btn-outline-info mr-2"
+                                *ngFor="let item of filterSkills; let i = index"
+                                (click)="filterDeleteSkill(i)">{{item}}</button>
+                        </div>
                     </div>
                     <!-- Widget End -->
 
@@ -244,6 +240,9 @@
                                 </option>
                             </select>
                         </label>
+                        <button type="button" class="btn btn-outline-info mr-2"
+                            *ngFor="let item of filterSkills; let i = index"
+                            (click)="filterDeleteSkill(i)">{{item}}</button>
                     </div>
                     <!-- Widget End -->
 

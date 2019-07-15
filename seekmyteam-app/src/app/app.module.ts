@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { Routes, RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -33,7 +32,6 @@ import { LoginModalComponent } from './register/login-modal.component';
 
 // const appRoutes: Routes = [
 //   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
-//   { path: 'login', component: LoginComponent, canActivate: [AuthRedirectService]},
 //   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
 //   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
@@ -44,7 +42,6 @@ import { LoginModalComponent } from './register/login-modal.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [] },
-  { path: 'login', component: LoginComponent, canActivate: []},
   { path: 'register', component: RegisterComponent, canActivate: [] },
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
@@ -57,7 +54,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RegisterComponent,
     ConfirmComponent,
     ProfileComponent,

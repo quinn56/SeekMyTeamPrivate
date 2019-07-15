@@ -166,7 +166,7 @@ export class PostListComponent {
 
     saveSelectedPost() {
         this.selectedPost = this.editPost;
-        this.post_utils.update(this.selectedPost.name, this.selectedPost.description, JSON.stringify(this.selectedPost.skills), JSON.stringify(this.selectedPost.members)).subscribe(data => {
+        this.post_utils.update(this.selectedPost).subscribe(data => {
             location.reload();
         }, (err) => {
             console.log(err);
