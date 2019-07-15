@@ -9,16 +9,19 @@ import { majors } from '../../data/majors';
 import { AlertService } from '../services/alerts/alert.service';
 
 class MoreInfo {
-  description: any;
+  description: string;
   skills: string[];
   image: Object;
+  howDidYouHear : string;
 }
 
 @Component({
   selector: 'app-register-modal',
   templateUrl: './register-modal.component.html',
+  exportAs: 'child'
 })
 export class RegisterModalComponent implements OnInit {
+  countries : any = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -39,7 +42,8 @@ export class RegisterModalComponent implements OnInit {
     moreInfo: MoreInfo = {
         description: '',
         skills: [],
-        image: null
+        image: null,
+        howDidYouHear: ''
     }
 
     skills: any[] = [
@@ -57,7 +61,7 @@ export class RegisterModalComponent implements OnInit {
     invalidCode: boolean = false;
     validCode: boolean = false;
     invalidEmail: boolean = false;
-   
+    unconfirmedEmail: boolean = false;
 
     nameForm: FormControl;
     emailForm: FormControl;
@@ -68,6 +72,7 @@ export class RegisterModalComponent implements OnInit {
 
     submitted = false;
     betaTester;
+    successfulRegistration = false;
 
     constructor(private auth: AuthenticationService,
         private auth_guard: AuthGuardService,
@@ -100,7 +105,9 @@ export class RegisterModalComponent implements OnInit {
         this.submitted = true;
         console.log("submitted");
         this.auth.register(this.credentials).subscribe((data) => { 
+            this.successfulRegistration = true;
             this.initConfirm();
+            this.clearRegisterFields();
         }, (err) => {
             if (err.status == 401) {
                 this.invalidEmail = true;
@@ -140,6 +147,7 @@ export class RegisterModalComponent implements OnInit {
         this.auth.confirm(this.confirmCredentials).subscribe(() => {
             this.validCode = true;
             this.invalidCode = false;
+            this.clearConfirmFields();
         }, (err) => {
             if (err.status == 401) {
                 console.log('you have not registered yet');
@@ -156,6 +164,7 @@ export class RegisterModalComponent implements OnInit {
 
     skipMoreInfo() {
         this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
+        this.clearMoreInfoFields();
     }
 
     submitMoreInfo() {
@@ -170,6 +179,7 @@ export class RegisterModalComponent implements OnInit {
             //doesn't work correctly yet
             //this.uploadFile();
             this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
+            this.clearMoreInfoFields();
         }, (err) => {
             console.log(err);
         })
@@ -195,5 +205,37 @@ export class RegisterModalComponent implements OnInit {
             if (this.skills[i].selected)
                 this.moreInfo.skills.push(this.skills[i].name);
         }
+    }
+
+    clearRegisterFields() {
+      this.credentials.name = '';
+      this.credentials.email = '';
+      this.credentials.password = '';
+      this.credentials.school = '';
+      this.credentials.major = '';
+      this.credentials.minor = '';
+      this.invalidEmail = false;
+      this.nameForm.markAsUntouched();
+      this.emailForm.markAsUntouched();
+      this.passwordForm.markAsUntouched();
+      this.schoolForm.markAsUntouched();
+      this.majorForm.markAsUntouched();
+      this.minorForm.markAsUntouched();
+      this.submitted = false;
+    }
+
+    clearConfirmFields() {
+      this.confirmCredentials.code = '';
+      this.confirmCredentials.email = '';
+      this.notRegistered = false;
+      this.invalidCode = false;
+      this.validCode = false;
+      this.serverError = false;
+    }
+
+    clearMoreInfoFields() {
+      this.moreInfo.description = '';
+      this.moreInfo.image = null;
+      this.moreInfo.skills = [];
     }
 }
