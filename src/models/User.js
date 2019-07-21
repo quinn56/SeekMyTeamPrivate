@@ -6,6 +6,7 @@ function summarize(item) {
         'skills': item.Skills.S,
         'facebook': item.Facebook.S,
         'linkedin': item.Linkedin.S,
+        'github': item.Github.S,
         'posts': item.Posts.S,
         'appliedPosts': item.AppliedPosts.S
     };

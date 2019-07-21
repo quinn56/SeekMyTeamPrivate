@@ -29,6 +29,7 @@ router.post('/', function(req, res) {
         'Image': {'S': ' '},
         'Facebook': {'S': ' '},
         'Linkedin': {'S': ' '},
+        'Github': {'S': ' '},
         'Major': {'S': req.body.major},
         'Minor': {'S': req.body.minor},
         'School': {'S': req.body.school}

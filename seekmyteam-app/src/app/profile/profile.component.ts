@@ -24,7 +24,8 @@ export class ProfileComponent {
     description: '',
     skills: [],
     facebook: '',
-    linkedin: ''
+    linkedin: '',
+    github: ''
   };
 
   editDetails: UserProfile = {
@@ -33,7 +34,8 @@ export class ProfileComponent {
     description: '',
     skills: [],
     facebook: '',
-    linkedin: ''
+    linkedin: '',
+    github: ''
   };
 
   private getEmail: string;
@@ -66,7 +68,7 @@ export class ProfileComponent {
 
   loadProfile() {
     this.route.params.subscribe(params => {
-      this.getEmail = params['email']; 
+      this.getEmail = params['email'];
 
       this.isCurrentUser = this.checkCurrentUser();
 
@@ -77,6 +79,7 @@ export class ProfileComponent {
         this.details.skills = JSON.parse(profile.user.skills);
         this.details.facebook = profile.user.facebook;
         this.details.linkedin = profile.user.linkedin;
+        this.details.github = profile.user.github
         
         // Keep a new copy so that the edits dont show up before saving
         this.copyDetails();
@@ -99,6 +102,7 @@ export class ProfileComponent {
     this.editDetails.description = this.details.description;
     this.editDetails.facebook = this.details.facebook;
     this.editDetails.linkedin = this.details.linkedin;
+    this.editDetails.github = this.details.github;
     this.editDetails.skills = this.details.skills.slice();
   }
 
@@ -112,6 +116,9 @@ export class ProfileComponent {
     if (this.details.linkedin === ' ') {
       this.details.linkedin = '';
     }
+    if (this.details.github === ' ') {
+      this.details.github = '';
+    }
   }
 
   addSpaces() {
@@ -123,6 +130,9 @@ export class ProfileComponent {
     }
     if (this.details.linkedin.length === 0) {
       this.details.linkedin = ' ';
+    }
+    if (this.details.github.length === 0) {
+      this.details.github = ' ';
     }
   }
 
@@ -159,7 +169,8 @@ export class ProfileComponent {
       this.details.description,
       JSON.stringify(this.details.skills),
       this.details.facebook,
-      this.details.linkedin
+      this.details.linkedin,
+      this.details.github
     ).subscribe(res => {
       this.uploadFile();
       this.alert.success('Successfully updated profile');
@@ -198,6 +209,7 @@ export class ProfileComponent {
   uploadFile() {
     let formData = new FormData();
     formData.append('image', this.fileInput.nativeElement.files[0]);
+    console.log("formData: ", formData);
     this.user_utils.uploadProfilePicture(formData).subscribe((res) => {
       if (res.imageUrl) {
         location.reload();
@@ -213,6 +225,10 @@ export class ProfileComponent {
   
   directLinkedin() {
     window.location.href = this.details.linkedin;
+  }
+
+  directGithub() {
+    window.location.href = this.details.github;
   }
 
   loadInvite() {    

@@ -107,7 +107,6 @@ export class RegisterModalComponent implements OnInit {
         this.auth.register(this.credentials).subscribe((data) => { 
             this.successfulRegistration = true;
             this.initConfirm();
-            this.clearRegisterFields();
         }, (err) => {
             if (err.status == 401) {
                 this.invalidEmail = true;
@@ -147,7 +146,6 @@ export class RegisterModalComponent implements OnInit {
         this.auth.confirm(this.confirmCredentials).subscribe(() => {
             this.validCode = true;
             this.invalidCode = false;
-            this.clearConfirmFields();
         }, (err) => {
             if (err.status == 401) {
                 console.log('you have not registered yet');
@@ -174,10 +172,10 @@ export class RegisterModalComponent implements OnInit {
         }
         this.assembleSkills();
         this.user_utils.updateProfile(this.moreInfo.description,
-        JSON.stringify(this.moreInfo.skills), 'facebook.com', 'linkedin.com').subscribe(res => {
+        JSON.stringify(this.moreInfo.skills), 'https://www.facebook.com', 'https://www.linkedin.com', 'https://github.com').subscribe(res => {
             console.log("uploaded correctly");
             //doesn't work correctly yet
-            //this.uploadFile();
+            this.uploadFile();
             this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
             this.clearMoreInfoFields();
         }, (err) => {

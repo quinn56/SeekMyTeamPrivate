@@ -84,26 +84,31 @@ router.post('/update', auth, function(req, res) {
     var skills = req.body.skills;
     var facebook = req.body.facebook;
     var linkedin = req.body.linkedin;
+    var github = req.body.github
 
     var params = {
         ExpressionAttributeNames: {
          "#C": "Description",
          "#S": 'Skills',
          "#F": 'Facebook',
-         "#L": 'Linkedin'
+         "#L": 'Linkedin',
+         "#G": 'Github'
         }, 
         ExpressionAttributeValues: {
          ":c": {
            'S': description
           },
           ":s": {
-              'S': skills
+            'S': skills
           },
           ":f": {
             'S': facebook
           },
           ":l": {
             'S': linkedin
+          },
+          ":g": {
+            'S': github
           },
         }, 
         Key: {
@@ -112,7 +117,7 @@ router.post('/update', auth, function(req, res) {
           }
         }, 
         TableName: process.env.USERS_TABLE, 
-        UpdateExpression: "SET #C = :c, #S = :s, #F = :f, #L = :l"
+        UpdateExpression: "SET #C = :c, #S = :s, #F = :f, #L = :l, #G = :g"
     };
 
     database.updateItem(params, function(err, data) {

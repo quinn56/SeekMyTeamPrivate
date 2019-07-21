@@ -79,19 +79,29 @@
     position: fixed;
   }
 
-    html, body {
-     overflow-y: auto;
-     padding-right: 0 !important;
-    
-    }
-    .modal-open {
-     overflow: auto !important;
-     padding-right: 0 !important;
-    }
+  #skills {
+    display: inline-block;
+    padding-right: 10%;
+    margin-left: 0;
+  }
+
+  #uploadPicture {
+    display: inline-block;
+    right: 3%;
+    position: fixed;
+  }
+
+  html, body {
+    overflow-y: auto;
+    padding-right: 0 !important;
+  
+  }
+  .modal-open {
+    overflow: auto !important;
+    padding-right: 0 !important;
+  }
 
 </style>
-
-<script src="../../awesomplete/awesomplete.js" async></script>
 
 <a class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</a>
 
@@ -181,7 +191,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="submit" *ngIf="!successfulRegistration" (click)="register()" class="btn btn-primary" >Register</button>
-                <button class="btn btn-primary" *ngIf="successfulRegistration" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Continue</button>
+                <button class="btn btn-primary" *ngIf="successfulRegistration" (click)="clearRegisterFields()" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Continue</button>
                 <div id="invalidText" *ngIf="invalidEmail == true">
                     <p>A user with that email already exists</p>
                 </div>
@@ -217,9 +227,9 @@
             <div id="validCode" *ngIf="validCode">
               <p>Account Verified!</p>
             </div>
-            <button *ngIf="!validCode" type="submit" class="btn btn-primary">Confirm</button>
             <!-- <button *ngIf="!validCode" type="submit" class="btn btn-primary">Confirm</button> -->
-            <button *ngIf="!validCode" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href=#moreInfoModal>More About Me</button>
+            <button *ngIf="!validCode" type="submit" class="btn btn-primary">Confirm</button>
+            <button *ngIf="validCode" class="btn btn-primary" (click)="clearConfirmFields()" data-dismiss="modal" data-toggle="modal" href=#moreInfoModal>More About Me</button>
           </div> 
         </div>
       </div>
@@ -228,7 +238,7 @@
 </div>
 
 <!-- More Info Modal -->
-<div class="modal fade" id="moreInfoModal" tabindex="-1" role="dialog" aria-labelledby="moreInfoModal" aria-hidden="true" data-backdrop="false">
+<div class="modal fade" style="top: -30px;" id="moreInfoModal" tabindex="-1" role="dialog" aria-labelledby="moreInfoModal" aria-hidden="true" data-backdrop="false">
     <div class="modal-dialog" role="document">
       <form (submit)="submitMoreInfo()">
         <div class="modal-content">
@@ -247,17 +257,19 @@
                   </label>
                 </div>
                 <br>
-                <label>
-                    <p style="font-size: 14px">Select your skills</p>
-                </label>
-                <div *ngFor="let skill of skills" class="form-check">
-                    <label class="form-check-label" for="defaultCheck">
-                      <input name="skill" class="form-check-input" type="checkbox" value="" [(ngModel)]="skill.selected" id="defaultCheck">
-                      {{skill.name}}
-                    </label>  
+                <div id="skills">
+                    <label>
+                        <p style="font-size: 14px">Select your skills</p>
+                    </label>
+                    <div *ngFor="let skill of skills" class="form-check">
+                        <label class="form-check-label" for="defaultCheck">
+                          <input name="skill" class="form-check-input" type="checkbox" value="" [(ngModel)]="skill.selected" id="defaultCheck">
+                          {{skill.name}}
+                        </label>  
+                    </div>
                 </div>
                 <br>            
-                <div class="input-group mb-3">
+                <div id="uploadPicture">
                     <div class="input-group-prepend">
                       <span style="font-size: 14px" class="input-group-text">Upload a profile picture</span>
                     </div>

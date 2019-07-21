@@ -15,7 +15,8 @@ export interface UserProfile {
   description: string,
   skills: string[],
   facebook: string,
-  linkedin: string
+  linkedin: string,
+  github: string
 }
 
 interface DeletePayload {
@@ -26,7 +27,8 @@ interface UpdatePayload {
   description: string,
   skills: string,
   facebook: string,
-  linkedin: string
+  linkedin: string,
+  github: string
 }
 
 interface MarkAppliedPayload {
@@ -52,12 +54,13 @@ export class UserUtilsService {
     return this.postMarkApplied(req);
   }
 
-  public updateProfile(description: string, skills: string, facebook: string, linkedin: string): Observable<any> {
+  public updateProfile(description: string, skills: string, facebook: string, linkedin: string, github: string): Observable<any> {
     var req: UpdatePayload = {
         description: description,
         skills: skills,
         facebook: facebook,
-        linkedin: linkedin
+        linkedin: linkedin,
+        github: github
     };
     return this.requestUpdateProfile(req);
   }
