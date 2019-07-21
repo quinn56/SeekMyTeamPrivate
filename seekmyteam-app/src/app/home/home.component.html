@@ -148,13 +148,25 @@
                 <!-- Project Main Sidebar Start -->
                 <div *ngIf="currentSelection === 'projects'" class="main--sidebar col-md-4 pb--60"
                     data-trigger="stickyScroll">
+
                     <!-- Widget Start -->
                     <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Find A Project</h2>
+                        <h2 class="h4 fw--700 widget--title">Create A Project</h2>
+                    
+                        <!-- Buddy Finder Widget Start -->
+                        <div class="buddy-finder--widget">
+                            <button type="button" class="btn btn-primary mr-2">Begin</button>
+                        </div>
+                        <!-- Buddy Finder Widget End -->
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Seek A Project</h2>
 
                         <!-- Buddy Finder Widget Start -->
                         <div class="buddy-finder--widget">
-                            <h2 class="h4 fw--700 widget--title">Project Name</h2>
                             <label>
                                 <input class="form-control" [(ngModel)]="searchText" placeholder="Search by name">
                             </label>
@@ -243,6 +255,28 @@
                         <button type="button" class="btn btn-outline-info mr-2"
                             *ngFor="let item of filterSkills; let i = index"
                             (click)="filterDeleteSkill(i)">{{item}}</button>
+                        <br>
+                        <h2 class="h4 fw--700 widget--title">Filter By Date</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select Order</option>
+                                <option >Recent</option>
+                                <option >Older</option>
+                            </select>
+                        </label>
+                        
+                        <br>
+                        <h2 class="h4 fw--700 widget--title">Filter By Major</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select Major</option>
+                                <option>Computer Science</option>
+                                <option>Engineering</option>
+                                <option>Business/Marketing</option>
+                                <option>Human Resources</option>
+                            </select>
+                        </label>
+                       
                     </div>
                     <!-- Widget End -->
 
