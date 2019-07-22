@@ -54,7 +54,8 @@ export class PostListComponent {
             skills: [],
             date: 0,
             age: "",
-            members: []
+            members: [],
+            comments: []
         };
 
         this.editPost = {
@@ -65,7 +66,8 @@ export class PostListComponent {
             skills: [],
             date: 0,
             age: "",
-            members: []
+            members: [],
+            comments: []
         };
 
 
@@ -110,7 +112,8 @@ export class PostListComponent {
                 skills: JSON.parse(item.Skills.S),
                 date: parseInt(item.Date.S),
                 age: this.date_func.buildDate(parseInt(item.Date.S)),
-                members: JSON.parse(item.Members.S)
+                members: JSON.parse(item.Members.S),
+                comments: []
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -182,7 +185,8 @@ export class PostListComponent {
             skills: [],
             date: 0,
             age: "",
-            members: []
+            members: [],
+            comments: []
         };
     }
     deletePost(idx:number) {

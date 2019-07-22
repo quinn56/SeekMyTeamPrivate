@@ -80,14 +80,21 @@
                                     *ngFor="let post of posts | filter:searchText:'name' | skills:filterSkills:'skills' | filter:ownerText:'ownerName'; let idx = index">
                                     <!-- Activity Item Start -->
                                     <div class="activity--item">
+                                        <div class="activity--avatar">
+                                            <a href="">
+                                                <img src="../../assets/profile_icon.jpg" alt="">
+                                            </a>
+                                        </div>
                                         <div class="activity--info fs--14">
                                             <div class="activity--header">
                                                 <p><a style="cursor: pointer;"
-                                                        (click)="routeProject(post)">{{post.name}}</a>
-                                                    posted by <a style="cursor: pointer"
-                                                        (click)="routeProfile(post)">{{post.ownerName}}</a></p>
+                                                    (click)="routeProfile(post)">{{post.ownerName}}</a>
+                                                    is seeking a <a style="cursor: pointer"
+                                                    (click)="routeProfile(post)">position</a>
+                                                    for <a style="cursor: pointer"
+                                                    (click)="routeProject(post)">{{post.name}}</a></p>
                                             </div>
-
+                    
                                             <div class="activity--meta fs--12">
                                                 <p><i class="fa mr--8 fa-clock-o"></i>{{post.age}}</p>
                                             </div>
@@ -95,11 +102,43 @@
                                             <div class="activity--content">
                                                 <p>{{post.description}}</p>
                                             </div>
-                                            <div>
-                                                <button type="button" class="btn btn-outline-info mr-2"
-                                                    *ngFor="let item of post.skills; let i = index"
-                                                    (click)="selectedDeleteSkill(i)">{{item}}</button>
+
+                                            <div class="activity--action fw--700">
+                                                <a style="margin-right: 30px;" href="#">Like</a>
+                                                <a style="cursor: pointer" (click)="openComment()">Comment</a>
                                             </div>
+                                            <div *ngIf="openCommentField" class="input-group mb-3">
+                                                <input type="text" style="width: 30em" class="form-control" placeholder="Comment" [(ngModel)]="newPost.description" aria-label="Comment" aria-describedby="basic-addon2">
+                                                <button style="background: url(../../assets/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none" type="button"></button>
+                                            </div>               
+                                            
+                                            <div class="activity--comments fs--12">
+                                                    <ul class="acomment--items nav">
+                                                        <li>
+                                                            <div class="acomment--item clearfix">
+                                                                <div class="acomment--avatar">
+                                                                    <a href="member-activity-personal.html">
+                                                                        <img src="../../assets/profile_icon_2.jpg" alt="">
+                                                                    </a>
+                                                                </div>
+
+                                                                <div class="acomment--info">
+                                                                    <div class="acomment--header">
+                                                                        <p><a href="#">Leticia J. Espinosa</a> Replied</p>
+                                                                    </div>
+
+                                                                    <div class="acomment--meta">
+                                                                        <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
+                                                                    </div>
+
+                                                                    <div class="acomment--content">
+                                                                        <p>Well Said!</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                         </div>
                                     </div>
                                     <!-- Activity Item End -->
