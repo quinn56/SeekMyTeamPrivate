@@ -173,23 +173,22 @@ export class RegisterModalComponent implements OnInit {
         this.assembleSkills();
         this.user_utils.updateProfile(this.moreInfo.description,
         JSON.stringify(this.moreInfo.skills), 'https://www.facebook.com', 'https://www.linkedin.com', 'https://github.com').subscribe(res => {
-            console.log("uploaded correctly");
             //doesn't work correctly yet
             this.uploadFile();
+            console.log("email: ", this.confirmCredentials.email);
             this.router.navigateByUrl('/profile/' + this.confirmCredentials.email);
-            this.clearMoreInfoFields();
         }, (err) => {
             console.log(err);
         })
-
+        this.clearMoreInfoFields();
     }
 
     uploadFile() {
         let formData = new FormData();
         formData.append('image', this.fileInput.nativeElement.files[0]);
-        console.log(this.fileInput.nativeElement.files[0]);
+        console.log("formData: ", formData);
         this.user_utils.uploadProfilePicture(formData).subscribe((res) => {
-            console.log("uploaded correctly");
+            console.log("uploaded success!!");
             if (res.imageUrl) {
             location.reload();
             }
@@ -224,7 +223,7 @@ export class RegisterModalComponent implements OnInit {
 
     clearConfirmFields() {
       this.confirmCredentials.code = '';
-      this.confirmCredentials.email = '';
+      //this.confirmCredentials.email = '';
       this.notRegistered = false;
       this.invalidCode = false;
       this.validCode = false;

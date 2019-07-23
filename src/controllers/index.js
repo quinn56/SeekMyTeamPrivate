@@ -154,7 +154,8 @@ router.post('/createPost', auth, function(req, res) {
                 'OwnerEmail': {'S': ownerEmail},
                 'Skills': {'S': skills},
                 'Date': {'S': date},
-                'Members': {'S' : members}
+                'Members': {'S' : members},
+                'Comments': {'S': []}
             };
         
             var postParams = { 

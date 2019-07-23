@@ -133,9 +133,10 @@ router.post('/update', auth, function(req, res) {
 router.post('/uploadPicture', auth, function(req, res) {
     singleUpload(req, res, function(err, some) {
         if (err) {
+            console.log('error uploading HERE');
           return res.status(405).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
         }
-    
+        console.log("image url: ", req.file.location);
         return res.json({'imageUrl': req.file.location});
       });
 });

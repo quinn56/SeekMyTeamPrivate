@@ -13,7 +13,14 @@ export interface Post {
     skills: string[],
     date: number,
     age: string,
-    members: string[]
+    members: string[],
+    comments: Comment[]
+}
+
+export interface Comment {
+    owner: string
+    text: string,
+    date: number
 }
 
 @Component({
@@ -26,12 +33,16 @@ export class HomeComponent {
     posts: Post[];
     private LastEvaluatedKey: any;
     showMore: boolean;
+    openCommentField: boolean;
 
     /* Home user variables */
     users: any[];
 
     /* Keeps track of a new post */
     newPost: Post;
+
+    /* Keeps track of a new comment */
+    newComment: Comment;
 
     /* Filter variables */
     searchText: string;
@@ -68,7 +79,8 @@ export class HomeComponent {
             skills: [],
             date: 0,
             age: "",
-            members: []
+            members: [],
+            comments: []
         };
 
         this.posts = [];
@@ -87,6 +99,10 @@ export class HomeComponent {
         }, (err) => {
             console.error(err);
         });
+    }
+
+    openComment() {
+        this.openCommentField = true;
     }
 
     resetFilters() {
@@ -147,7 +163,8 @@ export class HomeComponent {
                 skills: JSON.parse(item.Skills.S),
                 date: parseInt(item.Date.S),
                 age: this.date_func.buildDate(parseInt(item.Date.S)),
-                members: JSON.parse(item.Members.S)
+                members: JSON.parse(item.Members.S),
+                comments: []
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -195,6 +212,22 @@ export class HomeComponent {
         });
     }
 
+    addNewComment() {
+        this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
+            this.post_utils.create(this.newPost.name, this.newPost.description, JSON.stringify(this.newPost.skills), profile.user.name).subscribe(data => {
+                this.ngOnInit();    // Repopulate list automatically??
+            }, (err) => {
+                if (err.status == 401) {
+                    this.alert.error('A project with that name already exists')
+                } else {
+                    this.alert.error('Server error: Could not create post');
+                }
+            });
+        }, (err) => {
+            console.error(err);
+        });
+    }
+
     addSkill(skill: string) {
         document.getElementById("selectSkill").getElementsByTagName('option')[0].selected = true;
         if (!this.newPost.skills.includes(skill)) {
@@ -215,7 +248,8 @@ export class HomeComponent {
             skills: [],
             date: 0,
             age: "",
-            members: []
+            members: [],
+            comments: []
         };
     }
 
