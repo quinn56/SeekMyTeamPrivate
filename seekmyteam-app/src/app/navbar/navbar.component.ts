@@ -6,7 +6,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
+<<<<<<< HEAD
   templateUrl: './navbar.component.html',
+=======
+  templateUrl: './navbar.component.html'
+>>>>>>> home-page
 })
 export class NavbarComponent implements OnChanges {
   profilePic: string;
