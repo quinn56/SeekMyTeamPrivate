@@ -1,19 +1,61 @@
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Cover Header Start -->
-    <div class="cover--header pt--80 text-center" data-bg-img="img/cover-header-img/bg-01.jpg" data-overlay="0.6"
+    <div class="cover--header pt--80 text-center" data-bg-img="assets/girl.jpg" data-overlay="0.5"
         data-overlay-color="white">
         <div class="container">
             <div class="cover--avatar online" data-overlay="0.3" data-overlay-color="primary">
-                <img [src]="fileDataUrl" alt="">
+                <!-- <img [src]="fileDataUrl" alt=""> -->
+                <img src="assets/profile_icon_2.jpg" alt="">
             </div>
 
             <div class="cover--user-name">
-                <h2 class="h3 fw--600">{{details.name}}</h2>
+                <!-- <h2 class="h3 fw--600">{{details.name}}</h2> -->
+                <h2 class="">Shengqi Wang
+                    <button class="btn border-0 bg-white" data-toggle="modal" data-target="#exampleModal" style="padding: 0; background: none">
+                    <img src="assets/edit.svg" style="height: 25px; margin-left: 1.5vw" alt="edit btn">
+                    </button>
+                
+                </h2>
             </div>
+            
         </div>
     </div>
     <!-- Cover Header End -->
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">About me</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Skills</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <!-- Page Wrapper Start -->
     <section class="page--wrapper pt--80 pb--20">
         <div class="container">
