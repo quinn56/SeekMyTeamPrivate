@@ -27,16 +27,11 @@ export interface Comment {
     templateUrl: './home.component.html'
 })
 export class HomeComponent {
-    currentSelection: string; // Current topic to be displayed 
-    
     /* Home project variables */
     posts: Post[];
     private LastEvaluatedKey: any;
     showMore: boolean;
     openCommentField: boolean;
-
-    /* Home user variables */
-    users: any[];
 
     /* Keeps track of a new post */
     newPost: Post;
@@ -69,7 +64,6 @@ export class HomeComponent {
         this.showMore = true;
         this.LastEvaluatedKey = null;
         this.filterSkills = [];
-        this.currentSelection = 'projects'
 
         this.newPost = {
             name: "",
@@ -84,18 +78,11 @@ export class HomeComponent {
         };
 
         this.posts = [];
-        this.users = [];
         this.post_utils.fetchPosts(null).subscribe(data => {
             this.parsePosts(data.posts);
             this.sortPosts();
             this.LastEvaluatedKey = data.key;
             this.checkMorePosts();
-        }, (err) => {
-            console.error(err);
-        });
-
-        this.user_utils.getAllUsers().subscribe(arr => {
-            this.parseUsers(arr.users);
         }, (err) => {
             console.error(err);
         });
@@ -109,11 +96,6 @@ export class HomeComponent {
         this.filterSkills = [];
         this.searchText = '';
         this.ownerText = '';
-    }
-
-    changeSelection(topic: string) {
-        this.resetFilters();
-        this.currentSelection = topic;
     }
 
     buildPic(email: string) {
@@ -142,17 +124,7 @@ export class HomeComponent {
         }
         return comparison;
     }
-    parseUsers(data) {
-        data.forEach((item) => {
-            let parse = {
-                name: item.name,
-                description: item.description,
-                email: item.email,
-                skills: JSON.parse(item.skills)
-            };
-            this.users.push(parse); 
-        })
-    }
+
     parsePosts(data) {
         data.forEach((item) => {
             let parse: Post = {
@@ -254,15 +226,15 @@ export class HomeComponent {
     }
 
     routeProfile(post: Post) {
-        this.router.navigateByUrl('/profile/' + post.ownerEmail);
+        window.location.href = '/profile/' + post.ownerEmail;
     }
     
     routeProfileString(str: string) {
-        this.router.navigateByUrl('/profile/' + str);
+        window.location.href = '/profile/' + str;
     }
 
     routeProject(post: Post) {
-        this.router.navigateByUrl('/project/' + post.name);
+        window.location.href = '/project/' + post.name;
     }
 
     filterAddSkill(skill: string) {

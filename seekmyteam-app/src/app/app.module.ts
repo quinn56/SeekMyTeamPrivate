@@ -12,6 +12,7 @@ import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
+import { UsersComponent } from './home/users.component';
 import { PostListComponent } from './profile/post-list.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { AlertComponent } from './alerts/alert.component';
@@ -32,6 +33,7 @@ import { LoginModalComponent } from './register/login-modal.component';
 
 // const appRoutes: Routes = [
 //   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
+//   { path: 'users', component: HomeComponent, canActivate: [AuthGuardService] },
 //   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
 //   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
@@ -42,6 +44,7 @@ import { LoginModalComponent } from './register/login-modal.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [] },
+    { path: 'users', component: UsersComponent, canActivate: [] },
   { path: 'register', component: RegisterComponent, canActivate: [] },
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
@@ -59,6 +62,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     NavbarComponent,
     HomeComponent,
+    UsersComponent,
     PostListComponent,
     TeamPageComponent,
     AlertComponent,

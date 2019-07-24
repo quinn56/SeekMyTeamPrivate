@@ -60,20 +60,14 @@
                         <!-- Content Nav Start -->
                         <div class="content--nav pb--30">
                             <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
-                                <li style="cursor: pointer;" *ngIf="currentSelection === 'projects'" class="active"><a
-                                        (click)="changeSelection('projects')">Projects</a></li>
-                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'projects'"><a
-                                        (click)="changeSelection('projects')">Projects</a></li>
-                                <li style="cursor: pointer;" *ngIf="currentSelection === 'users'" class="active"><a
-                                        (click)="changeSelection('users')">Users</a></li>
-                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'users'"><a
-                                        (click)="changeSelection('users')">Users</a></li>
+                                <li style="cursor: pointer;" class="active"><a>Projects</a></li>
+                                <li style="cursor: pointer;"><a href="/users">Users</a></li>
                             </ul>
                         </div>
                         <!-- Content Nav End -->
 
                         <!-- Activity List Start -->
-                        <div *ngIf="currentSelection === 'projects'" class="activity--list">
+                        <div class="activity--list">
                             <!-- Activity Items Start -->
                             <ul class="activity--items nav">
                                 <li
@@ -81,20 +75,17 @@
                                     <!-- Activity Item Start -->
                                     <div class="activity--item">
                                         <div class="activity--avatar">
-                                            <a href="">
-                                                <img src="../../assets/profile_icon.jpg" alt="">
-                                            </a>
+                                            <a (click)="routeProfile(post)"><img [src]="buildPic(post.ownerEmail)"
+                                                    alt=""></a>
                                         </div>
                                         <div class="activity--info fs--14">
                                             <div class="activity--header">
                                                 <p><a style="cursor: pointer;"
-                                                    (click)="routeProfile(post)">{{post.ownerName}}</a>
-                                                    is seeking a <a style="cursor: pointer"
-                                                    (click)="routeProfile(post)">position</a>
-                                                    for <a style="cursor: pointer"
-                                                    (click)="routeProject(post)">{{post.name}}</a></p>
+                                                        (click)="routeProfile(post)">{{post.ownerName}}</a>
+                                                    is seeking collaborator(s) for <a style="cursor: pointer"
+                                                        (click)="routeProject(post)">{{post.name}}</a></p>
                                             </div>
-                    
+
                                             <div class="activity--meta fs--12">
                                                 <p><i class="fa mr--8 fa-clock-o"></i>{{post.age}}</p>
                                             </div>
@@ -108,37 +99,42 @@
                                                 <a style="cursor: pointer" (click)="openComment()">Comment</a>
                                             </div>
                                             <div *ngIf="openCommentField" class="input-group mb-3">
-                                                <input type="text" style="width: 30em" class="form-control" placeholder="Comment" [(ngModel)]="newPost.description" aria-label="Comment" aria-describedby="basic-addon2">
-                                                <button style="background: url(../../assets/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none" type="button"></button>
-                                            </div>               
-                                            
+                                                <input type="text" style="width: 30em" class="form-control"
+                                                    placeholder="Comment" [(ngModel)]="newPost.description"
+                                                    aria-label="Comment" aria-describedby="basic-addon2">
+                                                <button
+                                                    style="background: url(../../assets/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    type="button"></button>
+                                            </div>
+
                                             <div class="activity--comments fs--12">
-                                                    <ul class="acomment--items nav">
-                                                        <li>
-                                                            <div class="acomment--item clearfix">
-                                                                <div class="acomment--avatar">
-                                                                    <a href="member-activity-personal.html">
-                                                                        <img src="../../assets/profile_icon_2.jpg" alt="">
-                                                                    </a>
+                                                <ul class="acomment--items nav">
+                                                    <li>
+                                                        <div class="acomment--item clearfix">
+                                                            <div class="acomment--avatar">
+                                                                <a href="member-activity-personal.html">
+                                                                    <img src="../../assets/profile_icon_2.jpg" alt="">
+                                                                </a>
+                                                            </div>
+
+                                                            <div class="acomment--info">
+                                                                <div class="acomment--header">
+                                                                    <p><a href="#">Leticia J. Espinosa</a> Replied</p>
                                                                 </div>
 
-                                                                <div class="acomment--info">
-                                                                    <div class="acomment--header">
-                                                                        <p><a href="#">Leticia J. Espinosa</a> Replied</p>
-                                                                    </div>
+                                                                <div class="acomment--meta">
+                                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at
+                                                                        08:20 am</p>
+                                                                </div>
 
-                                                                    <div class="acomment--meta">
-                                                                        <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at 08:20 am</p>
-                                                                    </div>
-
-                                                                    <div class="acomment--content">
-                                                                        <p>Well Said!</p>
-                                                                    </div>
+                                                                <div class="acomment--content">
+                                                                    <p>Well Said!</p>
                                                                 </div>
                                                             </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Activity Item End -->
@@ -147,51 +143,17 @@
                             <!-- Activity Items End -->
                         </div>
                         <!-- Activity List End -->
-
-                        <!-- Filter Nav Start -->
-                        <div *ngIf="currentSelection === 'users'" class="filter--nav pb--60 clearfix">
-                            <div class="filter--link float--left">
-                                <h2 class="h4">All Users: {{users.length}}</h2>
-                            </div>
-                        </div>
-                        <!-- Filter Nav End -->
-
-                        <!-- Member Items Start -->
-                        <div *ngIf="currentSelection === 'users'" class="member--items">
-                            <div class="row gutter--15 AdjustRow">
-                                <div *ngFor="let user of users | filter:searchText:'name' | skills:filterSkills:'skills'; let idx = index"
-                                    class="col-md-3 col-xs-6 col-xxs-12">
-                                    <!-- Member Item Start -->
-                                    <div style="cursor: pointer;" (click)="routeProfileString(user.email)"
-                                        class="member--item online">
-                                        <div class="img img-circle">
-                                            <a class="btn-link">
-                                                <img [src]="buildPic(user.email)" alt="">
-                                            </a>
-                                        </div>
-
-                                        <div class="name">
-                                            <h3 class="h6 fs--12">
-                                                <a class="btn-link">{{user.name}}</a>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <!-- Member Item End -->
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    <!-- Main Inner Content End-->
                 </div>
                 <!-- Main Content End -->
 
                 <!-- Project Main Sidebar Start -->
-                <div *ngIf="currentSelection === 'projects'" class="main--sidebar col-md-4 pb--60"
-                    data-trigger="stickyScroll">
-
+                <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
                     <!-- Widget Start -->
                     <div class="widget">
                         <h2 class="h4 fw--700 widget--title">Create A Project</h2>
-                    
+
                         <!-- Buddy Finder Widget Start -->
                         <div class="buddy-finder--widget">
                             <button type="button" class="btn btn-primary mr-2">Begin</button>
@@ -202,7 +164,7 @@
 
                     <!-- Widget Start -->
                     <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Seek A Project</h2>
+                        <h2 class="h4 fw--700 widget--title">Seek Project by Name</h2>
 
                         <!-- Buddy Finder Widget Start -->
                         <div class="buddy-finder--widget">
@@ -216,7 +178,7 @@
 
                     <!-- Widget Start -->
                     <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Filter By Skills</h2>
+                        <h2 class="h4 fw--700 widget--title">Filter by Skills</h2>
                         <label>
                             <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
                                 <option value="Select a skill" disabled>Select a skill</option>
@@ -261,79 +223,6 @@
                     <!-- Widget End -->
                 </div>
                 <!-- Project Main Sidebar End -->
-
-                <!-- User Main Sidebar Start -->
-                <div *ngIf="currentSelection === 'users'" class="main--sidebar col-md-4 pb--60"
-                    data-trigger="stickyScroll">
-                    <!-- Widget Start -->
-                    <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Find A User</h2>
-
-                        <!-- Buddy Finder Widget Start -->
-                        <div class="buddy-finder--widget">
-                            <h2 class="h4 fw--700 widget--title">User Name</h2>
-                            <label>
-                                <input class="form-control" [(ngModel)]="searchText" placeholder="Search by name">
-                            </label>
-                        </div>
-                        <!-- Buddy Finder Widget End -->
-                    </div>
-                    <!-- Widget End -->
-
-                    <!-- Widget Start -->
-                    <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Filter By Skills</h2>
-                        <label>
-                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
-                                <option value="Select a skill" disabled>Select a skill</option>
-                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
-                                    {{skill}}
-                                </option>
-                            </select>
-                        </label>
-                        <button type="button" class="btn btn-outline-info mr-2"
-                            *ngFor="let item of filterSkills; let i = index"
-                            (click)="filterDeleteSkill(i)">{{item}}</button>
-                        <br>
-                        <h2 class="h4 fw--700 widget--title">Filter By Date</h2>
-                        <label>
-                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
-                                <option value="Select a skill" disabled>Select Order</option>
-                                <option >Recent</option>
-                                <option >Older</option>
-                            </select>
-                        </label>
-                        
-                        <br>
-                        <h2 class="h4 fw--700 widget--title">Filter By Major</h2>
-                        <label>
-                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
-                                <option value="Select a skill" disabled>Select Major</option>
-                                <option>Computer Science</option>
-                                <option>Engineering</option>
-                                <option>Business/Marketing</option>
-                                <option>Human Resources</option>
-                            </select>
-                        </label>
-                       
-                    </div>
-                    <!-- Widget End -->
-
-                    <!-- Widget Start -->
-                    <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Advertisements</h2>
-
-                        <!-- Ad Widget Start -->
-                        <div class="ad--widget">
-                            <a href="#">
-                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
-                            </a>
-                        </div>
-                        <!-- Ad Widget End -->
-                    </div>
-                    <!-- Widget End -->
-                </div>
-                <!-- User Main Sidebar End -->
             </div>
         </div>
     </section>
