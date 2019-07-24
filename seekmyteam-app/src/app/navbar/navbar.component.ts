@@ -40,12 +40,12 @@ export class NavbarComponent implements OnChanges {
 
   routeProfile() {
     this.currentEmail = this.user_utils.getCurrentUserDetails().email;
-    this.router.navigateByUrl('/profile/' + this.currentEmail);
+    window.location.href = '/profile/' + this.currentEmail;
   }
 
   routeMyProjects() {
     this.currentEmail = this.user_utils.getCurrentUserDetails().email;
-    this.router.navigateByUrl('/profile/' + this.currentEmail + '/posts');
+    window.location.href = '/profile/' + this.currentEmail + '/posts';
   }
 
   logout() {

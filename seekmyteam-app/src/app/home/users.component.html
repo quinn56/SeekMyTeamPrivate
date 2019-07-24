@@ -1,0 +1,137 @@
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <!-- Page Wrapper Start -->
+    <section class="page--wrapper pt--40 pb--20">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content Start -->
+                <div class="main--content col-md-8 pb--60">
+                    <div class="main--content-inner drop--shadow">
+                        <!-- Content Nav Start -->
+                        <div class="content--nav pb--30">
+                            <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
+                                <li style="cursor: pointer;"><a href="/">Projects</a></li>
+                                <li style="cursor: pointer;" class="active"><a>Users</a></li>
+                            </ul>
+                        </div>
+                        <!-- Content Nav End -->
+
+                        <!-- Filter Nav Start -->
+                        <div class="filter--nav pb--60 clearfix">
+                            <div class="filter--link float--left">
+                                <h2 class="h4">All Users: {{users.length}}</h2>
+                            </div>
+                        </div>
+                        <!-- Filter Nav End -->
+
+                        <!-- Member Items Start -->
+                        <div class="member--items">
+                            <div class="row gutter--15 AdjustRow">
+                                <div *ngFor="let user of users | filter:filterName:'name' | skills:filterSkills:'skills'; let idx = index"
+                                    class="col-md-3 col-xs-6 col-xxs-12">
+                                    <!-- Member Item Start -->
+                                    <div style="cursor: pointer;" (click)="routeProfile(user.email)"
+                                        class="member--item online">
+                                        <div class="img img-circle">
+                                            <a class="btn-link">
+                                                <img [src]="buildPic(user.email)" alt="">
+                                            </a>
+                                        </div>
+
+                                        <div class="name">
+                                            <h3 class="h6 fs--12">
+                                                <a class="btn-link">{{user.name}}</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <!-- Member Item End -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Main Content End -->
+
+                <!-- User Main Sidebar Start -->
+                <div class="main--sidebar col-md-4 pb--60" data-trigger="stickyScroll">
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Find A User</h2>
+
+                        <!-- Buddy Finder Widget Start -->
+                        <div class="buddy-finder--widget">
+                            <h2 class="h4 fw--700 widget--title">User Name</h2>
+                            <label>
+                                <input class="form-control" [(ngModel)]="filterName" placeholder="Search by name">
+                            </label>
+                        </div>
+                        <!-- Buddy Finder Widget End -->
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Filter By Skills</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select a skill</option>
+                                <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                    {{skill}}
+                                </option>
+                            </select>
+                        </label>
+                        <button type="button" class="btn btn-outline-info mr-2"
+                            *ngFor="let item of filterSkills; let i = index"
+                            (click)="filterDeleteSkill(i)">{{item}}</button>
+                        <br>
+                        <h2 class="h4 fw--700 widget--title">Filter By Date</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select Order</option>
+                                <option>Recent</option>
+                                <option>Older</option>
+                            </select>
+                        </label>
+
+                        <br>
+                        <h2 class="h4 fw--700 widget--title">Filter By Major</h2>
+                        <label>
+                            <select class="form-control" id="filterSkill" #fsk (change)="filterAddSkill(fsk.value)">
+                                <option value="Select a skill" disabled>Select Major</option>
+                                <option>Computer Science</option>
+                                <option>Engineering</option>
+                                <option>Business/Marketing</option>
+                                <option>Human Resources</option>
+                            </select>
+                        </label>
+
+                    </div>
+                    <!-- Widget End -->
+
+                    <!-- Widget Start -->
+                    <div class="widget">
+                        <h2 class="h4 fw--700 widget--title">Advertisements</h2>
+
+                        <!-- Ad Widget Start -->
+                        <div class="ad--widget">
+                            <a href="#">
+                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
+                            </a>
+                        </div>
+                        <!-- Ad Widget End -->
+                    </div>
+                    <!-- Widget End -->
+                </div>
+                <!-- User Main Sidebar End -->
+            </div>
+        </div>
+    </section>
+    <!-- Page Wrapper End -->
+</div>
+<!-- Wrapper End -->
+
+<!-- Back To Top Button Start -->
+<div id="backToTop">
+    <a href="#" class="btn"><i class="fa fa-caret-up"></i></a>
+</div>
+<!-- Back To Top Button End -->
