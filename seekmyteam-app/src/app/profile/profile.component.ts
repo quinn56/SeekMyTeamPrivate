@@ -17,7 +17,7 @@ export class ProfileComponent {
 
   @ViewChild('fileInput') fileInput: ElementRef;
   fileDataUrl: string = '';
-  
+
   details: UserProfile = {
     email: '',
     name: '',
@@ -38,7 +38,7 @@ export class ProfileComponent {
     github: ''
   };
 
-  private getEmail: string;
+  getEmail: string;
   isCurrentUser: boolean;
 
   // For inviting the user who's profile is being used to a certain project
@@ -60,9 +60,9 @@ export class ProfileComponent {
     private route: ActivatedRoute,
     private alert: AlertService,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.loadProfile();
   }
 
@@ -80,10 +80,9 @@ export class ProfileComponent {
         this.details.facebook = profile.user.facebook;
         this.details.linkedin = profile.user.linkedin;
         this.details.github = profile.user.github
-        
+
         // Keep a new copy so that the edits dont show up before saving
         this.copyDetails();
-        this.fileDataUrl = this.user_utils.buildProfilePicUrl(this.getEmail);
 
         this.handleSpaces();
       }, (err) => {
@@ -136,11 +135,19 @@ export class ProfileComponent {
     }
   }
 
+  buildPic(email: string) {
+    return this.user_utils.buildProfilePicUrl(email);
+  }
+
+  buildAsset(asset: string) {
+    return this.user_utils.buildAssetUrl(asset);
+  }
+
   checkCurrentUser() {
     var check: UserDetails;
     check = this.user_utils.getCurrentUserDetails();
-    
-    return (check.email === this.getEmail); 
+
+    return (check.email === this.getEmail);
   }
 
   deleteProfile() {
@@ -156,7 +163,7 @@ export class ProfileComponent {
         this.auth.logout();
       }, (err) => {
         this.alert.error('Could not delete profile');
-      }) 
+      })
     }
   }
 
@@ -176,7 +183,7 @@ export class ProfileComponent {
       this.alert.success('Successfully updated profile');
     }, (err) => {
       console.log(err);
-    }) 
+    })
   }
 
   addSkill(skill: string) {
@@ -222,7 +229,7 @@ export class ProfileComponent {
   directFacebook() {
     window.location.href = this.details.facebook;
   }
-  
+
   directLinkedin() {
     window.location.href = this.details.linkedin;
   }
@@ -231,21 +238,21 @@ export class ProfileComponent {
     window.location.href = this.details.github;
   }
 
-  loadInvite() {    
+  loadInvite() {
     this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe((data) => {
       this.ownedProjects = JSON.parse(data.user.posts);
     }, (err) => {
       console.log(err);
     })
   }
- 
+
   invite(proj: string) {
-    this.post_utils.invite(this.user_utils.getCurrentUserDetails().email, this.getEmail, proj ).subscribe((data) => {
+    this.post_utils.invite(this.user_utils.getCurrentUserDetails().email, this.getEmail, proj).subscribe((data) => {
       this.selectedProject = '';
       console.log('succesful invite');
       this.alert.success('Successfully invited user to work on project');
     }, (err) => {
-        console.log(err);
+      console.log(err);
     });
   }
 

@@ -1,58 +1,58 @@
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Cover Header Start -->
-    <div class="cover--header pt--80 text-center" data-bg-img="assets/girl.jpg" data-overlay="0.4"
+    <div class="cover--header pt--80 text-center" data-bg-img="buildAsset('main.jpg')" data-overlay="0.4"
         data-overlay-color="white">
         <div class="container">
             <div class="cover--avatar online" data-overlay="0.3" data-overlay-color="primary">
-                <img [src]="fileDataUrl" alt="">
+                <img [src]="buildPic(getEmail)" alt="">
                 <!-- <img src="assets/profile_icon_2.jpg" alt=""> -->
             </div>
 
             <div class="cover--user-name">
                 <h2 class="h3 fw--600">{{details.name}}
-                <!-- <h2 class="">Shengqi Wang -->
-                    <button class="btn border-0 bg-white" data-toggle="modal" data-target="#exampleModal" style="padding: 0; background: none">
-                    <img src="assets/edit.svg" style="height: 25px; margin-left: 1.5vw" alt="edit btn">
+                    <!-- <h2 class="">Shengqi Wang -->
+                    <button class="btn border-0 bg-white" data-toggle="modal" data-target="#exampleModal"
+                        style="padding: 0; background: none">
+                        <img [src]="buildAsset('edit.svg')" style="height: 25px; margin-left: 1.5vw" alt="edit btn">
                     </button>
-                
+
                 </h2>
             </div>
-            
         </div>
     </div>
     <!-- Cover Header End -->
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">About me</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Skills</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">About me</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Skills</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
@@ -177,13 +177,13 @@
                             <p style="margin-left: 5px">{{ details?.email }}</p>
                         </div>
                         <a style="cursor:pointer; margin-right:10px;" (click)="directFacebook()"><img
-                                src="assets/facebook.svg" width="40px"></a>
+                                [src]="buildAsset('facebook.svg')" width="40px"></a>
 
-                        <a style="cursor:pointer; margin-right:10px;" (click)="directLinkedin()"><img src="assets/linkedin.svg"
+                        <a style="cursor:pointer; margin-right:10px;" (click)="directLinkedin()"><img
+                                [src]="buildAsset('linkedin.svg')" width="40px"></a>
+
+                        <a style="cursor:pointer;" (click)="directGithub()"><img [src]="buildAsset('github.png')"
                                 width="40px"></a>
-
-                        <a style="cursor:pointer;" (click)="directGithub()"><img src="assets/github.png"
-                            width="40px"></a>
                         <!-- Text Widget End -->
                     </div>
 
@@ -194,7 +194,7 @@
                         <!-- Ad Widget Start -->
                         <div class="ad--widget">
                             <a href="#">
-                                <img src="img/widgets-img/ad.jpg" alt="" class="center-block">
+                                <img [src]="buildAsset('ad.jpg')" alt="" class="center-block">
                             </a>
                         </div>
                         <!-- Ad Widget End -->
