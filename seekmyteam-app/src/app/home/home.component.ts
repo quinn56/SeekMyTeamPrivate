@@ -102,6 +102,10 @@ export class HomeComponent {
         return this.user_utils.buildProfilePicUrl(email);
     }
 
+    buildAsset(asset: string) {
+        return this.user_utils.buildAssetUrl(asset);
+    }
+
     addSpaces() {
         if (this.newPost.description.length === 0) {
             this.newPost.description = ' ';

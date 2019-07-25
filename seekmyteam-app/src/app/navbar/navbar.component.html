@@ -1,51 +1,56 @@
 <!-- Header Section Start -->
 <header class="header--section style--1">
-        <!-- Header Navbar Start -->
-        <div class="header--navbar navbar bg-black" data-trigger="sticky">
-            <div class="container">
-                <div class="navbar-header">
-                    <!-- Header Navbar Logo Start -->
-                    <div class="header--navbar-logo navbar-brand" style="padding-top: 6%;">
+    <!-- Header Navbar Start -->
+    <div class="header--navbar navbar bg-black" data-trigger="sticky">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Header Navbar Logo Start -->
+                <div class="header--navbar-logo navbar-brand" style="padding-top: 6%;">
+                    <a href="/">
+                        <img [src]="buildAsset('alternative_white.png')" class="normal"
+                            style="height:60px; width:auto; position: absolute; top: 10px;">
+                        <img [src]="buildAsset('alternative_black.png')" class="sticky"
+                            style="height:60px; width:auto; position: absolute; top: 10px;">
+                    </a>
+                </div>
+                <!-- Header Navbar Logo End -->
+            </div>
+
+            <div id="headerNav" class="navbar-collapse collapse float--right">
+                <!-- Header Nav Links Start -->
+                <ul class="header--nav-links style--1 nav ff--primary">
+                    <li>
                         <a href="/">
-                            <img src="assets/alternative_white.png" class="normal" style="height:60px; width:auto; position: absolute; top: 10px;">
-                            <img src="assets/alternative_black.png" class="sticky" style="height:60px; width:auto; position: absolute; top: 10px;">
+                            <span>Feed</span>
                         </a>
-                    </div>
-                    <!-- Header Navbar Logo End -->
-                </div>
+                    </li>
+                    <li>
+                        <a href="/users">
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle rounded-circle" data-toggle="dropdown"
+                            style="position: relative; background-color: lightgrey;margin-top:30%;padding:0; width: 50px;height: 50px;position: relative;overflow: hidden;border-radius: 50%; cursor: pointer;">
+                            <!-- <img [src]="assets/posty.png" style="height:100%; width:auto;"> -->
+                            <h3 class=""
+                                style="position:absolute; height:100%; width:100%;text-align: center; margin:0;margin-top: 20%">
+                                {{userInitials}}</h3>
+                            <!-- <i class="fa fa-caret-down"></i> -->
+                        </a>
 
-                <div id="headerNav" class="navbar-collapse collapse float--right">
-                    <!-- Header Nav Links Start -->
-                    <ul class="header--nav-links style--1 nav ff--primary">
-                        <li>
-                            <a href="/" >
-                                <span>Feed</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/users">
-                                <span>Users</span>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle rounded-circle" data-toggle="dropdown" style="position: relative; background-color: lightgrey;margin-top:30%;padding:0; width: 50px;height: 50px;position: relative;overflow: hidden;border-radius: 50%; cursor: pointer;">
-                                <!-- <img src="assets/posty.png" style="height:100%; width:auto;"> -->
-                                <h3 class="" style="position:absolute; height:100%; width:100%;text-align: center; margin:0;margin-top: 20%">{{userInitials}}</h3>
-                                <!-- <i class="fa fa-caret-down"></i> -->
-                            </a>
+                        <ul class="dropdown-menu">
+                            <li><a (click)="routeProfile()" style="color: black; cursor: pointer;">View Profile</a></li>
+                            <hr>
+                            <li><a (click)="logout()" style="color: black; cursor: pointer;">Sign out</a></li>
+                        </ul>
+                    </li>
 
-                            <ul class="dropdown-menu">
-                                <li><a (click)="routeProfile()" style="color: black; cursor: pointer;">View Profile</a></li>
-                                <hr>
-                                <li><a (click)="logout()" style="color: black; cursor: pointer;">Sign out</a></li>
-                            </ul>
-                        </li>
-                       
-                    </ul>
-                    <!-- Header Nav Links End -->
-                </div>
+                </ul>
+                <!-- Header Nav Links End -->
             </div>
         </div>
-        <!-- Header Navbar End -->
-    </header>
-    <!-- Header Section End -->
+    </div>
+    <!-- Header Navbar End -->
+</header>
+<!-- Header Section End -->

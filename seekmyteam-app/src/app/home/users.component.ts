@@ -44,6 +44,10 @@ export class UsersComponent {
         return this.user_utils.buildProfilePicUrl(email);
     }
 
+    buildAsset(asset: string) {
+        return this.user_utils.buildAssetUrl(asset);
+    }
+
     parseUsers(data) {
         data.forEach((item) => {
             let parse = {

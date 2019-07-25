@@ -25,7 +25,7 @@ export class NavbarComponent implements OnChanges {
 
   ngOnInit() {
     this.currentEmail = this.user_utils.getCurrentUserDetails().email;
-    this.profilePic = this.user_utils.buildProfilePicUrl(this.currentEmail);
+    this.profilePic = this.buildPic(this.currentEmail);
     this.buildInitials()
   }
 
@@ -49,6 +49,14 @@ export class NavbarComponent implements OnChanges {
 
   logout() {
     this.auth.logout();
+  }
+
+  buildPic(email: string) {
+    return this.user_utils.buildProfilePicUrl(email);
+  }
+
+  buildAsset(asset: string) {
+      return this.user_utils.buildAssetUrl(asset);
   }
 
   buildInitials() {

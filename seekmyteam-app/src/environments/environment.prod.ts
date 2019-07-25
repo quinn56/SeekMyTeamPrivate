@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  cloudfront: 'https://d24imx1z1vc7kd.cloudfront.net'
 };

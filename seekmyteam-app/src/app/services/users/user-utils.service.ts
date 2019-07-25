@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
+import { environment } from '../../../environments/environment.prod'
 
 export interface UserDetails {
   email: string,
@@ -42,9 +43,12 @@ export class UserUtilsService {
 
   constructor(private http: HttpClient) { }
 
+  public buildAssetUrl(asset: string) { 
+    return environment.cloudfront + '/static-images/' + asset + '?' + new Date().getTime();
+  }
+
   public buildProfilePicUrl(email: string) { 
-    var S3_URL = 'https://s3.us-east-2.amazonaws.com/seekmyteam-profile-pics/';
-    return S3_URL + email + '/picture?' + new Date().getTime();
+    return environment.cloudfront + '/profile-pics/' + email + '/picture?' + new Date().getTime();
   }
 
   public markApplied(proj: string) {
