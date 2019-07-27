@@ -122,6 +122,35 @@ router.get('/appliedPosts', function (req, res) {
     });
 });
 
+// router.get('/postComments', function (req, res) {
+//     var email = req.query.email;
+//     var params = {
+//         AttributesToGet: [
+//             "comments"
+//           ],
+//         TableName : process.env.USERS_TABLE,
+//         Key : { 
+//           "Email" : {'S' : email}
+//         }
+//     };
+
+//     database.getItem(params, function(err, data) {
+//         if (err) {
+//             console.log(err);
+//             res.status(500).end();
+//         } else {
+//              /* No user with that email found */
+//              if (data.Item === undefined) {
+//                 res.status(401).end();
+//                 return;
+//             } 
+//             res.json({
+//                 posts: JSON.parse(data.Item.AppliedPosts.S)
+//             });
+//         }
+//     });
+// });
+
 router.post('/createPost', auth, function(req, res) {
     var name = req.body.name;
     var description = req.body.description;
@@ -155,7 +184,7 @@ router.post('/createPost', auth, function(req, res) {
                 'Skills': {'S': skills},
                 'Date': {'S': date},
                 'Members': {'S' : members},
-                'Comments': {'S': []}
+                'Comment': {'S': []}
             };
         
             var postParams = { 
@@ -251,6 +280,70 @@ router.post('/updatePost', auth, function(req, res) {
             res.status(200).end();
         }
     });  
+});
+
+router.post('/updateComment', auth, function(req, res) {
+    var name = req.body.name;
+    var comments = JSON.stringify(req.body.comments);
+    console.log("updated comments: ", comments);
+    
+    var params = {
+        ExpressionAttributeNames: {
+         "#N": 'Comment',
+        }, 
+        ExpressionAttributeValues: {
+          ":n": {
+            'S': comments
+          }
+        }, 
+        Key: {
+         "Name": {
+           'S': name
+          }
+        }, 
+        TableName: process.env.POSTS_TABLE, 
+        UpdateExpression: "SET #N = :n"
+    };
+
+    database.updateItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    });  
+});
+
+router.get('/comments', function (req, res) {
+    var name = req.query.name;
+    console.log("name: ", name);
+    //console.log("other name: ", req.query.name);
+    var params = {
+        AttributesToGet: [
+            "Comment"
+        ],
+        TableName : process.env.POSTS_TABLE,
+        Key : { 
+          "Name" : {'S' : name}
+        }
+    };
+
+    database.getItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
+            res.json({
+                comments: JSON.parse(data.Item.Comment.S)
+            });
+        }
+    });
 });
 
 router.post('/deletePost', auth, function(req, res) {

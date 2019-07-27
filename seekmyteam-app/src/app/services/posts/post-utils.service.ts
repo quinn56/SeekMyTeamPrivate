@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
-import { Post } from 'src/app/home/home.component';
+import { Post, Comment } from 'src/app/home/home.component';
 
 interface ApplyPayload {
   owner: string,
@@ -32,6 +32,11 @@ interface UpdatePayload {
   description: string,
   skills: string,
   members: string
+}
+
+interface CommentPayload {
+  name: string,
+  comments: any[]
 }
 
 
@@ -115,6 +120,46 @@ export class PostUtilsService {
   private postUpdate(req: UpdatePayload): Observable<any> {
     let base = this.http.post('/api/updatePost', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
 
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  public commentUpdate(existingComments: any[], postName: string, newComment: Comment): Observable<any> {
+    var c = { "commentOwnerEmail":newComment.commentOwnerEmail, "commentOwner":newComment.commentOwner, "commentText":newComment.commentText };
+    let cmt = JSON.parse(JSON.stringify(c));
+    console.log("existing comments before push: ", existingComments);
+    existingComments.push(cmt);
+    console.log("existing comments after push: ", existingComments);
+
+    let payload: CommentPayload = {
+      name: postName,
+      comments: existingComments
+    };
+    
+    return this.updateComment(payload);
+  }
+
+  private updateComment(req: CommentPayload): Observable<any> {
+    let base = this.http.post('/api/updateComment', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  public fetchComments(name: string): Observable<any> {
+    console.log("gets here")
+    let base = this.http.get('/api/comments', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {name: name}});
+    
     const requestedData = base.pipe(
       map((data) => {
         return data;

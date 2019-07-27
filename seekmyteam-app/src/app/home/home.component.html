@@ -75,13 +75,13 @@
                                     <!-- Activity Item Start -->
                                     <div class="activity--item">
                                         <div class="activity--avatar">
-                                            <a (click)="routeProfile(post)"><img [src]="buildPic(post.ownerEmail)"
+                                            <a (click)="routeProfileString(post.ownerEmail)"><img [src]="buildPic(post.ownerEmail)"
                                                     alt=""></a>
                                         </div>
                                         <div class="activity--info fs--14">
                                             <div class="activity--header">
                                                 <p><a style="cursor: pointer;"
-                                                        (click)="routeProfile(post)">{{post.ownerName}}</a>
+                                                        (click)="routeProfileString(post.ownerEmail)">{{post.ownerName}}</a>
                                                     is seeking collaborator(s) for <a style="cursor: pointer"
                                                         (click)="routeProject(post)">{{post.name}}</a></p>
                                             </div>
@@ -96,39 +96,39 @@
 
                                             <div class="activity--action fw--700">
                                                 <a style="margin-right: 30px;" href="#">Like</a>
-                                                <a style="cursor: pointer" (click)="openComment()">Comment</a>
+                                                <a style="cursor: pointer" (click)="openCommentDialog(post)">Comment</a>
                                             </div>
-                                            <div *ngIf="openCommentField" class="input-group mb-3">
+                                            <div *ngIf="post.openComment" class="input-group mb-3">
                                                 <input type="text" style="width: 30em" class="form-control"
-                                                    placeholder="Comment" [(ngModel)]="newPost.description"
+                                                    placeholder="Comment" [(ngModel)]="newComment.commentText"
                                                     aria-label="Comment" aria-describedby="basic-addon2">
                                                 <button
                                                     style="background: url(../../assets/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
-                                                    type="button"></button>
+                                                    (click)="addNewComment(post)" type="button"></button>
                                             </div>
 
-                                            <div class="activity--comments fs--12">
+                                            <div *ngFor="let comment of post.comments" class="activity--comments fs--12">
                                                 <ul class="acomment--items nav">
                                                     <li>
                                                         <div class="acomment--item clearfix">
                                                             <div class="acomment--avatar">
-                                                                <a href="member-activity-personal.html">
-                                                                    <img src="../../assets/profile_icon_2.jpg" alt="">
+                                                                <a (click)="routeProfileString(comment.commentOwnerEmail)"><img [src]="buildPic(comment.commentOwnerEmail)"
+                                                                    alt="">
                                                                 </a>
                                                             </div>
 
                                                             <div class="acomment--info">
                                                                 <div class="acomment--header">
-                                                                    <p><a href="#">Leticia J. Espinosa</a> Replied</p>
+                                                                    <p><a (click)="routeProfileString(comment.commentOwnerEmail)">{{comment.commentOwner}}</a> Replied</p>
                                                                 </div>
 
                                                                 <div class="acomment--meta">
-                                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yeasterday at
+                                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yesterday at
                                                                         08:20 am</p>
                                                                 </div>
 
                                                                 <div class="acomment--content">
-                                                                    <p>Well Said!</p>
+                                                                    <p>{{comment.commentText}}</p>
                                                                 </div>
                                                             </div>
                                                         </div>

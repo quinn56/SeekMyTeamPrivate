@@ -4,6 +4,7 @@ import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { AlertService } from '../services/alerts/alert.service';
 import { PostDateService } from '../services/posts/post-date.service';
+import { CommaExpr } from '@angular/compiler';
 
 export interface Post {
     name: string,
@@ -14,13 +15,15 @@ export interface Post {
     date: number,
     age: string,
     members: string[],
-    comments: Comment[]
+    comments: Comment[],
+    openComment: boolean
 }
 
 export interface Comment {
-    owner: string
-    text: string,
-    date: number
+    commentOwnerEmail: string,
+    commentOwner: string,
+    commentText: string,
+    //date: number
 }
 
 @Component({
@@ -32,6 +35,7 @@ export class HomeComponent {
     private LastEvaluatedKey: any;
     showMore: boolean;
     openCommentField: boolean;
+    comments: Comment[];
 
     /* Keeps track of a new post */
     newPost: Post;
@@ -74,8 +78,15 @@ export class HomeComponent {
             date: 0,
             age: "",
             members: [],
-            comments: []
+            comments: [],
+            openComment: false
         };
+
+        this.newComment = {
+            commentOwnerEmail: "",
+            commentOwner: "",
+            commentText: "",
+        }
 
         this.posts = [];
         this.post_utils.fetchPosts(null).subscribe(data => {
@@ -88,8 +99,9 @@ export class HomeComponent {
         });
     }
 
-    openComment() {
-        this.openCommentField = true;
+    openCommentDialog(post: Post) {
+        //this.openCommentField = true;
+        post.openComment = true;
     }
 
     resetFilters() {
@@ -127,6 +139,20 @@ export class HomeComponent {
 
     parsePosts(data) {
         data.forEach((item) => {
+            this.comments = [];
+            if (item.Comment !== undefined) {
+                let comment = JSON.parse(item.Comment.S);
+                var i;
+                for (i = 0; i < comment.length; i++) {
+                    let cmt: Comment = {
+                        commentOwnerEmail: comment[i].commentOwnerEmail,
+                        commentOwner: comment[i].commentOwner,
+                        commentText: comment[i].commentText
+                    }
+                    this.comments.push(cmt);
+                }
+            }
+
             let parse: Post = {
                 name: item.Name.S,
                 description: item.Description.S,
@@ -136,7 +162,8 @@ export class HomeComponent {
                 date: parseInt(item.Date.S),
                 age: this.date_func.buildDate(parseInt(item.Date.S)),
                 members: JSON.parse(item.Members.S),
-                comments: []
+                comments: this.comments,
+                openComment: false
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -184,17 +211,41 @@ export class HomeComponent {
         });
     }
 
-    addNewComment() {
-        this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
-            this.post_utils.create(this.newPost.name, this.newPost.description, JSON.stringify(this.newPost.skills), profile.user.name).subscribe(data => {
-                this.ngOnInit();    // Repopulate list automatically??
+    addNewComment(post: Post) {
+        console.log(post.name);
+        this.post_utils.fetchComments(post.name).subscribe(data => {
+            console.log("here")
+            this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
+                this.newComment.commentOwnerEmail = profile.user.email;
+                this.newComment.commentOwner = profile.user.name;
+                console.log("owner title: ", post.name);
+                console.log("comment owner email: ", this.newComment.commentOwnerEmail);
+                console.log("comment owner: ", this.newComment.commentOwner);
+                console.log("comment text: ", this.newComment.commentText);
+                console.log("existing comments: ", data.comments);
+                if (data.comments === undefined)
+                    data.comments = [];
+                this.post_utils.commentUpdate(data.comments, post.name, this.newComment).subscribe(data => {
+                    this.ngOnInit();    // Repopulate list automatically??
+                }, (err) => {
+                    if (err.status == 401) {
+                        this.alert.error('Weird error')
+                    } else {
+                        this.alert.error('Server error: Could not add comment');
+                    }
+                });
             }, (err) => {
-                if (err.status == 401) {
-                    this.alert.error('A project with that name already exists')
-                } else {
-                    this.alert.error('Server error: Could not create post');
-                }
+                console.error(err);
             });
+        }, (err) => {
+            console.error(err);
+        })
+        
+    }
+    
+    getComments(name: string) {
+        this.post_utils.fetchComments(name).subscribe(data => {
+            
         }, (err) => {
             console.error(err);
         });
@@ -221,7 +272,8 @@ export class HomeComponent {
             date: 0,
             age: "",
             members: [],
-            comments: []
+            comments: [],
+            openComment: false
         };
     }
 
