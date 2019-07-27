@@ -46,7 +46,8 @@ export class TeamPageComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false
+            openComment: false,
+            showComments: true
         };
 
         this.editPost = {
@@ -59,7 +60,8 @@ export class TeamPageComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false
+            openComment: false,
+            showComments: true
         };
 
         this.route.params.subscribe(params => {
@@ -87,7 +89,8 @@ export class TeamPageComponent {
             age: this.date_func.buildDate(parseInt(item.Date.S)),
             members: JSON.parse(item.Members.S),
             comments: [],
-            openComment: false
+            openComment: false,
+            showComments: true
         };
     }
 
@@ -182,7 +185,8 @@ export class TeamPageComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false
+            openComment: false,
+            showComments: true
         };
     }
 

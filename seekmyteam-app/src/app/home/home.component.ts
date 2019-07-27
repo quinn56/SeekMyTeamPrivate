@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
@@ -16,18 +16,29 @@ export interface Post {
     age: string,
     members: string[],
     comments: Comment[],
-    openComment: boolean
+    openComment: boolean,
+    showComments: boolean
 }
 
 export interface Comment {
     commentOwnerEmail: string,
     commentOwner: string,
     commentText: string,
-    //date: number
+    date: string,
+    age: string
+}
+
+@Pipe({ name: 'reverse', pure: false })
+export class ReversePipe implements PipeTransform {
+    transform(values) {
+        if (values) {
+            return values.slice().reverse();
+        }
+    }
 }
 
 @Component({
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
 })
 export class HomeComponent {
     /* Home project variables */
@@ -61,7 +72,7 @@ export class HomeComponent {
         private post_utils: PostUtilsService,
         private alert: AlertService,
         private router: Router,
-        private date_func: PostDateService
+        private date_func: PostDateService,
     ) { }
 
     ngOnInit() {
@@ -79,13 +90,16 @@ export class HomeComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false
+            openComment: false,
+            showComments: true
         };
 
         this.newComment = {
             commentOwnerEmail: "",
             commentOwner: "",
             commentText: "",
+            date: "",
+            age: ""
         }
 
         this.posts = [];
@@ -100,8 +114,17 @@ export class HomeComponent {
     }
 
     openCommentDialog(post: Post) {
-        //this.openCommentField = true;
-        post.openComment = true;
+        if (post.openComment === true)
+            post.openComment = false;
+        else
+            post.openComment = true;
+    }
+
+    toggleCommentsDisplay(post: Post) {
+        if (post.showComments === true)
+            post.showComments = false;
+        else
+            post.showComments = true;
     }
 
     resetFilters() {
@@ -151,7 +174,9 @@ export class HomeComponent {
                     let cmt: Comment = {
                         commentOwnerEmail: comment[i].commentOwnerEmail,
                         commentOwner: comment[i].commentOwner,
-                        commentText: comment[i].commentText
+                        commentText: comment[i].commentText,
+                        date: comment[i].date,
+                        age: this.date_func.buildDate(parseInt(comment[i].date))
                     }
                     this.comments.push(cmt);
                 }
@@ -167,7 +192,8 @@ export class HomeComponent {
                 age: this.date_func.buildDate(parseInt(item.Date.S)),
                 members: JSON.parse(item.Members.S),
                 comments: this.comments,
-                openComment: false
+                openComment: false,
+                showComments: true
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -222,6 +248,7 @@ export class HomeComponent {
             this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
                 this.newComment.commentOwnerEmail = profile.user.email;
                 this.newComment.commentOwner = profile.user.name;
+                this.newComment.date = Date.now().toString()
                 console.log("owner title: ", post.name);
                 console.log("comment owner email: ", this.newComment.commentOwnerEmail);
                 console.log("comment owner: ", this.newComment.commentOwner);
@@ -277,7 +304,8 @@ export class HomeComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false
+            openComment: false,
+            showComments: true
         };
     }
 

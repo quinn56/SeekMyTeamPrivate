@@ -47,7 +47,6 @@
     </div>
 </div>
 <!-- End of modal -->
-
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Page Wrapper Start -->
@@ -65,7 +64,6 @@
                             </ul>
                         </div>
                         <!-- Content Nav End -->
-
                         <!-- Activity List Start -->
                         <div class="activity--list">
                             <!-- Activity Items Start -->
@@ -97,46 +95,51 @@
                                             <div class="activity--action fw--700">
                                                 <a style="margin-right: 30px;" href="#">Like</a>
                                                 <a style="cursor: pointer" (click)="openCommentDialog(post)">Comment</a>
+                                                <img *ngIf="!post.showComments" src="../../assets/baseline-expand_more-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
+                                                <img *ngIf="post.showComments" src="../../assets/baseline-expand_less-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
                                             </div>
                                             <div *ngIf="post.openComment" class="input-group mb-3">
                                                 <input type="text" style="width: 30em" class="form-control"
                                                     placeholder="Comment" [(ngModel)]="newComment.commentText"
                                                     aria-label="Comment" aria-describedby="basic-addon2">
-                                                <button
+                                                <!-- <button
                                                     style="background: url(d24imx1z1vc7kd.cloudfront.net/static-images/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    (click)="addNewComment(post)" type="button"></button> -->
+                                                <button
+                                                    style="background: url(../../assets/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
                                                     (click)="addNewComment(post)" type="button"></button>
                                             </div>
+                                            <ng-container *ngIf="post.showComments">
+                                                <div *ngFor="let comment of post.comments | reverse" class="activity--comments fs--12">
+                                                    <ul class="acomment--items nav">
+                                                        <li>
+                                                            <div class="acomment--item clearfix">
+                                                                <div class="acomment--avatar">
+                                                                    <a (click)="routeProfileString(comment.commentOwnerEmail)"><img [src]="buildPic(comment.commentOwnerEmail)"
+                                                                        alt=""></a>
+                                                                    <!-- <a href="/profile/">
+                                                                        <img [src]="" alt="">
+                                                                    </a> -->
+                                                                </div>
 
-                                            <div *ngFor="let comment of post.comments" class="activity--comments fs--12">
-                                                <ul class="acomment--items nav">
-                                                    <li>
-                                                        <div class="acomment--item clearfix">
-                                                            <div class="acomment--avatar">
-                                                                <a (click)="routeProfileString(comment.commentOwnerEmail)"><img [src]="buildPic(comment.commentOwnerEmail)"
-                                                                    alt=""></a>
-                                                                <!-- <a href="/profile/">
-                                                                    <img [src]="" alt="">
-                                                                </a> -->
+                                                                <div class="acomment--info">
+                                                                    <div class="acomment--header">
+                                                                        <p><a style="cursor: pointer;" (click)="routeProfileString(comment.commentOwnerEmail)">{{comment.commentOwner}}</a> Replied</p>
+                                                                    </div>
+
+                                                                    <div class="acomment--meta">
+                                                                            <p><i class="fa mr--8 fa-clock-o"></i>{{comment.age}}</p>
+                                                                    </div>
+
+                                                                    <div class="acomment--content">
+                                                                        <p>{{comment.commentText}}</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-
-                                                            <div class="acomment--info">
-                                                                <div class="acomment--header">
-                                                                    <p><a (click)="routeProfileString(comment.commentOwnerEmail)">{{comment.commentOwner}}</a> Replied</p>
-                                                                </div>
-
-                                                                <div class="acomment--meta">
-                                                                    <p><i class="fa mr--8 fa-clock-o"></i>Yesterday at
-                                                                        08:20 am</p>
-                                                                </div>
-
-                                                                <div class="acomment--content">
-                                                                    <p>{{comment.commentText}}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </ng-container>
                                         </div>
                                     </div>
                                     <!-- Activity Item End -->

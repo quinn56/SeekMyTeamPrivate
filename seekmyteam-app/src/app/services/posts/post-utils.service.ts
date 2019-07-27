@@ -130,7 +130,7 @@ export class PostUtilsService {
   }
 
   public commentUpdate(existingComments: any[], postName: string, newComment: Comment): Observable<any> {
-    var c = { "commentOwnerEmail":newComment.commentOwnerEmail, "commentOwner":newComment.commentOwner, "commentText":newComment.commentText };
+    var c = { "commentOwnerEmail":newComment.commentOwnerEmail, "commentOwner":newComment.commentOwner, "commentText":newComment.commentText, "date": newComment.date };
     let cmt = JSON.parse(JSON.stringify(c));
     console.log("existing comments before push: ", existingComments);
     existingComments.push(cmt);
