@@ -22,7 +22,7 @@ const upload = multer({
         acl: 'public-read',
         contentType: multers3.AUTO_CONTENT_TYPE,
         key: function (req, file, cb) {
-            cb(null, req.payload.email + '/picture');
+            cb(null, 'profile-pics/' + req.payload.email + '/picture');
         }
     })
 });
