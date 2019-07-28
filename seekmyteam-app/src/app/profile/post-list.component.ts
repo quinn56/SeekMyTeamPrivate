@@ -57,7 +57,9 @@ export class PostListComponent {
             members: [],
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
 
         this.editPost = {
@@ -71,7 +73,9 @@ export class PostListComponent {
             members: [],
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
 
 
@@ -119,7 +123,9 @@ export class PostListComponent {
                 members: JSON.parse(item.Members.S),
                 comments: [],
                 openComment: false,
-                showComments: true
+                showComments: true,
+                likes: 0,
+                liked: false
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -194,7 +200,9 @@ export class PostListComponent {
             members: [],
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
     }
     deletePost(idx:number) {

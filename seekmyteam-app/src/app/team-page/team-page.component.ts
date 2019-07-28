@@ -47,7 +47,9 @@ export class TeamPageComponent {
             members: [],
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
 
         this.editPost = {
@@ -61,7 +63,9 @@ export class TeamPageComponent {
             members: [],
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
 
         this.route.params.subscribe(params => {
@@ -90,7 +94,9 @@ export class TeamPageComponent {
             members: JSON.parse(item.Members.S),
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
     }
 
@@ -186,7 +192,9 @@ export class TeamPageComponent {
             members: [],
             comments: [],
             openComment: false,
-            showComments: true
+            showComments: true,
+            likes: 0,
+            liked: false
         };
     }
 

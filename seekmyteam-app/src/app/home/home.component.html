@@ -93,10 +93,28 @@
                                             </div>
 
                                             <div class="activity--action fw--700">
-                                                <a style="margin-right: 30px;" href="#">Like</a>
+                                                <ng-container *ngIf="post.likes > 0" style="margin-right: 10px;">{{post.likes}}</ng-container>
+                                                <ng-container *ngIf="!post.liked">
+                                                    <button
+                                                        style="background: url(../../assets/outline-thumb_up-24px.svg); margin-right: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                        (click)="like(post)" type="button"></button>
+                                                    <a style="margin-right: 30px; cursor: pointer;" (click)="like(post)">Like</a>
+                                                </ng-container>
+                                                <ng-container *ngIf="post.liked">
+                                                    <button
+                                                        style="background: url(../../assets/baseline-thumb_up-24px.svg); margin-right: 10px; margin-top: 7px; padding: 0.9em; border: none; cursor: default"
+                                                        type="button"></button>
+                                                    <a style="margin-right: 30px; font: bold; cursor: default">Like</a>
+                                                </ng-container>
                                                 <a style="cursor: pointer" (click)="openCommentDialog(post)">Comment</a>
-                                                <img *ngIf="!post.showComments" src="../../assets/baseline-expand_more-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
-                                                <img *ngIf="post.showComments" src="../../assets/baseline-expand_less-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
+                                                <button
+                                                    style="background: url(../../assets/baseline-expand_more-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    (click)="toggleCommentsDisplay(post)" type="button"></button>
+                                                <button
+                                                    style="background: url(../../assets/baseline-expand_less-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    (click)="toggleCommentsDisplay(post)" type="button"></button>
+                                                <!-- <img *ngIf="!post.showComments" src="../../assets/baseline-expand_more-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
+                                                <img *ngIf="post.showComments" src="../../assets/baseline-expand_less-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)"> -->
                                             </div>
                                             <div *ngIf="post.openComment" class="input-group mb-3">
                                                 <input type="text" style="width: 30em" class="form-control"

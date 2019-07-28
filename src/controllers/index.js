@@ -317,8 +317,6 @@ router.post('/updateComment', auth, function(req, res) {
 
 router.get('/comments', function (req, res) {
     var name = req.query.name;
-    console.log("name: ", name);
-    //console.log("other name: ", req.query.name);
     var params = {
         AttributesToGet: [
             "Comment"
@@ -341,6 +339,67 @@ router.get('/comments', function (req, res) {
             } 
             res.json({
                 comments: JSON.parse(data.Item.Comment.S)
+            });
+        }
+    });
+});
+
+router.post('/updateLikes', auth, function(req, res) {
+    var name = req.body.name;
+    var likes = JSON.stringify(req.body.likes);
+    
+    var params = {
+        ExpressionAttributeNames: {
+         "#L": 'Likes',
+        }, 
+        ExpressionAttributeValues: {
+          ":l": {
+            'S': likes
+          }
+        }, 
+        Key: {
+         "Name": {
+           'S': name
+          }
+        }, 
+        TableName: process.env.POSTS_TABLE, 
+        UpdateExpression: "SET #L = :l"
+    };
+
+    database.updateItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    });  
+});
+
+router.get('/likes', function (req, res) {
+    var name = req.query.name;
+    var params = {
+        AttributesToGet: [
+            "Likes"
+        ],
+        TableName : process.env.POSTS_TABLE,
+        Key : { 
+          "Name" : {'S' : name}
+        }
+    };
+
+    database.getItem(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        } else {
+             /* No user with that email found */
+             if (data.Item === undefined) {
+                res.status(401).end();
+                return;
+            } 
+            res.json({
+                likes: JSON.parse(data.Item.Likes.S)
             });
         }
     });
