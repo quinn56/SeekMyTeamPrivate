@@ -33,14 +33,16 @@
                                     <div style="cursor: pointer;" (click)="routeProfile(user.email)"
                                         class="member--item online">
                                         <div class="img img-circle">
-                                            <a class="btn-link">
-                                                <img [src]="buildPic(user.email)" alt="">
+                                            <a class="btn-link" style="width: 100%; height:100%;">
+                                                <img [src]="buildPic(user.email)" style="width: 100%; height: 100%; overflow:hidden" alt="duh">
+                                                <!-- <img src="https://www.gstatic.com/webp/gallery/5.jpg" style="width: 100%; height: 100%; overflow:hidden" alt="duh"> -->
                                             </a>
                                         </div>
 
                                         <div class="name">
                                             <h3 class="h6 fs--12">
                                                 <a class="btn-link">{{user.name}}</a>
+                                                <!-- <a class="btn-link">Shengqi</a> -->
                                             </h3>
                                         </div>
                                     </div>
