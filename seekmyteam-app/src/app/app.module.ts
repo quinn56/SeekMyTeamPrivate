@@ -11,7 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { ConfirmComponent } from './register/confirm.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent, ReversePipe } from './home/home.component';
+import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './home/users.component';
 import { PostListComponent } from './profile/post-list.component';
 import { TeamPageComponent } from './team-page/team-page.component';
@@ -27,6 +27,7 @@ import { PostDateService } from './services/posts/post-date.service';
 
 import { FilterPipe } from './services/pipes/filter.pipe';
 import { SkillsPipe } from './services/pipes/skills.pipe';
+import { ReversePipe } from './services/pipes/reverse.pipe';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { RegisterModalComponent } from './register/register-modal.component';
 import { LoginModalComponent } from './register/login-modal.component';
@@ -68,10 +69,10 @@ const appRoutes: Routes = [
     AlertComponent,
     FilterPipe,
     SkillsPipe,
+    ReversePipe,
     ComingSoonComponent,
     RegisterModalComponent,
-    LoginModalComponent,
-    ReversePipe
+    LoginModalComponent
   ],
   imports: [
     BrowserModule,

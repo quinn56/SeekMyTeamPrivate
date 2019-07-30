@@ -1,4 +1,4 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
@@ -24,15 +24,6 @@ export interface Comment {
     commentText: string,
     date: string,
     age: string
-}
-
-@Pipe({ name: 'reverse', pure: false })
-export class ReversePipe implements PipeTransform {
-    transform(values) {
-        if (values) {
-            return values.slice().reverse();
-        }
-    }
 }
 
 @Component({

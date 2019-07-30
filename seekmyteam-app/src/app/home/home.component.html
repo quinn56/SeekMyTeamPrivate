@@ -133,8 +133,8 @@
                                                     (click)="addNewComment(post)" type="button"></button>
                                             </div>
 
-                                            <ng-container *ngIf="idx == showCommentsIdx">
-                                                <div *ngFor="let comment of post.comments | reverse"
+                                            <ng-container>
+                                                <div *ngFor="let comment of post.comments | reverse | slice:0:3"
                                                     class="activity--comments fs--12">
                                                     <ul class="acomment--items nav">
                                                         <li>
