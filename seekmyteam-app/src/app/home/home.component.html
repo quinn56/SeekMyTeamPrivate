@@ -110,15 +110,15 @@
                                                 <a style="cursor: pointer" (click)="toggleCommentBox(idx)">Comment</a>
 
                                                 <button
-                                                    style="background: url(d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
                                                     (click)="toggleCommentsDisplay(idx)" type="button"></button>
 
                                                 <button
-                                                    style="background: url(d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_less-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_less-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
                                                     (click)="toggleCommentsDisplay(idx)" type="button"></button>
 
-                                                <!-- <img *ngIf="!post.showComments" src="d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
-                                                <img *ngIf="post.showComments" src="d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_less-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)"> -->
+                                                <!-- <img *ngIf="!post.showComments" src="https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
+                                                <img *ngIf="post.showComments" src="https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_less-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)"> -->
                                             </div>
 
                                             <div *ngIf="idx == openCommentIdx" class="input-group mb-3">
@@ -126,10 +126,10 @@
                                                     placeholder="Comment" [(ngModel)]="newCommentText"
                                                     aria-label="Comment" aria-describedby="basic-addon2">
                                                 <!-- <button
-                                                    style="background: url(d24imx1z1vc7kd.cloudfront.net/static-images/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
                                                     (click)="addNewComment(post)" type="button"></button> -->
                                                 <button
-                                                    style="background: url(d24imx1z1vc7kd.cloudfront.net/static-images/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-send-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
                                                     (click)="addNewComment(post)" type="button"></button>
                                             </div>
 
@@ -141,9 +141,8 @@
                                                             <div class="acomment--item clearfix">
                                                                 <div class="acomment--avatar">
                                                                     <div class="img img-circle">
-                                                                        <a class="btn-link"
-                                                                            style="width: 100%; height:100%;">
-                                                                            <img [src]="buildPic(user.email)"
+                                                                        <a class="btn-link">
+                                                                            <img [src]="buildPic(comment.commentOwnerEmail)"
                                                                                 style="width: 100%; height: 100%; overflow:hidden"
                                                                                 alt="">
                                                                         </a>
