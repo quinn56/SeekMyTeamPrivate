@@ -20,7 +20,7 @@ interface DeletePayload {
 }
 
 interface CreatePayload {
-  name: string, 
+  name: string,
   description: string,
   skills: string,
   ownerName: string,
@@ -82,17 +82,17 @@ export class PostUtilsService {
       owner: owner,
       applicant: applicant
     };
-    
+
     return this.postApply(payload);
   }
 
   public invite(owner: string, invite: string, project: string): Observable<any> {
     let payload: InvitePayload = {
       owner: owner,
-      invite: invite, 
+      invite: invite,
       project: project
     };
-    
+
     return this.postInvite(payload);
   }
 
@@ -102,7 +102,7 @@ export class PostUtilsService {
       commentor: commentor,
       project: project
     };
-    
+
     return this.postComment(payload);
   }
 
@@ -112,7 +112,7 @@ export class PostUtilsService {
       liker: liker,
       project: project
     };
-    
+
     return this.postLike(payload);
   }
 
@@ -144,12 +144,12 @@ export class PostUtilsService {
       comments: JSON.stringify(post.comments),
       likes: JSON.stringify(post.likes)
     };
-    
+
     return this.postUpdate(payload);
   }
 
   private postUpdate(req: UpdatePayload): Observable<any> {
-    let base = this.http.post('/api/updatePost', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/updatePost', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -161,8 +161,8 @@ export class PostUtilsService {
   }
 
   public fetchComments(name: string): Observable<any> {
-    let base = this.http.get('/api/comments', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {name: name}});
-    
+    let base = this.http.get('/api/comments', { headers: { Authorization: `Bearer ${this.getToken()}` }, params: { name: name } });
+
     const requestedData = base.pipe(
       map((data) => {
         return data;
@@ -173,8 +173,8 @@ export class PostUtilsService {
   }
 
   public fetchLikes(name: string): Observable<any> {
-    let base = this.http.get('/api/likes', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {name: name}});
-    
+    let base = this.http.get('/api/likes', { headers: { Authorization: `Bearer ${this.getToken()}` }, params: { name: name } });
+
     const requestedData = base.pipe(
       map((data) => {
         return data;
@@ -185,7 +185,7 @@ export class PostUtilsService {
   }
 
   private postCreate(req: CreatePayload): Observable<any> {
-    let base = this.http.post('/api/createPost', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/createPost', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -197,7 +197,7 @@ export class PostUtilsService {
   }
 
   private postDelete(req: DeletePayload): Observable<any> {
-    let base = this.http.post('/api/deletePost', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/deletePost', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -209,7 +209,7 @@ export class PostUtilsService {
   }
 
   private postApply(req: ApplyPayload): Observable<any> {
-    let base = this.http.post('/api/apply', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/apply', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -221,7 +221,7 @@ export class PostUtilsService {
   }
 
   private postInvite(req: InvitePayload): Observable<any> {
-    let base = this.http.post('/api/invite', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/invite', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -233,7 +233,7 @@ export class PostUtilsService {
   }
 
   private postComment(req: CommentPayload): Observable<any> {
-    let base = this.http.post('/api/comment', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/comment', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -245,7 +245,7 @@ export class PostUtilsService {
   }
 
   private postLike(req: LikePayload): Observable<any> {
-    let base = this.http.post('/api/like', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+    let base = this.http.post('/api/like', req, { headers: { Authorization: `Bearer ${this.getToken()}` } });
 
     const requestedData = base.pipe(
       map((data) => {
@@ -257,8 +257,8 @@ export class PostUtilsService {
   }
 
   private getPost(key: string): Observable<any> {
-    let base = this.http.get('/api/post/' + key, { headers: { Authorization: `Bearer ${this.getToken()}`}});
-    
+    let base = this.http.get('/api/post/' + key, { headers: { Authorization: `Bearer ${this.getToken()}` } });
+
     const requestedData = base.pipe(
       map((data) => {
         return data;
@@ -268,8 +268,8 @@ export class PostUtilsService {
     return requestedData;
   }
   private getPosts(key: string): Observable<any> {
-    let base = this.http.get('/api/posts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {ExclusiveStartKey: key}});
-    
+    let base = this.http.get('/api/posts', { headers: { Authorization: `Bearer ${this.getToken()}` }, params: { ExclusiveStartKey: key } });
+
     const requestedData = base.pipe(
       map((data) => {
         return data;
@@ -280,8 +280,8 @@ export class PostUtilsService {
   }
 
   private getUserPosts(email: string): Observable<any> {
-    let base = this.http.get('/api/userPosts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {email: email}});
-    
+    let base = this.http.get('/api/userPosts', { headers: { Authorization: `Bearer ${this.getToken()}` }, params: { email: email } });
+
     const requestedData = base.pipe(
       map((data) => {
         return data;
@@ -292,8 +292,8 @@ export class PostUtilsService {
   }
 
   private getAppliedPosts(email: string): Observable<any> {
-    let base = this.http.get('/api/appliedPosts', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {email: email}});
-    
+    let base = this.http.get('/api/appliedPosts', { headers: { Authorization: `Bearer ${this.getToken()}` }, params: { email: email } });
+
     const requestedData = base.pipe(
       map((data) => {
         return data;

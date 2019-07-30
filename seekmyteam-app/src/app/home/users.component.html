@@ -34,8 +34,8 @@
                                         class="member--item online">
                                         <div class="img img-circle">
                                             <a class="btn-link" style="width: 100%; height:100%;">
-                                                <img [src]="buildPic(user.email)" style="width: 100%; height: 100%; overflow:hidden" alt="duh">
-                                                <!-- <img src="https://www.gstatic.com/webp/gallery/5.jpg" style="width: 100%; height: 100%; overflow:hidden" alt="duh"> -->
+                                                <img [src]="buildPic(user.email)"
+                                                    style="width: 100%; height: 100%; overflow:hidden" alt="">
                                             </a>
                                         </div>
 
@@ -58,11 +58,9 @@
                 <div class="main--sidebar col-md-4 pb--60">
                     <!-- Widget Start -->
                     <div class="widget">
-                        <h2 class="h4 fw--700 widget--title">Find A User</h2>
-
                         <!-- Buddy Finder Widget Start -->
                         <div class="buddy-finder--widget">
-                            <h2 class="h4 fw--700 widget--title">User Name</h2>
+                            <h2 class="h4 fw--700 widget--title">Seek User by Name</h2>
                             <label>
                                 <input class="form-control" [(ngModel)]="filterName" placeholder="Search by name">
                             </label>

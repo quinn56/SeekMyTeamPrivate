@@ -56,10 +56,10 @@ export class UsersComponent {
                 email: item.email,
                 skills: JSON.parse(item.skills)
             };
-            this.users.push(parse); 
+            this.users.push(parse);
         })
     }
-    
+
     routeProfile(str: string) {
         window.location.href = '/profile/' + str;
     }

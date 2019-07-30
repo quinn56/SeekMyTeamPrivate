@@ -68,21 +68,22 @@ export class HomeComponent {
         'Project Management',
         'Database Management'
     ];
-    
+
     constructor(
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
         private alert: AlertService,
         private date_func: PostDateService,
-        ) { }
-        
-        ngOnInit() {
-            this.showMore = true;
-            this.LastEvaluatedKey = null;
-            this.filterSkills = [];
-            this.newCommentText = "";
-            this.currentUserEmail = this.user_utils.getCurrentUserDetails().email;
-            this.openCommentIdx = -1;
+    ) { }
+
+    ngOnInit() {
+        this.showMore = true;
+        this.LastEvaluatedKey = null;
+        this.filterSkills = [];
+        this.newCommentText = "";
+        this.currentUserEmail = this.user_utils.getCurrentUserDetails().email;
+        this.openCommentIdx = -1;
+        this.showCommentsIdx = -1;
 
         this.newPost = {
             name: "",
@@ -109,17 +110,17 @@ export class HomeComponent {
     }
 
     toggleCommentBox(idx) {
-        if (this.openCommentIdx == -1)
-            this.openCommentIdx = idx;
+        if (this.openCommentIdx == idx)
+            this.openCommentIdx = -1;
         else
-            this.openCommentIdx = -1; 
+            this.openCommentIdx = idx;
     }
 
     toggleCommentsDisplay(idx) {
-        if (this.showCommentsIdx == -1)
-            this.showCommentsIdx = idx;
-        else
+        if (this.showCommentsIdx == idx)
             this.showCommentsIdx = -1;
+        else
+            this.showCommentsIdx = idx;
     }
 
     resetFilters() {
@@ -160,7 +161,7 @@ export class HomeComponent {
     }
 
     parsePosts(data) {
-       data.forEach(item => {    
+        data.forEach(item => {
             let parse: Post = {
                 name: item.Name.S,
                 description: item.Description.S,
@@ -220,15 +221,15 @@ export class HomeComponent {
     }
 
     addNewComment(post: Post) {
-        if (this.newCommentText.length == 0) 
+        if (this.newCommentText.length == 0)
             return
-        
+
         this.user_utils.getProfile(this.currentUserEmail).subscribe(profile => {
             let currentUserName = profile.user.name;
 
             let newComment = {
                 commentOwnerEmail: this.currentUserEmail,
-                commentOwner: currentUserName, 
+                commentOwner: currentUserName,
                 commentText: this.newCommentText,
                 date: Date.now().toString(),
                 age: this.date_func.buildDate(parseInt(Date.now().toString()))
@@ -257,17 +258,17 @@ export class HomeComponent {
         this.post_utils.update(post).subscribe(res => {
             this.post_utils.like(post.ownerEmail, currentUser, post.name).subscribe(data => {
                 this.ngOnInit();
-            }, (err) => { 
+            }, (err) => {
                 console.log(err);
             })
         }, (err) => {
             console.log(err);
         });
     }
-    
+
     getComments(name: string) {
         this.post_utils.fetchComments(name).subscribe(data => {
-            
+
         }, (err) => {
             console.error(err);
         });
@@ -302,7 +303,7 @@ export class HomeComponent {
     routeProfile(post: Post) {
         window.location.href = '/profile/' + post.ownerEmail;
     }
-    
+
     routeProfileString(str: string) {
         window.location.href = '/profile/' + str;
     }
