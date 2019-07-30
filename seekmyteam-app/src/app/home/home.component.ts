@@ -39,7 +39,7 @@ export class HomeComponent {
 
     currentUserEmail: string;
     openCommentIdx: number;
-    showCommentsIdx: number;
+    showComments: number[];
 
     /* Keeps track of a new post */
     newPost: Post;
@@ -74,7 +74,7 @@ export class HomeComponent {
         this.newCommentText = "";
         this.currentUserEmail = this.user_utils.getCurrentUserDetails().email;
         this.openCommentIdx = -1;
-        this.showCommentsIdx = -1;
+        this.showComments= [];
 
         this.newPost = {
             name: "",
@@ -108,10 +108,10 @@ export class HomeComponent {
     }
 
     toggleCommentsDisplay(idx) {
-        if (this.showCommentsIdx == idx)
-            this.showCommentsIdx = -1;
+        if (this.showComments.includes(idx))
+            this.showComments.splice(this.showComments.indexOf(idx), 1);
         else
-            this.showCommentsIdx = idx;
+            this.showComments.push(idx);
     }
 
     resetFilters() {
