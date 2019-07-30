@@ -46,10 +46,7 @@ export class TeamPageComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
 
         this.editPost = {
@@ -62,10 +59,7 @@ export class TeamPageComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
 
         this.route.params.subscribe(params => {
@@ -93,10 +87,7 @@ export class TeamPageComponent {
             age: this.date_func.buildDate(parseInt(item.Date.S)),
             members: JSON.parse(item.Members.S),
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
     }
 
@@ -191,10 +182,7 @@ export class TeamPageComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
     }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
-import { Post, Comment, Like } from 'src/app/home/home.component';
+import { Post } from 'src/app/home/home.component';
 
 interface ApplyPayload {
   owner: string,
@@ -31,17 +31,21 @@ interface UpdatePayload {
   name: string,
   description: string,
   skills: string,
-  members: string
+  members: string,
+  comments: string,
+  likes: string
 }
 
 interface CommentPayload {
-  name: string,
-  comments: any[]
+  owner: string,
+  commentor: string,
+  project: string
 }
 
 interface LikePayload {
-  name: string
-  likes: any[]
+  owner: string,
+  liker: string,
+  project: string
 }
 
 
@@ -92,6 +96,26 @@ export class PostUtilsService {
     return this.postInvite(payload);
   }
 
+  public comment(owner: string, commentor: string, project: string): Observable<any> {
+    let payload: CommentPayload = {
+      owner: owner,
+      commentor: commentor,
+      project: project
+    };
+    
+    return this.postComment(payload);
+  }
+
+  public like(owner: string, liker: string, project: string): Observable<any> {
+    let payload: LikePayload = {
+      owner: owner,
+      liker: liker,
+      project: project
+    };
+    
+    return this.postLike(payload);
+  }
+
   public delete(name: string): Observable<any> {
     let payload: DeletePayload = {
       name: name
@@ -116,7 +140,9 @@ export class PostUtilsService {
       name: post.name,
       description: post.description,
       skills: JSON.stringify(post.skills),
-      members: JSON.stringify(post.members)
+      members: JSON.stringify(post.members),
+      comments: JSON.stringify(post.comments),
+      likes: JSON.stringify(post.likes)
     };
     
     return this.postUpdate(payload);
@@ -134,59 +160,9 @@ export class PostUtilsService {
     return requestedData;
   }
 
-  public commentUpdate(existingComments: any[], postName: string, newComment: Comment): Observable<any> {
-    var buildObject = { "commentOwnerEmail":newComment.commentOwnerEmail, "commentOwner":newComment.commentOwner, "commentText":newComment.commentText, "date": newComment.date };
-    let cmt = JSON.parse(JSON.stringify(buildObject));
-    existingComments.push(cmt);
-
-    let payload: CommentPayload = {
-      name: postName,
-      comments: existingComments
-    };
-    
-    return this.updateComment(payload);
-  }
-
-  private updateComment(req: CommentPayload): Observable<any> {
-    let base = this.http.post('/api/updateComment', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
-
-    const requestedData = base.pipe(
-      map((data) => {
-        return data;
-      })
-    );
-
-    return requestedData;
-  }
-
   public fetchComments(name: string): Observable<any> {
     let base = this.http.get('/api/comments', { headers: { Authorization: `Bearer ${this.getToken()}`}, params: {name: name}});
     
-    const requestedData = base.pipe(
-      map((data) => {
-        return data;
-      })
-    );
-
-    return requestedData;
-  }
-
-  public likeUpdate(existingLikes: any[], postName: string, newLike: Like): Observable<any> {
-    var buildObject = { "likeOwnerEmail":newLike.likeOwnerEmail, "likeOwner":newLike.likeOwner };
-    let like = JSON.parse(JSON.stringify(buildObject));
-    existingLikes.push(like);
-
-    let payload: LikePayload = {
-      name: postName,
-      likes: existingLikes
-    };
-    
-    return this.updateLike(payload);
-  }
-
-  private updateLike(req: LikePayload): Observable<any> {
-    let base = this.http.post('/api/updateLikes', req, { headers: {Authorization: `Bearer ${this.getToken()}`}});
-
     const requestedData = base.pipe(
       map((data) => {
         return data;
@@ -246,6 +222,30 @@ export class PostUtilsService {
 
   private postInvite(req: InvitePayload): Observable<any> {
     let base = this.http.post('/api/invite', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  private postComment(req: CommentPayload): Observable<any> {
+    let base = this.http.post('/api/comment', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
+
+    const requestedData = base.pipe(
+      map((data) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  private postLike(req: LikePayload): Observable<any> {
+    let base = this.http.post('/api/like', req, { headers: { Authorization: `Bearer ${this.getToken()}`}});
 
     const requestedData = base.pipe(
       map((data) => {

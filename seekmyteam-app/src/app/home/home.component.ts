@@ -4,7 +4,6 @@ import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { AlertService } from '../services/alerts/alert.service';
 import { PostDateService } from '../services/posts/post-date.service';
-import { CommaExpr } from '@angular/compiler';
 
 export interface Post {
     name: string,
@@ -16,10 +15,7 @@ export interface Post {
     age: string,
     members: string[],
     comments: Comment[],
-    openComment: boolean,
-    showComments: boolean,
-    likes: number,
-    liked: boolean
+    likes: string[]
 }
 
 export interface Comment {
@@ -28,11 +24,6 @@ export interface Comment {
     commentText: string,
     date: string,
     age: string
-}
-
-export interface Like {
-    likeOwnerEmail: string,
-    likeOwner: string
 }
 
 @Pipe({ name: 'reverse', pure: false })
@@ -55,14 +46,15 @@ export class HomeComponent {
     openCommentField: boolean;
     comments: Comment[];
 
+    currentUserEmail: string;
+    openCommentIdx: number;
+    showCommentsIdx: number;
+
     /* Keeps track of a new post */
     newPost: Post;
 
     /* Keeps track of a new comment */
-    newComment: Comment;
-
-    /* Keeps track of a new like */
-    newLike: Like;
+    newCommentText: string;
 
     /* Filter variables */
     searchText: string;
@@ -76,19 +68,21 @@ export class HomeComponent {
         'Project Management',
         'Database Management'
     ];
-
+    
     constructor(
         private user_utils: UserUtilsService,
         private post_utils: PostUtilsService,
         private alert: AlertService,
-        private router: Router,
         private date_func: PostDateService,
-    ) { }
-
-    ngOnInit() {
-        this.showMore = true;
-        this.LastEvaluatedKey = null;
-        this.filterSkills = [];
+        ) { }
+        
+        ngOnInit() {
+            this.showMore = true;
+            this.LastEvaluatedKey = null;
+            this.filterSkills = [];
+            this.newCommentText = "";
+            this.currentUserEmail = this.user_utils.getCurrentUserDetails().email;
+            this.openCommentIdx = -1;
 
         this.newPost = {
             name: "",
@@ -100,24 +94,8 @@ export class HomeComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
-
-        this.newComment = {
-            commentOwnerEmail: "",
-            commentOwner: "",
-            commentText: "",
-            date: "",
-            age: ""
-        }
-
-        this.newLike = {
-            likeOwnerEmail: "",
-            likeOwner: "",
-        }
 
         this.posts = [];
         this.post_utils.fetchPosts(null).subscribe(data => {
@@ -130,18 +108,18 @@ export class HomeComponent {
         });
     }
 
-    openCommentDialog(post: Post) {
-        if (post.openComment === true)
-            post.openComment = false;
+    toggleCommentBox(idx) {
+        if (this.openCommentIdx == -1)
+            this.openCommentIdx = idx;
         else
-            post.openComment = true;
+            this.openCommentIdx = -1; 
     }
 
-    toggleCommentsDisplay(post: Post) {
-        if (post.showComments === true)
-            post.showComments = false;
+    toggleCommentsDisplay(idx) {
+        if (this.showCommentsIdx == -1)
+            this.showCommentsIdx = idx;
         else
-            post.showComments = true;
+            this.showCommentsIdx = -1;
     }
 
     resetFilters() {
@@ -182,63 +160,23 @@ export class HomeComponent {
     }
 
     parsePosts(data) {
-        this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
-            var currentUserEmail = profile.user.email;
-            console.log("currentUserEmail: ", currentUserEmail);
-            data.forEach((item) => {
-                this.comments = [];
-                if (item.Comment !== undefined) {
-                    let comment = JSON.parse(item.Comment.S);
-                    var i;
-                    for (i = 0; i < comment.length; i++) {
-                        let cmt: Comment = {
-                            commentOwnerEmail: comment[i].commentOwnerEmail,
-                            commentOwner: comment[i].commentOwner,
-                            commentText: comment[i].commentText,
-                            date: comment[i].date,
-                            age: this.date_func.buildDate(parseInt(comment[i].date))
-                        }
-                        this.comments.push(cmt);
-                    }
-                }
-    
-                var numLikes = 0;
-                var isLiked = false;
-                if (item.Likes !== undefined) {
-                    let likes = JSON.parse(item.Likes.S);
-                    numLikes = likes.length;
-                    var i;
-                    for (i = 0; i < likes.length; i++) {
-                        console.log(likes[i].likeOwnerEmail)
-                        if (likes[i].likeOwnerEmail === currentUserEmail) {
-                            isLiked = true;
-                            break;
-                        }
-                    }
-                }
-    
-                let parse: Post = {
-                    name: item.Name.S,
-                    description: item.Description.S,
-                    ownerName: item.OwnerName.S,
-                    ownerEmail: item.OwnerEmail.S,
-                    skills: JSON.parse(item.Skills.S),
-                    date: parseInt(item.Date.S),
-                    age: this.date_func.buildDate(parseInt(item.Date.S)),
-                    members: JSON.parse(item.Members.S),
-                    comments: this.comments,
-                    openComment: false,
-                    showComments: true,
-                    likes: numLikes,
-                    liked: isLiked
-                };
-                if (parse.description === ' ') {
-                    parse.description = '';
-                }
-                this.posts.push(parse);
-            })
-        }, (err) => {
-            console.error(err);
+       data.forEach(item => {    
+            let parse: Post = {
+                name: item.Name.S,
+                description: item.Description.S,
+                ownerName: item.OwnerName.S,
+                ownerEmail: item.OwnerEmail.S,
+                skills: JSON.parse(item.Skills.S),
+                date: parseInt(item.Date.S),
+                age: this.date_func.buildDate(parseInt(item.Date.S)),
+                members: JSON.parse(item.Members.S),
+                comments: JSON.parse(item.Comments.S),
+                likes: JSON.parse(item.Likes.S)
+            };
+            if (parse.description === ' ') {
+                parse.description = '';
+            }
+            this.posts.push(parse);
         });
     }
 
@@ -266,7 +204,7 @@ export class HomeComponent {
             return;
         }
 
-        this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
+        this.user_utils.getProfile(this.currentUserEmail).subscribe(profile => {
             this.post_utils.create(this.newPost.name, this.newPost.description, JSON.stringify(this.newPost.skills), profile.user.name).subscribe(data => {
                 this.ngOnInit();    // Repopulate list automatically??
             }, (err) => {
@@ -282,56 +220,49 @@ export class HomeComponent {
     }
 
     addNewComment(post: Post) {
-        if (this.newComment.commentText !== "") {
-            this.post_utils.fetchComments(post.name).subscribe(data => {
-                this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
-                    this.newComment.commentOwnerEmail = profile.user.email;
-                    this.newComment.commentOwner = profile.user.name;
-                    this.newComment.date = Date.now().toString()
-                    if (data.comments === undefined)
-                        data.comments = [];
-                    this.post_utils.commentUpdate(data.comments, post.name, this.newComment).subscribe(data => {
-                        this.ngOnInit();
-                    }, (err) => {
-                        if (err.status == 401) {
-                            this.alert.error('Unknown error')
-                        } else {
-                            this.alert.error('Server error: Could not add comment');
-                        }
-                    });
+        if (this.newCommentText.length == 0) 
+            return
+        
+        this.user_utils.getProfile(this.currentUserEmail).subscribe(profile => {
+            let currentUserName = profile.user.name;
+
+            let newComment = {
+                commentOwnerEmail: this.currentUserEmail,
+                commentOwner: currentUserName, 
+                commentText: this.newCommentText,
+                date: Date.now().toString(),
+                age: this.date_func.buildDate(parseInt(Date.now().toString()))
+            };
+
+            post.comments.push(newComment);
+
+            this.post_utils.update(post).subscribe(res => {
+                this.post_utils.comment(post.ownerEmail, currentUserName, post.name).subscribe(data => {
+                    this.ngOnInit();
                 }, (err) => {
-                    console.error(err);
-                });
+                    console.log(err);
+                })
             }, (err) => {
-                console.error(err);
-            })
-        }
+                this.alert.error('Server error: Could not add comment');
+            });
+        }, (err) => {
+            console.log(err);
+        });
     }
 
     like(post: Post) {
-        post.liked = true;
-        this.post_utils.fetchLikes(post.name).subscribe(data => {
-            this.user_utils.getProfile(this.user_utils.getCurrentUserDetails().email).subscribe(profile => {
-                this.newLike.likeOwnerEmail = profile.user.email;
-                this.newLike.likeOwner = profile.user.name;
-                if (data.likes === undefined)
-                    data.likes = [];
-                this.post_utils.likeUpdate(data.likes, post.name, this.newLike).subscribe(data => {
-                    this.ngOnInit();
-                }, (err) => {
-                    if (err.status == 401) {
-                        this.alert.error('Unknown error')
-                    } else {
-                        this.alert.error('Server error: Could not add comment');
-                    }
-                });
-            }, (err) => {
-                console.error(err);
-            });
-        }, (err) => {
-            console.error(err);
-        })
+        let currentUser = this.user_utils.getCurrentUserDetails().email;
+        post.likes.push(currentUser);
 
+        this.post_utils.update(post).subscribe(res => {
+            this.post_utils.like(post.ownerEmail, currentUser, post.name).subscribe(data => {
+                this.ngOnInit();
+            }, (err) => { 
+                console.log(err);
+            })
+        }, (err) => {
+            console.log(err);
+        });
     }
     
     getComments(name: string) {
@@ -364,10 +295,7 @@ export class HomeComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
     }
 

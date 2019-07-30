@@ -184,7 +184,8 @@ router.post('/createPost', auth, function(req, res) {
                 'Skills': {'S': skills},
                 'Date': {'S': date},
                 'Members': {'S' : members},
-                'Comment': {'S': []}
+                'Comments': {'S': []},
+                'Likes': {'S': []}
             };
         
             var postParams = { 
@@ -245,12 +246,16 @@ router.post('/updatePost', auth, function(req, res) {
     var description = req.body.description;
     var skills = req.body.skills;
     var members = req.body.members;
+    var comments = req.body.comments;
+    var likes = req.body.likes;
     
     var params = {
         ExpressionAttributeNames: {
          "#C": 'Description',
          '#S': 'Skills',
-         '#M': 'Members'
+         '#M': 'Members',
+         '#CM': 'Comments',
+         '#L': 'Likes'
         }, 
         ExpressionAttributeValues: {
          ":c": {
@@ -261,39 +266,12 @@ router.post('/updatePost', auth, function(req, res) {
           },
           ":m": {
             'S': members
-          }
-        }, 
-        Key: {
-         "Name": {
-           'S': name
-          }
-        }, 
-        TableName: process.env.POSTS_TABLE, 
-        UpdateExpression: "SET #C = :c, #S = :s, #M = :m"
-    };
-
-    database.updateItem(params, function(err, data) {
-        if (err) {
-            console.log(err);
-            res.status(500).end();
-        } else {
-            res.status(200).end();
-        }
-    });  
-});
-
-router.post('/updateComment', auth, function(req, res) {
-    var name = req.body.name;
-    var comments = JSON.stringify(req.body.comments);
-    console.log("updated comments: ", comments);
-    
-    var params = {
-        ExpressionAttributeNames: {
-         "#N": 'Comment',
-        }, 
-        ExpressionAttributeValues: {
-          ":n": {
+          },
+          ":cm": {
             'S': comments
+          },
+          ":l": {
+            'S': likes
           }
         }, 
         Key: {
@@ -302,7 +280,7 @@ router.post('/updateComment', auth, function(req, res) {
           }
         }, 
         TableName: process.env.POSTS_TABLE, 
-        UpdateExpression: "SET #N = :n"
+        UpdateExpression: "SET #C = :c, #S = :s, #M = :m, #CM = :cm, #L = :l"
     };
 
     database.updateItem(params, function(err, data) {
@@ -342,38 +320,6 @@ router.get('/comments', function (req, res) {
             });
         }
     });
-});
-
-router.post('/updateLikes', auth, function(req, res) {
-    var name = req.body.name;
-    var likes = JSON.stringify(req.body.likes);
-    
-    var params = {
-        ExpressionAttributeNames: {
-         "#L": 'Likes',
-        }, 
-        ExpressionAttributeValues: {
-          ":l": {
-            'S': likes
-          }
-        }, 
-        Key: {
-         "Name": {
-           'S': name
-          }
-        }, 
-        TableName: process.env.POSTS_TABLE, 
-        UpdateExpression: "SET #L = :l"
-    };
-
-    database.updateItem(params, function(err, data) {
-        if (err) {
-            console.log(err);
-            res.status(500).end();
-        } else {
-            res.status(200).end();
-        }
-    });  
 });
 
 router.get('/likes', function (req, res) {
@@ -474,4 +420,15 @@ router.post('/invite', auth, function(req, res) {
     mailer.sendInvitation(req.body.owner, req.body.invite, req.body.project);
     res.status(200).end();
 });
+
+router.post('/comment', auth, function(req, res) {
+    //mailer.sendComment(req.body.owner, req.body.invite, req.body.project);
+    res.status(200).end();
+});
+
+router.post('/like', auth, function(req, res) {
+    //mailer.sendLike(req.body.owner, req.body.invite, req.body.project);
+    res.status(200).end();
+});
+
 module.exports = router;

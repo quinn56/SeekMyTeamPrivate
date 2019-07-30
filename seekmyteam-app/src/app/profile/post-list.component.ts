@@ -56,10 +56,7 @@ export class PostListComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
 
         this.editPost = {
@@ -72,10 +69,7 @@ export class PostListComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+           likes: []
         };
 
 
@@ -122,10 +116,7 @@ export class PostListComponent {
                 age: this.date_func.buildDate(parseInt(item.Date.S)),
                 members: JSON.parse(item.Members.S),
                 comments: [],
-                openComment: false,
-                showComments: true,
-                likes: 0,
-                liked: false
+                likes: []
             };
             if (parse.description === ' ') {
                 parse.description = '';
@@ -199,10 +190,7 @@ export class PostListComponent {
             age: "",
             members: [],
             comments: [],
-            openComment: false,
-            showComments: true,
-            likes: 0,
-            liked: false
+            likes: []
         };
     }
     deletePost(idx:number) {
