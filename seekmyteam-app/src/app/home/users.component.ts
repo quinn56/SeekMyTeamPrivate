@@ -11,6 +11,7 @@ export class UsersComponent {
     /* Filter variables */
     filterName: string;
     filterSkills: string[];
+    filterMajor: string[]
 
     SKILLS_ARRAY: string[] = [
         'Web Development',
@@ -26,6 +27,7 @@ export class UsersComponent {
 
     ngOnInit() {
         this.filterSkills = [];
+        this.filterMajor = [];
         this.users = [];
 
         this.user_utils.getAllUsers().subscribe(arr => {
@@ -72,5 +74,15 @@ export class UsersComponent {
 
     filterDeleteSkill(idx: number) {
         this.filterSkills.splice(idx, 1);
+    }
+    
+    filterAddMajor(skill: string) {
+        if (!this.filterMajor.includes(skill)) {
+            this.filterMajor.push(skill);
+        }
+    }
+
+    filterDeleteMajor(idx: number) {
+        this.filterMajor.splice(idx, 1);
     }
 }
