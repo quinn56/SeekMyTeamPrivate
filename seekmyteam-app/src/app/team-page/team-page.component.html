@@ -106,6 +106,10 @@
                                         (click)="changeSelection('members')">Members</a></li>
                                 <li style="cursor: pointer;" *ngIf="currentSelection !== 'members'"><a
                                         (click)="changeSelection('members')">Members</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection === 'comments'" class="active"><a
+                                        (click)="changeSelection('comments')">Comments</a></li>
+                                <li style="cursor: pointer;" *ngIf="currentSelection !== 'comments'"><a
+                                        (click)="changeSelection('comments')">Comments</a></li>       
                             </ul>
                         </div>
                         <!-- Content Nav End -->
@@ -183,6 +187,43 @@
                                     </div>
                                     <!-- Member Item End -->
                                 </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="currentSelection === 'comments'">
+                            <div *ngFor="let comment of comments | reverse"
+                                class="activity--comments fs--12">
+                                <ul class="acomment--items nav">
+                                    <li>
+                                        <div class="acomment--item clearfix">
+                                            <div class="acomment--avatar">
+                                                <div class="img img-circle">
+                                                    <a class="btn-link">
+                                                        <img [src]="buildPic(comment.commentOwnerEmail)" alt="">
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="acomment--info">
+                                                <div class="acomment--header">
+                                                    <p><a style="cursor: pointer;"
+                                                            (click)="routeProfileString(comment.commentOwnerEmail)">{{comment.commentOwner}}</a>
+                                                        Replied</p>
+                                                </div>
+
+                                                <div class="acomment--meta">
+                                                    <p><i
+                                                            class="fa mr--8 fa-clock-o"></i>{{comment.age}}
+                                                    </p>
+                                                </div>
+
+                                                <div class="acomment--content">
+                                                    <p>{{comment.commentText}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

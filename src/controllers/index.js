@@ -293,11 +293,12 @@ router.post('/updatePost', auth, function(req, res) {
     });  
 });
 
-router.get('/comments', function (req, res) {
+router.get('/comments', auth, function (req, res) {
     var name = req.query.name;
+    console.log("Name: ", name);
     var params = {
         AttributesToGet: [
-            "Comment"
+            "Comments"
         ],
         TableName : process.env.POSTS_TABLE,
         Key : { 
@@ -311,7 +312,9 @@ router.get('/comments', function (req, res) {
             res.status(500).end();
         } else {
              /* No user with that email found */
+             console.log("data.Item: ", data.Item);
              if (data.Item === undefined) {
+                console.log("MISTAKE!");
                 res.status(401).end();
                 return;
             } 
@@ -322,7 +325,7 @@ router.get('/comments', function (req, res) {
     });
 });
 
-router.get('/likes', function (req, res) {
+router.get('/likes', auth, function (req, res) {
     var name = req.query.name;
     var params = {
         AttributesToGet: [

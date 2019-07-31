@@ -4,7 +4,8 @@ import { PostUtilsService } from '../services/posts/post-utils.service';
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { AlertService } from '../services/alerts/alert.service';
 import { PostDateService } from '../services/posts/post-date.service';
-import { Post } from '../home/home.component';
+import { Post, Comment } from '../home/home.component';
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './team-page.component.html'
@@ -23,6 +24,9 @@ export class TeamPageComponent {
     /* Post modal variables */
     isOP: boolean;
     showApply: boolean;
+
+    /* Comments variables */
+    comments: Comment[];
 
     constructor(
         private post_utils: PostUtilsService,
@@ -68,6 +72,7 @@ export class TeamPageComponent {
             this.post_utils.fetchPost(this.getName).subscribe((data) => {
                 this.post = this.parsePost(data.post);
                 this.loadMembers();
+                this.comments = JSON.parse(data.post.Comments.S)
             }, (err) => {
                 console.log(err);
             });
@@ -217,5 +222,13 @@ export class TeamPageComponent {
             };
             this.allUsers.push(parse); 
         })
+    }
+
+    getComments(name: string) {
+        this.post_utils.fetchComments(name).subscribe(data => {
+            this.comments = data;
+        }, (err) => {
+            console.error(err);
+        });
     }
 }

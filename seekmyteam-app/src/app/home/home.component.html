@@ -110,11 +110,11 @@
                                                 <a style="cursor: pointer" (click)="toggleCommentBox(idx)">Comment</a>
 
                                                 <button *ngIf="!showComments.includes(idx)"
-                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg); margin-left: 10px; padding: 1em; border: none"
                                                     (click)="toggleCommentsDisplay(idx)" type="button"></button>
 
                                                 <button *ngIf="showComments.includes(idx)"
-                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_less-24px.svg); margin-left: 10px; margin-top: 7px; padding: 0.9em; border: none"
+                                                    style="background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_less-24px.svg); margin-left: 10px; padding: 1em; border: none"
                                                     (click)="toggleCommentsDisplay(idx)" type="button"></button>
 
                                                 <!-- <img *ngIf="!post.showComments" src="https://d24imx1z1vc7kd.cloudfront.net/static-images/baseline-expand_more-24px.svg" style="margin-left: 10px; cursor: pointer" (click)="toggleCommentsDisplay(post)">
