@@ -87,7 +87,7 @@ export class ProfileComponent {
         this.handleSpaces();
       }, (err) => {
         if (err.status === 401) {
-          this.alert.error('Profile not found for requested user', true);
+          // this.alert.error('Profile not found for requested user', true);
           this.router.navigateByUrl('/profile/' + this.user_utils.getCurrentUserDetails().email);
         }
         console.error(err);
@@ -156,15 +156,16 @@ export class ProfileComponent {
 
   handleDelete() {
     if (!this.isCurrentUser) {
-      console.log('cannot delete another users profile');
-    } else {
-      this.user_utils.deleteProfile(this.user_utils.getCurrentUserDetails().email).subscribe(res => {
-        this.alert.success('Successfully deleted profile');
-        this.auth.logout();
-      }, (err) => {
-        this.alert.error('Could not delete profile');
-      })
+      return
     }
+
+    this.user_utils.deleteProfile(this.user_utils.getCurrentUserDetails().email).subscribe(res => {
+      // this.alert.success('Successfully deleted profile');
+      this.auth.logout();
+    }, (err) => {
+      // this.alert.error('Could not delete profile');
+    })
+  
   }
 
   updateProfile() {
@@ -180,7 +181,7 @@ export class ProfileComponent {
       this.details.github
     ).subscribe(res => {
       this.uploadFile();
-      this.alert.success('Successfully updated profile');
+      // this.alert.success('Successfully updated profile');
     }, (err) => {
       console.log(err);
     })
@@ -216,7 +217,6 @@ export class ProfileComponent {
   uploadFile() {
     let formData = new FormData();
     formData.append('image', this.fileInput.nativeElement.files[0]);
-    console.log("formData: ", formData);
     this.user_utils.uploadProfilePicture(formData).subscribe((res) => {
       if (res.imageUrl) {
         location.reload();
@@ -249,8 +249,7 @@ export class ProfileComponent {
   invite(proj: string) {
     this.post_utils.invite(this.user_utils.getCurrentUserDetails().email, this.getEmail, proj).subscribe((data) => {
       this.selectedProject = '';
-      console.log('succesful invite');
-      this.alert.success('Successfully invited user to work on project');
+      // this.alert.success('Successfully invited user to work on project');
     }, (err) => {
       console.log(err);
     });

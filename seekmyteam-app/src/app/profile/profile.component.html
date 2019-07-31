@@ -1,8 +1,95 @@
+<!-- Start Edit Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit Profile</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h5>Change Profile Picture</h5>
+
+                    <!-- <input class="form-control-file" type="file" (change)="previewFile()" #fileInput> -->
+                    <input class="form-control-file" type="file" #fileInput>
+                    <br>
+
+                    <h5>Social Media Links</h5>
+
+                    <!-- Facebook -->
+                    <input type="text" [(ngModel)]="editDetails.facebook" class="form-control" placeholder="Facebook">
+                    <br>
+
+                    <!-- Linkedin -->
+                    <input type="text" [(ngModel)]="editDetails.linkedin" class="form-control" placeholder="LinkedIn">
+                    <br>
+
+                    <!-- Github -->
+                    <input type="text" [(ngModel)]="editDetails.github" class="form-control" placeholder="Github">
+                    <br>
+
+                    <h5>Description</h5>
+                    <textarea [(ngModel)]="editDetails.description" rows="2" class="form-control"></textarea>
+                    <br>
+
+                    <div class="form-group mt-3">
+                        <h5>My Skills</h5>
+                        <select class="form-control" id="selectedSkill" #sk (change)="addSkill(sk.value)">
+                            <option value="Select a skill" disabled>Select a skill</option>
+                            <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                                {{skill}}
+                            </option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-outline-info mr-2"
+                            *ngFor="let item of editDetails.skills; let i = index"
+                            (click)="deleteSkill(i)">{{item}}</button>
+                    </div>
+                </div>
+                <div class="modal-footer mb-0">
+                    <button type="button" class="btn btn-secondary" (click)="resetEdit()"
+                        data-dismiss="modal">Close</button>
+
+                    <button type="button" (click)="updateProfile()" data-dismiss="modal"
+                        class="btn btn-primary">Save</button>
+
+                    <button type="button" (click)="handleDelete()" data-dismiss="modal" data-toggle="modal" href="#confirmDeleteModal"
+                        class="btn btn-primary" style="float: left;">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Edit Profile Modal -->
+
+<!-- Start Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Delete Profile</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Confirm Delete Modal -->
 <!-- Wrapper Start -->
 <div class="wrapper">
     <!-- Cover Header Start -->
-     overflow-y: auto;
-    <div class="cover--header pt--80 text-center" data-bg-img="https://d24imx1z1vc7kd.cloudfront.net/static-images/profile_header.jpg" data-overlay="0.4"
+    <div class="cover--header pt--80 text-center"
+        data-bg-img="https://d24imx1z1vc7kd.cloudfront.net/static-images/profile_header.jpg" data-overlay="0.4"
         data-overlay-color="white">
         <div class="container">
             <div class="cover--avatar online" data-overlay="0.3" data-overlay-color="primary">
@@ -11,51 +98,16 @@
             </div>
 
             <div class="cover--user-name">
-                <h2 class="h3 fw--600">{{details.name}}
-                    <!-- <h2 class="">Shengqi Wang -->
-                    <button class="btn border-0 bg-white" data-toggle="modal" data-target="#exampleModal"
-                        style="padding: 0; background: none">
-                        <img [src]="buildAsset('edit.svg')" style="height: 25px; margin-left: 1.5vw" alt="edit btn">
-                    </button>
-
-                </h2>
+                <h2 class="h3 fw--600">{{details.name}}</h2>
+                <!-- <h2 class="">Shengqi Wang -->
+                <button class="btn border-0 bg-white" data-toggle="modal" data-target="#profileModal"
+                    style="padding: 0; background: none">
+                    <img [src]="buildAsset('edit.svg')" style="height: 25px; margin-left: 1.5vw" alt="edit btn">
+                </button>
             </div>
         </div>
     </div>
     <!-- Cover Header End -->
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">About me</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Skills</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
     <!-- Page Wrapper Start -->
     <section class="page--wrapper pt--80 pb--20">
@@ -173,10 +225,10 @@
                     <div class="widget">
                         <h1 class="h4 fw--700 widget--title">Contact</h1>
                         <!-- Text Widget Start -->
-                        <div class="text--widget">
-                            <p><b>Email</b></p>
-                            <p style="margin-left: 5px">{{ details?.email }}</p>
+                        <div class="text--widget pb-2">
+                            <p><b>Email: {{details?.email}}</b></p>
                         </div>
+                        <br>
                         <a style="cursor:pointer; margin-right:10px;" (click)="directFacebook()"><img
                                 [src]="buildAsset('facebook.svg')" width="40px"></a>
 
