@@ -74,7 +74,7 @@ export class HomeComponent {
         this.newCommentText = "";
         this.currentUserEmail = this.user_utils.getCurrentUserDetails().email;
         this.openCommentIdx = -1;
-        
+        this.showComments = [];
         
         this.newPost = {
             name: "",
