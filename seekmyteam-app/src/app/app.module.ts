@@ -16,6 +16,10 @@ import { UsersComponent } from './home/users.component';
 import { PostListComponent } from './profile/post-list.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { AlertComponent } from './alerts/alert.component';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { RegisterModalComponent } from './register/register-modal.component';
+import { LoginModalComponent } from './register/login-modal.component';
+import { FooterComponent } from './footer/footer.component';
 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
@@ -28,9 +32,6 @@ import { PostDateService } from './services/posts/post-date.service';
 import { FilterPipe } from './services/pipes/filter.pipe';
 import { SkillsPipe } from './services/pipes/skills.pipe';
 import { ReversePipe } from './services/pipes/reverse.pipe';
-import { ComingSoonComponent } from './coming-soon/coming-soon.component';
-import { RegisterModalComponent } from './register/register-modal.component';
-import { LoginModalComponent } from './register/login-modal.component';
 
 // const appRoutes: Routes = [
 //   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -72,7 +73,8 @@ const appRoutes: Routes = [
     ReversePipe,
     ComingSoonComponent,
     RegisterModalComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
