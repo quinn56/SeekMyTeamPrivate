@@ -75,7 +75,7 @@
                                         <div class="activity--avatar">
                                             <a (click)="routeProfile(post)" style="width: 100%; height:100%;"><img
                                                     [src]="buildPic(post.ownerEmail)"
-                                                    style="width: 100%; height: 100%; overflow:hidden" alt=""></a>
+                                                    style="margin:0; width: 100%; height: 100%; overflow:hidden" alt=""></a>
                                         </div>
                                         <div class="activity--info fs--14">
                                             <div class="activity--header">
@@ -141,7 +141,7 @@
                                                             <div class="acomment--item clearfix">
                                                                 <div class="acomment--avatar">
                                                                     <div class="img img-circle">
-                                                                        <a class="btn-link">
+                                                                        <a class="btn-link" style="width: 100%; height: 100%;">
                                                                             <img [src]="buildPic(comment.commentOwnerEmail)" alt="">
                                                                         </a>
                                                                     </div>
