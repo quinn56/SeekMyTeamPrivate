@@ -74,8 +74,8 @@ export class HomeComponent {
         this.newCommentText = "";
         this.currentUserEmail = this.user_utils.getCurrentUserDetails().email;
         this.openCommentIdx = -1;
-        this.showComments= [];
-
+        
+        
         this.newPost = {
             name: "",
             description: "",
@@ -95,6 +95,7 @@ export class HomeComponent {
             this.sortPosts();
             this.LastEvaluatedKey = data.key;
             this.checkMorePosts();
+            this.initShowComment();
         }, (err) => {
             console.error(err);
         });
@@ -112,6 +113,11 @@ export class HomeComponent {
             this.showComments.splice(this.showComments.indexOf(idx), 1);
         else
             this.showComments.push(idx);
+    }
+
+    initShowComment() {
+        for (let i = 0; i < this.posts.length; i++) 
+            this.showComments.push(i);
     }
 
     resetFilters() {

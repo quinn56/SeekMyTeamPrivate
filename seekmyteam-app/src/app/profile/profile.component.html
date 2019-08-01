@@ -19,14 +19,17 @@
                     <h5>Social Media Links</h5>
 
                     <!-- Facebook -->
+                    <label><b>Facebook</b></label>
                     <input type="text" [(ngModel)]="editDetails.facebook" class="form-control" placeholder="Facebook">
                     <br>
-
+                    
                     <!-- Linkedin -->
+                    <label><b>LinkedIn</b></label>
                     <input type="text" [(ngModel)]="editDetails.linkedin" class="form-control" placeholder="LinkedIn">
                     <br>
-
+                    
                     <!-- Github -->
+                    <label><b>Github</b></label>
                     <input type="text" [(ngModel)]="editDetails.github" class="form-control" placeholder="Github">
                     <br>
 
@@ -57,7 +60,7 @@
                     <button type="button" (click)="updateProfile()" data-dismiss="modal"
                         class="btn btn-primary">Save</button>
 
-                    <button type="button" (click)="handleDelete()" data-dismiss="modal" data-toggle="modal" href="#confirmDeleteModal"
+                    <button type="button" data-dismiss="modal" data-toggle="modal" href="#confirmDeleteModal"
                         class="btn btn-primary" style="float: left;">Delete Account</button>
                 </div>
             </div>
@@ -79,6 +82,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <button class="btn btn-primary" (click)="handleDelete()">Are you sure you want to delete?</button>
                 </div>
             </div>
         </div>
@@ -139,11 +143,11 @@
                                     <table class="table">
                                         <tr>
                                             <th class="fw--700 text-darkest">Full Name</th>
-                                            <td><a href="#" class="btn-link">{{details.name}}</a></td>
+                                            <td class="text-darker">{{details.name}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="fw--700 text-darkest">Skill</th>
-                                            <td>Graphic Design, Font-End Development, Web Development</td>
+                                            <th class="fw--700 text-darkest">Skills</th>
+                                            <td class="text-darker" *ngFor="let item of details.skills">{{item}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -160,7 +164,7 @@
                                 </div>
 
                                 <div class="profile--info">
-                                    <p>{{details.description}}</p>
+                                    <p class="text-darker">{{details.description}}</p>
                                 </div>
                             </div>
                             <!-- Profile Item End -->
@@ -226,7 +230,7 @@
                         <h1 class="h4 fw--700 widget--title">Contact</h1>
                         <!-- Text Widget Start -->
                         <div class="text--widget pb-2">
-                            <p><b>Email: {{details?.email}}</b></p>
+                            <p> <span class="text-darker">Email: </span> {{details?.email}}</p>
                         </div>
                         <br>
                         <a style="cursor:pointer; margin-right:10px;" (click)="directFacebook()"><img
