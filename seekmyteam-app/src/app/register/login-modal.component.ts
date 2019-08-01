@@ -24,8 +24,8 @@ export class LoginModalComponent implements OnInit {
     this.invalidLoginEmail = false;
     this.invalidLoginPassword = false;
     this.auth.login(this.loginCredentials).subscribe(() => {
-        location.reload();
-        this.router.navigateByUrl('');
+        //location.reload();
+        this.router.navigateByUrl('/');
     }, (err) => {
         if (err.status == 400) {
             this.invalidLoginEmail = true;
