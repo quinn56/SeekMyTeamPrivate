@@ -295,7 +295,7 @@ router.post('/updatePost', auth, function(req, res) {
 
 router.get('/comments', auth, function (req, res) {
     var name = req.query.name;
-    console.log("Name: ", name);
+
     var params = {
         AttributesToGet: [
             "Comments"
@@ -314,12 +314,11 @@ router.get('/comments', auth, function (req, res) {
              /* No user with that email found */
              console.log("data.Item: ", data.Item);
              if (data.Item === undefined) {
-                console.log("MISTAKE!");
                 res.status(401).end();
                 return;
             } 
             res.json({
-                comments: JSON.parse(data.Item.Comment.S)
+                comments: JSON.parse(data.Item.Comments.S)
             });
         }
     });

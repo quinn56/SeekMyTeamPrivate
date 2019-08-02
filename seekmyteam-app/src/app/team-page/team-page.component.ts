@@ -72,7 +72,7 @@ export class TeamPageComponent {
             this.post_utils.fetchPost(this.getName).subscribe((data) => {
                 this.post = this.parsePost(data.post);
                 this.loadMembers();
-                this.comments = JSON.parse(data.post.Comments.S)
+                this.comments = this.parseComments(data.post.Comments.S);
             }, (err) => {
                 console.log(err);
             });
@@ -224,11 +224,19 @@ export class TeamPageComponent {
         })
     }
 
-    getComments(name: string) {
-        this.post_utils.fetchComments(name).subscribe(data => {
-            this.comments = data;
-        }, (err) => {
-            console.error(err);
+    parseComments(comments) {
+        let arr = JSON.parse(comments);
+        let ret = [];
+        arr.forEach(element => {
+            let parse: Comment = {
+                commentOwner: element.commentOwner,
+                commentOwnerEmail: element.commentOwnerEmail,
+                commentText: element.commentText,
+                date: element.date,
+                age: this.date_func.buildDate(parseInt(element.date))
+            }
+            ret.push(parse);
         });
+        return ret;
     }
 }

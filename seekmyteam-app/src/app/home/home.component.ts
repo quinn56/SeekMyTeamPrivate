@@ -168,7 +168,7 @@ export class HomeComponent {
                 date: parseInt(item.Date.S),
                 age: this.date_func.buildDate(parseInt(item.Date.S)),
                 members: JSON.parse(item.Members.S),
-                comments: JSON.parse(item.Comments.S),
+                comments: this.parseComments(item.Comments.S),
                 likes: JSON.parse(item.Likes.S)
             };
             if (parse.description === ' ') {
@@ -176,6 +176,22 @@ export class HomeComponent {
             }
             this.posts.push(parse);
         });
+    }
+
+    parseComments(comments: string) {
+        let arr = JSON.parse(comments);
+        let ret = [];
+        arr.forEach(element => {
+            let parse: Comment = {
+                commentOwner: element.commentOwner,
+                commentOwnerEmail: element.commentOwnerEmail,
+                commentText: element.commentText,
+                date: element.date,
+                age: this.date_func.buildDate(parseInt(element.date))
+            }
+            ret.push(parse);
+        });
+        return ret;
     }
 
     fetchMore() {
