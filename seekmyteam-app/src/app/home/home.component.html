@@ -101,10 +101,9 @@
 
                                                     <a *ngIf="!post.likes.includes(currentUserEmail)"
                                                         style="margin-right: 30px; cursor: pointer;"
-                                                        (click)="like(post)">{{post.likes.length}} Like</a>
+                                                        (click)="like(post)">Like {{post.likes.length}}</a>
                                                     <a *ngIf="post.likes.includes(currentUserEmail)"
-                                                        style="margin-right: 30px; cursor: pointer;">{{post.likes.length}}
-                                                        Like</a>
+                                                        style="margin-right: 30px; cursor: pointer;">Like {{post.likes.length}}</a>
                                                 </ng-container>
 
                                                 <a style="cursor: pointer" (click)="toggleCommentBox(idx)">Comment</a>
