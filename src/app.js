@@ -50,9 +50,6 @@ app.use(function(err, req, res, next) {
 /* Hookup controllers for endpoints w/ angular */
 app.use('/api', require('./controllers'));
 
-/* Hookup controllers for endpoints w/o angular */
-//app.use(require('./controllers'));
-
 const allowedExt = [
     '.js',
     '.ico',
