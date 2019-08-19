@@ -32,6 +32,8 @@ import { PostDateService } from './services/posts/post-date.service';
 import { FilterPipe } from './services/pipes/filter.pipe';
 import { SkillsPipe } from './services/pipes/skills.pipe';
 import { ReversePipe } from './services/pipes/reverse.pipe';
+import { RegisterBetaComponent } from './register-beta/register-beta.component';
+import { RegisterBetaModalComponent } from './register-beta/register-beta-modal.component';
 
 // const appRoutes: Routes = [
 //   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -48,6 +50,7 @@ const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [] },
     { path: 'users', component: UsersComponent, canActivate: [] },
   { path: 'register', component: RegisterComponent, canActivate: [] },
+  { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
@@ -74,7 +77,9 @@ const appRoutes: Routes = [
     ComingSoonComponent,
     RegisterModalComponent,
     LoginModalComponent,
-    FooterComponent
+    FooterComponent,
+    RegisterBetaComponent,
+    RegisterBetaModalComponent
   ],
   imports: [
     BrowserModule,

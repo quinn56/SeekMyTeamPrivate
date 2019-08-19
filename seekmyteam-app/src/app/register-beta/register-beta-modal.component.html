@@ -1,0 +1,238 @@
+<style>
+  #bg {
+    background-image: url("assets/main.jpg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .my-center {
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    /* transform: translateY(-50%); */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #invalidText {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+    padding-top: 10px;
+  }
+
+  #validCode {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+    padding-top: 10px;
+  }
+
+  #required {
+    color: red;
+    display: inline-block;
+  }
+  
+  #nameField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    margin-left: 0;
+  }
+
+  #emailField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+  
+  #passwordField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    margin-left: 0;
+  }
+
+  #schoolField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+
+  #majorField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    margin-left: 0;
+  }
+  
+  #minorField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+
+  #skills {
+    display: inline-block;
+    padding-right: 10%;
+    margin-left: 0;
+  }
+
+  #uploadPicture {
+    display: inline-block;
+    right: 3%;
+    position: fixed;
+  }
+
+  html, body {
+    overflow-y: auto;
+    padding-right: 0 !important;
+  
+  }
+  .modal-open {
+    overflow: auto !important;
+    padding-right: 0 !important;
+  }
+
+</style>
+
+<a class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</a>
+
+<!-- Register Modal -->
+<div #myModal class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document" >
+      <form class="needs-validation" novalidate>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModal">Register</h5>
+                <button type="button" (click)="clearRegisterFields()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <div id="test" class="form-group">
+                    <span id="nameField" >
+                        <label> Name
+                            <input type="text" id="name" name="name" placeholder="Name" [formControl]="nameForm" [(ngModel)]="credentials.name" class="form-control" required>
+                        </label>
+                        <div id="required" *ngIf="submitted && nameForm.errors"  class="invalid-feedback">
+                            Please enter a name
+                        </div>
+                    </span>
+                    <span id="emailField">
+                    <label> Email
+                        <input type="text" name="email" placeholder="Email" [formControl]="emailForm" [(ngModel)]="credentials.email" class="form-control" required>
+                    </label>
+                    <div *ngIf="emailForm.errors">
+                        <div id="required" *ngIf="submitted && emailForm.errors.required" class="invalid-feedback">
+                        Please enter a Purdue email
+                        </div>
+                        <div id="required" *ngIf="submitted && emailForm.value !== '' && emailForm.errors.emailDomain !== null" class="invalid-feedback">
+                        Must be a Purdue email
+                        </div>
+                    </div>          
+                    </span>       
+                </div>
+                <div class="form-group">     
+                    <span id="passwordField">
+                    <label> Password
+                        <input type="password" name="password" placeholder="Password" [formControl]="passwordForm" [(ngModel)]="credentials.password" class="form-control" required>
+                    </label>
+                    <div id="required" *ngIf="submitted && passwordForm.errors" class="invalid-feedback">
+                        Please enter a password
+                    </div>
+                    </span>
+                    <span id="schoolField">
+                    <label> School
+                        <input type="text" name="school" placeholder="School" [formControl]="schoolForm" [(ngModel)]="credentials.school" class="form-control" required>
+                    </label>
+                    <div id="required" *ngIf="submitted && schoolForm.errors" class="invalid-feedback">
+                        Please enter your school
+                    </div>
+                    </span> 
+                </div>
+                <div class="form-group">
+                    <!-- <div  class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Major</label>
+                        </div>
+                        <select name="selectMajor" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" id="inputGroupSelect01" required>
+                        <option value=''>Select your major</option>  
+                        <option value='{{major}}' *ngFor="let major of MAJORS_ARRAY">{{major}}</option>
+                        </select>
+                        <div id="required" *ngIf="majorForm.touched && majorForm.errors" class="invalid-feedback">
+                            Please enter your major
+                        </div>
+                    </div> -->
+                    <span id="majorField">      
+                      <label> Major
+                        <input placeholder="Major" list="mylist" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                        <datalist id="mylist">
+                            <option value='{{major}}' *ngFor="let major of MAJORS_ARRAY">{{major}}</option>
+                        </datalist>
+                      </label>
+                      <div id="required" *ngIf="submitted && majorForm.errors" class="invalid-feedback">
+                          Please enter your major
+                      </div>
+                    </span>
+                    <span id="minorField">
+                    <label> Minor
+                        <input type="text" name="major" placeholder="Minor" [formControl]="minorForm" [(ngModel)]="credentials.minor" class="form-control" required>
+                    </label>
+                    </span>  
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" *ngIf="!successfulRegistration" (click)="register()" class="btn btn-primary">Register</button>
+                <button class="btn btn-primary" *ngIf="successfulRegistration" (click)="clearRegisterFields()" data-dismiss="modal" data-toggle="modal" href=#confirmModal>Continue</button>
+                <div id="invalidText" *ngIf="invalidEmail == true">
+                    <p>A user with that email already exists</p>
+                </div>
+                </div>
+        </div>
+      </form>
+    </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModal" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <form (submit)="confirm()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm email</h5>
+          <button type="button" class="close" (click)="clearConfirmFields()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="unconfirmedEmail">
+            <p>Confirmation code was resent. Please enter the code to confirm your account</p>
+          </div>      
+          <div class="form-group">
+            <input type="text" style="width: 40%" class="form-control" name="code" placeholder="Enter confirmation PIN here"
+              [(ngModel)]="confirmCredentials.code">
+          </div>
+          <div class="modal-footer">
+            <div id="invalidText" *ngIf="invalidCode == true">
+              <p>Invalid code</p>
+            </div>
+            <div id="validCode" *ngIf="validCode">
+              <p>Account Verified!</p>
+            </div>
+            <!-- <button *ngIf="!validCode" type="submit" class="btn btn-primary">Confirm</button> -->
+            <button *ngIf="!validCode" type="submit" class="btn btn-primary">Confirm</button>
+            <button *ngIf="validCode" class="btn btn-primary" (click)="finishConfirmation()" data-dismiss="modal" data-toggle="modal">Finish</button>
+          </div> 
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

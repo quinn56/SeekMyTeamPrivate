@@ -1,0 +1,498 @@
+<style>
+  #bg {
+    background-image: url("assets/main.jpg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .my-center {
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    /* transform: translateY(-50%); */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #pic_logo {
+    /* height: 40%; */
+    width: 20%;
+  }
+
+  #invalidCode {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+    padding-top: 10px;
+  }
+
+  #validCode {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+    padding-top: 10px;
+  }
+
+  #required {
+    color: red;
+    display: inline-block;
+  }
+
+  #nameField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+  }
+
+  #emailField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+
+  #passwordField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+  }
+
+  #schoolField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+
+  #majorField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+  }
+
+  #minorField {
+    display: inline-block;
+    width: 50%;
+    padding-right: 3%;
+    position: fixed;
+  }
+</style>
+
+<!-- Wrapper Start -->
+<div class="wrapper">
+  <!-- Banner Section Start -->
+  <!-- Banner Section Start -->
+  <section class="banner--section">
+    <!-- Banner Slider Start -->
+    <div class="banner--slider owl-carousel" data-owl-loop="false">
+      <!-- Banner Item Start -->
+      <div class="banner--item" data-bg-img="assets/main.jpg" data-overlay="0.5">
+        <div class="vc--parent">
+          <div class="vc--child">
+            <div class="container">
+
+              <div class="row row--md-vc">
+                <div class="col-md-7">
+                  <!-- Banner Content Start -->
+                  <div class="banner--content pt--70 pb--80">
+                    <div class="title">
+                      <h1 class="h2 text-white">Coming Soon to Boilermakers</h1>
+
+                    </div>
+
+                    <div class="sub-title">
+                      <h2 class="h1 text-white">Connect, Build &amp; Grow</h2>
+                    </div>
+
+                    <div class="desc fs--16">
+                      <p> Have you always wanted to start a side project? Connect with passionate Purdue students across
+                        campus. Build projects with those in different majors.
+                        Grow your profile and skillset.</p>
+                    </div>
+
+                    <div class="text-black">
+                      <br>
+                      &nbsp;&nbsp;
+                      <app-register-beta-modal></app-register-beta-modal>
+                    </div>
+                  </div>
+                  <!-- Banner Content End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Banner Item End -->
+    </div>
+    <!-- Banner Slider End -->
+  </section>
+  <!-- Banner Section End -->
+  <!-- Features Section Start -->
+  <section class="section bg-lighter pt--80 pb--40">
+    <div class="container">
+      <div class="row AdjustRow">
+        <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
+          <!-- Feature Item Start -->
+          <div class="feature--item bg-default text-center">
+            <div class="title">
+              <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">11</span></h2>
+            </div>
+
+            <div class="sub-title">
+              <h3 class="h2 fs--16">Schools Seeked</h3>
+            </div>
+
+            <!-- <div class="desc">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
+          </div>
+          <!-- Feature Item End -->
+        </div>
+
+        <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
+          <!-- Feature Item Start -->
+          <div class="feature--item bg-default text-center">
+            <div class="title">
+              <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">190</span>+</h2>
+            </div>
+
+            <div class="sub-title">
+              <h3 class="h2 fs--16">Majors Offered</h3>
+            </div>
+
+            <!-- <div class="desc">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
+          </div>
+          <!-- Feature Item End -->
+        </div>
+
+        <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
+          <!-- Feature Item Start -->
+          <div class="feature--item bg-default text-center">
+            <div class="title">
+              <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">1090</span></h2>
+            </div>
+
+            <div class="sub-title">
+              <h3 class="h2 fs--16">Organizations Pursued</h3>
+            </div>
+
+            <!-- <div class="desc">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
+          </div>
+          <!-- Feature Item End -->
+        </div>
+
+        <div class="col-md-3 col-xs-6 col-xxs-12 pb--40">
+          <!-- Feature Item Start -->
+          <div class="feature--item bg-default text-center">
+            <div class="title">
+              <h2 class="h1 ff--default text-primary"><span data-trigger="counterup">40,000</span>+</h2>
+            </div>
+
+            <div class="sub-title">
+              <h3 class="h2 fs--16">Purdue Students Incorporated</h3>
+            </div>
+
+            <!-- <div class="desc">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div> -->
+          </div>
+          <!-- Feature Item End -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Features Section End -->
+
+  <!-- How It Works Section Start -->
+  <section class="section bg-lighter pt--70 pb--40">
+    <div class="container">
+      <!-- Section Title Start -->
+      <div class="section--title pb--50 text-center">
+        <div class="title">
+          <h2 class="h2">How It Works?</h2>
+        </div>
+
+        <!-- <div class="sub-title">
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has industry's.</p>
+        </div> -->
+      </div>
+      <!-- Section Title End -->
+
+      <div class="row">
+        <div class="col-md-7 pb--40">
+          <div class="row gutter--15 AdjustRow" data-scroll-reveal="group">
+            <div class="col-xs-4 pb--15">
+              <img src="assets/register-middle.jpg" alt="">
+            </div>
+
+            <div class="col-xs-4 pb--15">
+              <img src="assets/register-left.jpg" alt="">
+            </div>
+
+            <div class="col-xs-4 pb--15">
+              <img src="assets/register-right.jpg" alt="">
+            </div>
+
+            <div class="col-xs-12">
+              <img src="assets/register-bottom.jpg" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5 pb--40">
+          <!-- Info Items Start -->
+          <div class="info--items" data-scroll-reveal="group">
+            <!-- Info Item Start -->
+            <div class="info--item clearfix">
+              <div class="icon">
+                <img src="img/how-it-works-img/icon-01.png" alt="">
+              </div>
+
+              <div class="info">
+                <div class="title">
+                  <h3 class="h4 fw--700">Create An Account</h3>
+                </div>
+
+                <div class="desc">
+                  <p>Sign up with your Purdue email address. Create your academic profile today.</p>
+                </div>
+              </div>
+            </div>
+            <!-- Info Item End -->
+
+            <!-- Info Item Start -->
+            <div class="info--item clearfix">
+              <div class="icon">
+                <img src="img/how-it-works-img/icon-02.png" alt="">
+              </div>
+
+              <div class="info">
+                <div class="title">
+                  <h3 class="h4 fw--700">Find Projects &amp; Students</h3>
+                </div>
+
+                <div class="desc">
+                  <p>Have others apply to join your project or search for projects or students to join</p>
+                </div>
+              </div>
+            </div>
+            <!-- Info Item End -->
+
+            <!-- Info Item Start -->
+            <div class="info--item clearfix">
+              <div class="icon">
+                <img src="img/how-it-works-img/icon-03.png" alt="">
+              </div>
+
+              <div class="info">
+                <div class="title">
+                  <h3 class="h4 fw--700">Apply To Join</h3>
+                </div>
+
+                <div class="desc">
+                  <p>Collaborate with other students by applying to the project</p>
+                </div>
+              </div>
+            </div>
+            <!-- Info Item End -->
+
+            <!-- Info Item Start -->
+            <!-- <div class="info--item clearfix">
+              <div class="icon">
+                <img src="img/how-it-works-img/icon-04.png" alt="">
+              </div>
+
+              <div class="info">
+                <div class="title">
+                  <h3 class="h4 fw--700">Share With Friends</h3>
+                </div>
+
+                <div class="desc">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+              </div>
+            </div> -->
+            <!-- Info Item End -->
+          </div>
+          <!-- Info Items End -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- How It Works Section End -->
+
+  <!-- Why Choose Us Section Start -->
+  <!-- <section class="section bg-lighter pt--80 pb--20"> -->
+  <!-- <div class="container">
+      <div class="row row--md-vc">
+        <div class="col-md-6 pb--60"> -->
+  <!-- Video Popup Start -->
+  <!-- <div class="video--popup style--2" data-overlay="0.3">
+            <img src="img/why-choose-us-img/video-poster-2.jpg" alt="">
+
+            <a href="https://www.youtube.com/watch?v=YE7VzlLtp-4" data-overlay="0.5" data-overlay-color="primary"
+              data-trigger="video_popup">
+              <i class="fa fa-play"></i>
+            </a>
+          </div> -->
+  <!-- Video Popup End -->
+  <!-- </div> -->
+
+  <!-- <div class="col-md-6 pb--60"> -->
+  <!-- Text Block Start -->
+  <!-- <div class="text--block">
+            <div class="title">
+              <h2 class="h2 fw--600">Why Choose Us?</h2>
+            </div>
+
+            <div class="content fs--14">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in esse cillum dolore eu fugiat nulla
+                pariatur.</p>
+            </div>
+
+            <div class="action">
+              <a href="#" class="btn btn-default">Read More<i class="fa ml--10 fa-caret-right"></i></a>
+              <a href="#" class="btn btn-primary">Get Started<i class="fa ml--10 fa-caret-right"></i></a>
+            </div>
+          </div> -->
+  <!-- Text Block End -->
+  <!-- </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- Why Choose Us Section End -->
+
+  <!-- FAQ and Download Section Start -->
+  <section class="section pt--70 pb--20">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 pb--60">
+          <!-- FAQ Items Start -->
+          <div class="faq--items" id="faqItems" data-scroll-reveal="group">
+            <div class="title pb--20">
+              <h2 class="h2 fw--600">Frequently Asked Question</h2>
+            </div>
+
+            <!-- FAQ Item Start -->
+            <div class="faq--item style--1 panel">
+              <div class="title">
+                <h3 class="h6 fw--700 text-darker">
+                  <a href="#faqItem01" data-parent="#faqItems" data-toggle="collapse" class="collapsed">
+                    <span>How can I register?</span>
+                  </a>
+                </h3>
+              </div>
+
+              <div id="faqItem01" class="content collapse">
+                <div class="content--inner">
+                  <p>Simple! Log in with your Purdue Address and check your Purdue Email for a confirmation to register.
+                    Happy Connecting!</p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ Item End -->
+
+            <!-- FAQ Item Start -->
+            <div class="faq--item style--1 panel">
+              <div class="title">
+                <h3 class="h6 fw--700 text-darker">
+                  <a href="#faqItem02" data-parent="#faqItems" data-toggle="collapse" class="collapsed">
+                    <span>Will my profile be public?</span>
+                  </a>
+                </h3>
+              </div>
+
+              <div id="faqItem02" class="content collapse">
+                <div class="content--inner">
+                  <p>Yes! The idea is to allow yourself to be discoverable to the Boilermaker community. This will allow
+                    for users to see if you're the
+                    perfect fit and for you to find other passionate students.</p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ Item End -->
+
+            <!-- FAQ Item Start -->
+            <div class="faq--item style--1 panel">
+              <div class="title">
+                <h3 class="h6 fw--700 text-darker">
+                  <a href="#faqItem03" data-parent="#faqItems" data-toggle="collapse" class="collapsed">
+                    <span>Is this free?</span>
+                  </a>
+                </h3>
+              </div>
+
+              <div id="faqItem03" class="content collapse">
+                <div class="content--inner">
+                  <p>Absolutely, save your money! SeekMyTeam understands the college budget. There are no
+                    premium or subscription based plans. </p>
+                </div>
+              </div>
+            </div>
+            <!-- FAQ Item End -->
+          </div>
+          <!-- FAQ Items End -->
+        </div>
+
+        <div class="col-md-7 pb--60">
+          <!-- Download Block Start -->
+          <!-- FAQ Item Start -->
+          <div class="faq--item style--1 panel">
+            <div class="title">
+              <h3 class="h6 fw--700 text-darker">
+                <a href="#faqItem04" data-parent="#faqItems" data-toggle="collapse" class="collapsed">
+                  <span>I am no longer a Purdue Student. May I still join?</span>
+                </a>
+              </h3>
+            </div>
+
+            <div id="faqItem04" class="content collapse">
+              <div class="content--inner">
+                <p>Unfortunately, at this time we only support Purdue Students or Alumni with access to a purdue.edu
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- FAQ Item End -->
+
+          <!-- FAQ Item Start -->
+          <div class="faq--item style--1 panel">
+            <div class="title">
+              <h3 class="h6 fw--700 text-darker">
+                <a href="#faqItem05" data-parent="#faqItems" data-toggle="collapse" class="collapsed">
+                  <span>I am a Purdue Professor. May I still join?</span>
+                </a>
+              </h3>
+            </div>
+
+            <div id="faqItem05" class="content collapse">
+              <div class="content--inner">
+                <p>Most definitely! Contact us directly to be verified and receive a badge on your profile! </p>
+              </div>
+            </div>
+          </div>
+          <!-- FAQ Item End -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FAQ and Download Section End -->
+</div>
+<!-- Wrapper End -->
+
+<!-- Back To Top Button Start -->
+<div id="backToTop">
+  <a href="#" class="btn"><i class="fa fa-caret-up"></i></a>
+</div>
+<!-- Back To Top Button End -->
