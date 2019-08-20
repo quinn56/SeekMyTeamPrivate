@@ -123,104 +123,58 @@
                         <!-- Content Nav Start -->
                         <div class="content--nav pb--30">
                             <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
-                                <li class="active"><a>Profile</a></li>
+                                <li style="cursor: pointer;" (click)="routeProfile()"><a>Profile</a></li>
                                 <li style="cursor: pointer;" (click)="routePosts()"><a>My Projects</a></li>
-                                <li *ngIf="isCurrentUser" style="cursor: pointer;" (click)="routeApplied()"><a>Applied
-                                        Projects</a></li>
+                                <li class="active"><a>Applied Projects</a></li>
                             </ul>
                         </div>
                         <!-- Content Nav End -->
 
-                        <!-- Profile Details Start -->
-                        <div class="profile--details fs--14">
-                            <!-- Profile Item Start -->
-                            <div class="profile--item">
-                                <div class="profile--heading">
-                                    <h3 class="h4 fw--700">
-                                        <span class="mr--4">About Me</span>
-                                        <i class="ml--10 text-primary fa fa-caret-right"></i>
-                                    </h3>
-                                </div>
-
-                                <div class="profile--info">
-                                    <table class="table">
-                                        <tr>
-                                            <th class="fw--700 text-darkest">Full Name</th>
-                                            <td class="text-darker">{{details.name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="fw--700 text-darkest">Skills</th>
-                                            <td class="text-darker" *ngFor="let item of details.skills">{{item}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                        <!-- Forum Header Start -->
+                        <div class="forum--header pb--50">
+                            <div class="forum--title">
+                                <h3 class="h3 fw--500 text-default">Projects I've Applied To</h3>
                             </div>
-                            <!-- Profile Item End -->
 
-                            <!-- Profile Item Start -->
-                            <div class="profile--item">
-                                <div class="profile--heading">
-                                    <h3 class="h4 fw--700">
-                                        <span class="mr--4">Biography</span>
-                                        <i class="ml--10 text-primary fa fa-caret-right"></i>
-                                    </h3>
-                                </div>
-
-                                <div class="profile--info">
-                                    <p class="text-darker">{{details.description}}</p>
-                                </div>
+                            <div class="forum--subtitle ff--primary fs--14 text-darker">
+                                <p>Viewing {{userPosts.length}} Projects</p>
                             </div>
-                            <!-- Profile Item End -->
-
-                            <!-- Profile Item Start -->
-                            <div class="profile--item">
-                                <div class="profile--heading">
-                                    <h3 class="h4 fw--700">
-                                        <span class="mr--4">Work Experience</span>
-                                        <i class="ml--10 text-primary fa fa-caret-right"></i>
-                                    </h3>
-                                </div>
-
-                                <div class="profile--info">
-                                    <dl>
-                                        <dt>
-                                            <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
-                                            <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at
-                                                    Sydney</small></p>
-                                        </dt>
-                                        <dd>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but
-                                                the majority have suffered alteration in some form, by injected
-                                                humour which don't look even slightly believable.</p>
-                                        </dd>
-
-                                        <dt>
-                                            <p class="h6 fw--700 text-darkest">Font-End Developer 2012 - 2014</p>
-                                            <p><small class="fw--400 fs--12 text-darker">Themeforest.net at
-                                                    Australia</small></p>
-                                        </dt>
-                                        <dd>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but
-                                                the majority have suffered alteration in some form, by injected
-                                                humour which don't look even slightly believable.</p>
-                                        </dd>
-
-                                        <dt>
-                                            <p class="h6 fw--700 text-darkest">Web Developer 2014 - Still Now</p>
-                                            <p><small class="fw--400 fs--12 text-darker">Codecanyon.net at
-                                                    Sydney</small></p>
-                                        </dt>
-                                        <dd>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but
-                                                the majority have suffered alteration in some form, by injected
-                                                humour which don't look even slightly believable.</p>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <!-- Profile Item End -->
                         </div>
-                        <!-- Profile Details End -->
+                        <!-- Forum Header End -->
+
+                        <!-- Project List Start -->
+                        <div class="topics--list">
+                            <table class="table">
+                                <thead class="ff--primary fs--14 text-darkest">
+                                    <tr>
+                                        <th>Projects</th>
+                                        <th>Description</th>
+                                        <th>Age</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr style="cursor: pointer;" *ngFor="let post of userPosts; let idx = index"
+                                        (click)="routeProject(post.name)">
+                                        <td>
+                                            <h4 class="h6 fw--500 text-darkest"><a class="btn-link">{{post.name}}</a>
+                                            </h4>
+
+                                            <p>Started by <a>{{post.ownerName}}</a></p>
+                                        </td>
+                                        <td>
+                                            <p class="ff--primary fw--500 fs--14 text-darkest">{{post.description}}</p>
+                                        </td>
+                                        <td>
+                                            <i class="text-primary fa fa-paperclip"></i>
+
+                                            <p>{{post.age}}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Project List End -->
                     </div>
                 </div>
                 <!-- Main Content End -->

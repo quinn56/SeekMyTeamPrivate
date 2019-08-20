@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
-import { Post } from 'src/app/home/home.component';
+import { Post, Comment } from 'src/app/home/home.component';
+import { PostDateService } from './post-date.service';
 
 interface ApplyPayload {
   owner: string,
@@ -55,7 +56,51 @@ interface LikePayload {
 
 export class PostUtilsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private date_func: PostDateService
+  ) { }
+
+  public parsePosts(data): Post[] {
+    let arr: Post[] = [];
+    
+    data.forEach(item => {
+      let parse: Post = {
+        name: item.Name.S,
+        description: item.Description.S,
+        ownerName: item.OwnerName.S,
+        ownerEmail: item.OwnerEmail.S,
+        skills: JSON.parse(item.Skills.S),
+        date: parseInt(item.Date.S),
+        age: this.date_func.buildDate(parseInt(item.Date.S)),
+        members: JSON.parse(item.Members.S),
+        comments: this.parseComments(item.Comments.S),
+        likes: JSON.parse(item.Likes.S)
+      };
+      if (parse.description === ' ') {
+        parse.description = '';
+      }
+      arr.push(parse);
+    });
+
+    return arr;
+  }
+
+  public parseComments(comments: string) {
+    let arr = JSON.parse(comments);
+    let ret = [];
+    arr.forEach(element => {
+      let parse: Comment = {
+        commentOwner: element.commentOwner,
+        commentOwnerEmail: element.commentOwnerEmail,
+        commentText: element.commentText,
+        date: element.date,
+        age: this.date_func.buildDate(parseInt(element.date))
+      }
+      ret.push(parse);
+    });
+    return ret;
+  }
 
   public fetchPosts(key: any): Observable<any> {
     if (key) {

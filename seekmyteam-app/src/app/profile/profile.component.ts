@@ -71,6 +71,9 @@ export class ProfileComponent {
   }
 
   routeApplied(email) {
+    if (!this.isCurrentUser)
+      return;
+      
     window.location.href = '/profile/' + email + '/applied';
   }
 

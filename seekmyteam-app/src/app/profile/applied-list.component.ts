@@ -1,15 +1,15 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { UserUtilsService, UserProfile, UserDetails } from '../../services/users/user-utils.service';
-import { PostUtilsService } from '../../services/posts/post-utils.service';
+import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
+import { PostUtilsService } from '../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { AlertService } from '../../services/alerts/alert.service';
+import { AuthenticationService } from '../services/authentication/authentication.service';
+import { AlertService } from '../services/alerts/alert.service';
+import { Post } from '../home/home.component';
 
 @Component({
-  templateUrl: './profile-section.component.html',
-  selector: 'profile-section'
+  templateUrl: './applied-list.component.html'
 })
-export class ProfileSectionComponent {
+export class AppliedListComponent {
   acceptedMimeTypes: string[] = [
     'image/gif',
     'image/jpeg',
@@ -42,6 +42,8 @@ export class ProfileSectionComponent {
   getEmail: string;
   isCurrentUser: boolean;
 
+  appliedPosts: Post[];
+
   // For inviting the user who's profile is being used to a certain project
   selectedProject: string;
   ownedProjects: string[];
@@ -65,6 +67,19 @@ export class ProfileSectionComponent {
 
   ngOnInit() {
     this.loadProfile();
+    this.loadAppliedPosts();
+  }
+
+  routeProfile() {
+    window.location.href = '/profile/' + this.getEmail;
+  }
+
+  routePosts() {
+    window.location.href = '/profile/' + this.getEmail + '/posts';
+  }
+
+  routeProject(name) {
+    window.location.href = '/project/' + name;
   }
 
   loadProfile() {
@@ -72,6 +87,10 @@ export class ProfileSectionComponent {
       this.getEmail = params['email'];
 
       this.isCurrentUser = this.checkCurrentUser();
+
+      if (!this.isCurrentUser) {
+        window.location.href = '/profile/' + this.getEmail;
+      }
 
       this.user_utils.getProfile(this.getEmail).subscribe(profile => {
         this.details.email = profile.user.email;
@@ -136,6 +155,21 @@ export class ProfileSectionComponent {
     }
   }
 
+  loadAppliedPosts() {
+    this.appliedPosts = [];
+    this.post_utils.fetchAppliedPosts(this.getEmail).subscribe((data) => {
+      this.parseAppliedPosts(data.posts);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  parseAppliedPosts(posts) {
+    posts.forEach(element => {
+      this.appliedPosts.push(JSON.parse(element));
+    });
+  }
+
   buildPic(email: string) {
     return this.user_utils.buildProfilePicUrl(email);
   }
@@ -166,7 +200,7 @@ export class ProfileSectionComponent {
     }, (err) => {
       // this.alert.error('Could not delete profile');
     })
-  
+
   }
 
   updateProfile() {

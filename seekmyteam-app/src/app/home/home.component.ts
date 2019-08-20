@@ -158,24 +158,7 @@ export class HomeComponent {
     }
 
     parsePosts(data) {
-        data.forEach(item => {
-            let parse: Post = {
-                name: item.Name.S,
-                description: item.Description.S,
-                ownerName: item.OwnerName.S,
-                ownerEmail: item.OwnerEmail.S,
-                skills: JSON.parse(item.Skills.S),
-                date: parseInt(item.Date.S),
-                age: this.date_func.buildDate(parseInt(item.Date.S)),
-                members: JSON.parse(item.Members.S),
-                comments: this.parseComments(item.Comments.S),
-                likes: JSON.parse(item.Likes.S)
-            };
-            if (parse.description === ' ') {
-                parse.description = '';
-            }
-            this.posts.push(parse);
-        });
+        this.posts = this.post_utils.parsePosts(data);
     }
 
     parseComments(comments: string) {

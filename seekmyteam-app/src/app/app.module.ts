@@ -13,9 +13,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './home/users.component';
-import { PostListComponent } from './profile/profile-sections/post-list.component';
-import { AppliedListComponent } from './profile/profile-sections/applied-list.component';
-import { ProfileSectionComponent } from './profile/profile-sections/profile-section.component';
+import { PostListComponent } from './profile/post-list.component';
+import { AppliedListComponent } from './profile/applied-list.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { AlertComponent } from './alerts/alert.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
@@ -41,6 +40,7 @@ import { ReversePipe } from './services/pipes/reverse.pipe';
 //   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
 //   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
 //   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
+//   { path: 'profile/:email/applied', component: AppliedListComponent, canActivate: [AuthGuardService] },
 //   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
 //   { path: 'project/:name', component: TeamPageComponent, canActivate: [AuthGuardService] },
 //   { path: '**', redirectTo: '/' }
@@ -53,6 +53,7 @@ const appRoutes: Routes = [
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
+  { path: 'profile/:email/applied', component: AppliedListComponent, canActivate: [] },
   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
   { path: 'project/:name', component: TeamPageComponent, canActivate: [] },
   { path: '**', redirectTo: '/' }
@@ -69,7 +70,6 @@ const appRoutes: Routes = [
     UsersComponent,
     PostListComponent,
     AppliedListComponent,
-    ProfileSectionComponent,
     TeamPageComponent,
     AlertComponent,
     FilterPipe,

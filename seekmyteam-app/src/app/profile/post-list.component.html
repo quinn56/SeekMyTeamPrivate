@@ -1,3 +1,124 @@
+<!-- <div class="container-fluid">
+    <div class="row">
+        <div class="offset-2 col-8">
+
+            <div class="card text-center mb-3">
+                <div class="card-header">
+                    <h2 class="text-center"><b>{{title}}</b></h2>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6 border-right btn-hover" (click)="toggleMyPosts()">
+                            <br>
+                            <h4>My Projects</h4><br>
+                        </div>
+                        <div class="col-6 border-left btn-hover" (click)="toggleAppliedPosts()">
+                            <br>
+                            <h4>Applied Projects</h4><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!showApplied">
+                <div style="cursor: pointer;" class="card text-center mb-3"
+                    *ngFor="let post of userPosts; let idx = index"
+                    (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
+                    <div class="card-header text-left">
+                        <h4>{{post.name}}</h4>
+                    </div>
+                    <div class="card-body text-left">
+                        <h6>{{post.description}}</h6>
+                        <div class="form-group mt-3 mb-0">
+                            <button type="button" class="btn btn-outline-info mr-2"
+                                *ngFor="let item of post.skills; let i = index">{{item}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="showApplied">
+                <div style="cursor: pointer;" class="card text-center mb-3"
+                    *ngFor="let post of appliedPosts let idx = index" (click)="displayPost(post)"
+                    data-toggle="modal" data-target="#postModal">
+                    <div class="card-header text-left">
+                        <h4>{{post.name}}</h4>
+                    </div>
+                    <div class="card-body text-left">
+                        <h6>{{post.description}}</h6>
+                        <div class="form-group mt-3 mb-0">
+                            <button type="button" class="btn btn-outline-info mr-2"
+                                *ngFor="let item of post.skills; let i = index">{{item}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .btn-hover:hover {
+        background-color: lightgray;
+        cursor: pointer;
+    }
+</style> -->
+
+<!-- Start Edit Project Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{selectedPost.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-left">{{ selectedPost.ownerName }}</h6>
+                <p class="text-left">{{ selectedPost.ownerEmail }}</p>
+
+                <div class="form-group">
+                    <h6 class="">Project Description</h6>
+                    <p *ngIf="!isOP">{{ selectedPost.description }}</p>
+                    <textarea *ngIf="isOP" [(ngModel)]="editPost.description" rows="3" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <h6>Skills Needed</h6>
+                    <select class="form-control" id="selectedSkill" #sk (change)="selectedAddSkill(sk.value)">
+                        <option value="Select a skill" disabled>Select a skill</option>
+                        <option *ngFor="let skill of SKILLS_ARRAY" value={{skill}}>
+                            {{skill}}
+                        </option>
+                    </select>
+                </div>
+
+                <div *ngIf="isOP" class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-outline-info mr-2"
+                        *ngFor="let item of editPost.skills; let i = index"
+                        (click)="selectedDeleteSkill(i)">{{item}}</button>
+                </div>
+
+                <div *ngIf="!isOP" class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-outline-info mr-2"
+                        *ngFor="let item of selectedPost.skills; let i = index">{{item}}</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="isOP" (click)="deletePost()" class="btn btn-danger mr-auto"
+                    data-dismiss="modal">Delete</button>
+                <button class="btn btn-secondary pl-6 pr-6" (click)='clearEdit()' data-dismiss="modal">Close</button>
+                <button *ngIf="isOP" (click)="saveSelectedPost()" data-dismiss="modal"
+                    class="btn btn-success pl-6 pr-6">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Start Edit Profile Modal -->
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -123,104 +244,59 @@
                         <!-- Content Nav Start -->
                         <div class="content--nav pb--30">
                             <ul class="nav ff--primary fs--14 fw--500 bg-lighter">
-                                <li class="active"><a>Profile</a></li>
-                                <li style="cursor: pointer;" (click)="routePosts()"><a>My Projects</a></li>
+                                <li style="cursor: pointer;" (click)="routeProfile()"><a>Profile</a></li>
+                                <li class="active"><a>My Projects</a></li>
                                 <li *ngIf="isCurrentUser" style="cursor: pointer;" (click)="routeApplied()"><a>Applied
                                         Projects</a></li>
                             </ul>
                         </div>
                         <!-- Content Nav End -->
 
-                        <!-- Profile Details Start -->
-                        <div class="profile--details fs--14">
-                            <!-- Profile Item Start -->
-                            <div class="profile--item">
-                                <div class="profile--heading">
-                                    <h3 class="h4 fw--700">
-                                        <span class="mr--4">About Me</span>
-                                        <i class="ml--10 text-primary fa fa-caret-right"></i>
-                                    </h3>
-                                </div>
-
-                                <div class="profile--info">
-                                    <table class="table">
-                                        <tr>
-                                            <th class="fw--700 text-darkest">Full Name</th>
-                                            <td class="text-darker">{{details.name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="fw--700 text-darkest">Skills</th>
-                                            <td class="text-darker" *ngFor="let item of details.skills">{{item}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                        <!-- Forum Header Start -->
+                        <div class="forum--header pb--50">
+                            <div class="forum--title">
+                                <h3 class="h3 fw--500 text-default">Projects I Started</h3>
                             </div>
-                            <!-- Profile Item End -->
 
-                            <!-- Profile Item Start -->
-                            <div class="profile--item">
-                                <div class="profile--heading">
-                                    <h3 class="h4 fw--700">
-                                        <span class="mr--4">Biography</span>
-                                        <i class="ml--10 text-primary fa fa-caret-right"></i>
-                                    </h3>
-                                </div>
-
-                                <div class="profile--info">
-                                    <p class="text-darker">{{details.description}}</p>
-                                </div>
+                            <div class="forum--subtitle ff--primary fs--14 text-darker">
+                                <p>Viewing {{userPosts.length}} Projects</p>
                             </div>
-                            <!-- Profile Item End -->
-
-                            <!-- Profile Item Start -->
-                            <div class="profile--item">
-                                <div class="profile--heading">
-                                    <h3 class="h4 fw--700">
-                                        <span class="mr--4">Work Experience</span>
-                                        <i class="ml--10 text-primary fa fa-caret-right"></i>
-                                    </h3>
-                                </div>
-
-                                <div class="profile--info">
-                                    <dl>
-                                        <dt>
-                                            <p class="h6 fw--700 text-darkest">Graphic Designer 2010 - 2012</p>
-                                            <p><small class="fw--400 fs--12 text-darker">Graphicriver.net at
-                                                    Sydney</small></p>
-                                        </dt>
-                                        <dd>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but
-                                                the majority have suffered alteration in some form, by injected
-                                                humour which don't look even slightly believable.</p>
-                                        </dd>
-
-                                        <dt>
-                                            <p class="h6 fw--700 text-darkest">Font-End Developer 2012 - 2014</p>
-                                            <p><small class="fw--400 fs--12 text-darker">Themeforest.net at
-                                                    Australia</small></p>
-                                        </dt>
-                                        <dd>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but
-                                                the majority have suffered alteration in some form, by injected
-                                                humour which don't look even slightly believable.</p>
-                                        </dd>
-
-                                        <dt>
-                                            <p class="h6 fw--700 text-darkest">Web Developer 2014 - Still Now</p>
-                                            <p><small class="fw--400 fs--12 text-darker">Codecanyon.net at
-                                                    Sydney</small></p>
-                                        </dt>
-                                        <dd>
-                                            <p>There are many variations of passages of Lorem Ipsum available, but
-                                                the majority have suffered alteration in some form, by injected
-                                                humour which don't look even slightly believable.</p>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <!-- Profile Item End -->
                         </div>
-                        <!-- Profile Details End -->
+                        <!-- Forum Header End -->
+
+                        <!-- Project List Start -->
+                        <div class="topics--list">
+                            <table class="table">
+                                <thead class="ff--primary fs--14 text-darkest">
+                                    <tr>
+                                        <th>Projects</th>
+                                        <th>Description</th>
+                                        <th>Age</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr style="cursor: pointer;" *ngFor="let post of userPosts; let idx = index"
+                                        (click)="displayPost(post)" data-toggle="modal" data-target="#postModal">
+                                        <td>
+                                            <h4 class="h6 fw--500 text-darkest"><a (click)="routeProject(post.name)" class="btn-link">{{post.name}}</a>
+                                            </h4>
+
+                                            <p>Started by <a>{{post.ownerName}}</a></p>
+                                        </td>
+                                        <td>
+                                            <p class="ff--primary fw--500 fs--14 text-darkest">{{post.description}}</p>
+                                        </td>
+                                        <td>
+                                            <i class="text-primary fa fa-paperclip"></i>
+
+                                            <p>{{post.age}}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Project List End -->
                     </div>
                 </div>
                 <!-- Main Content End -->
