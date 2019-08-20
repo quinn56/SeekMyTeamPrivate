@@ -13,7 +13,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './home/users.component';
-import { PostListComponent } from './profile/post-list.component';
+import { PostListComponent } from './profile/profile-sections/post-list.component';
+import { AppliedListComponent } from './profile/profile-sections/applied-list.component';
+import { ProfileSectionComponent } from './profile/profile-sections/profile-section.component';
 import { TeamPageComponent } from './team-page/team-page.component';
 import { AlertComponent } from './alerts/alert.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
@@ -66,6 +68,8 @@ const appRoutes: Routes = [
     HomeComponent,
     UsersComponent,
     PostListComponent,
+    AppliedListComponent,
+    ProfileSectionComponent,
     TeamPageComponent,
     AlertComponent,
     FilterPipe,

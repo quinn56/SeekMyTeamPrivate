@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { UserUtilsService } from '../services/users/user-utils.service';
-import { PostUtilsService } from '../services/posts/post-utils.service';
+import { UserUtilsService } from '../../services/users/user-utils.service';
+import { PostUtilsService } from '../../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Post } from '../home/home.component';
-import { PostDateService } from '../services/posts/post-date.service';
+import { Post } from '../../home/home.component';
+import { PostDateService } from '../../services/posts/post-date.service';
 
 @Component({
-  templateUrl: './post-list.component.html'
+  templateUrl: './applied-list.component.html',
+  selector: 'applied-list'
 })
-export class PostListComponent {
+export class AppliedListComponent {
     getEmail: string;
     userPosts: Post[];
     appliedPosts: Post[];

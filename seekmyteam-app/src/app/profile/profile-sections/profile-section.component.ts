@@ -1,14 +1,15 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { UserUtilsService, UserProfile, UserDetails } from '../services/users/user-utils.service';
-import { PostUtilsService } from '../services/posts/post-utils.service';
+import { UserUtilsService, UserProfile, UserDetails } from '../../services/users/user-utils.service';
+import { PostUtilsService } from '../../services/posts/post-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../services/authentication/authentication.service';
-import { AlertService } from '../services/alerts/alert.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { AlertService } from '../../services/alerts/alert.service';
 
 @Component({
-  templateUrl: './profile.component.html'
+  templateUrl: './profile-section.component.html',
+  selector: 'profile-section'
 })
-export class ProfileComponent {
+export class ProfileSectionComponent {
   acceptedMimeTypes: string[] = [
     'image/gif',
     'image/jpeg',
@@ -64,14 +65,6 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.loadProfile();
-  }
-
-  routePosts(email) {
-    window.location.href = '/profile/' + email + '/posts';
-  }
-
-  routeApplied(email) {
-    window.location.href = '/profile/' + email + '/applied';
   }
 
   loadProfile() {
