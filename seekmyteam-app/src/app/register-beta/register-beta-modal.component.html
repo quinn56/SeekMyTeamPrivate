@@ -1,6 +1,7 @@
 <style>
   #bg {
-    background-image: url("assets/main.jpg");
+    /* background-image: url("assets/main.jpg"); */
+    background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/register-background.jpeg);
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -151,8 +152,11 @@
                     </span>
                     <span id="schoolField">
                     <label> School
-                        <input type="text" name="school" placeholder="School" [formControl]="schoolForm" [(ngModel)]="credentials.school" class="form-control" required>
-                    </label>
+                        <input type="text" name="school" placeholder="School" list="mylist" [formControl]="schoolForm" [(ngModel)]="credentials.school" class="form-control" required>
+                        <datalist id="mylist">
+                            <option value='{{school}}' *ngFor="let school of SCHOOLS_ARRAY">{{school}}</option>
+                        </datalist>
+                      </label>
                     <div id="required" *ngIf="submitted && schoolForm.errors" class="invalid-feedback">
                         Please enter your school
                     </div>
@@ -173,10 +177,78 @@
                     </div> -->
                     <span id="majorField">      
                       <label> Major
-                        <input placeholder="Major" list="mylist" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
-                        <datalist id="mylist">
-                            <option value='{{major}}' *ngFor="let major of MAJORS_ARRAY">{{major}}</option>
-                        </datalist>
+                          <ng-container *ngIf="credentials.school !== 'Agriculture' && credentials.school !== 'Education' && credentials.school !== 'Engineering' && credentials.school !== 'Exploratory Studies' && credentials.school !== 'Health and Human Sciences' && credentials.school !== 'Liberal Arts' && credentials.school !== 'Management' && credentials.school !== 'Pharmacy' && credentials.school !== 'Polytechnic Institute' && credentials.school !== 'Science' && credentials.school !== 'Veterinary Medicine'">
+                              <input type="text" name="major" placeholder="Major" list="mylist0" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                              <datalist id="mylist0">
+                                  <option value=''>--SELECT SCHOOL FIRST--</option>
+                              </datalist>
+                          </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Agriculture'">
+                            <input type="text" name="major" placeholder="Major" list="mylist2" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist2">
+                                <option value='{{major}}' *ngFor="let major of AGRICULTURE_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Education'">
+                            <input type="text" name="major" placeholder="Major" list="mylist3" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist3">
+                                <option value='{{major}}' *ngFor="let major of EDUCATION_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Engineering'">
+                            <input type="text" name="major" placeholder="Major" list="mylist4" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist4">
+                                <option value='{{major}}' *ngFor="let major of ENGINEERING_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Exploratory Studies'">
+                            <input type="text" name="major" placeholder="Major" list="mylist5" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist5">
+                                <option value='{{major}}' *ngFor="let major of EXPLORATORY_STUDIES_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Health and Human Sciences'">
+                            <input type="text" name="major" placeholder="Major" list="mylist6" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist6">
+                                <option value='{{major}}' *ngFor="let major of HEALTH_AND_HUMAN_SCIENCES_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Liberal Arts'">
+                            <input type="text" name="major" placeholder="Major" list="mylist7" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist7">
+                                <option value='{{major}}' *ngFor="let major of LIBERAL_ARTS_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Management'">
+                            <input type="text" name="major" placeholder="Major" list="mylist8" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist8">
+                                <option value='{{major}}' *ngFor="let major of MANAGEMENT_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Pharmacy'">
+                            <input type="text" name="major" placeholder="Major" list="mylist9" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist9">
+                                <option value='{{major}}' *ngFor="let major of PHARMACY_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Polytechnic Institute'">
+                            <input type="text" name="major" placeholder="Major" list="mylist10" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist10">
+                                <option value='{{major}}' *ngFor="let major of POLYTECHNIC_INSTITUTE_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Science'">
+                            <input type="text" name="major" placeholder="Major" list="mylist11" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist11">
+                                <option value='{{major}}' *ngFor="let major of SCIENCE_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
+                        <ng-container *ngIf="credentials.school === 'Veterinary Medicine'">
+                            <input type="text" name="major" placeholder="Major" list="mylist12" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
+                            <datalist id="mylist12">
+                                <option value='{{major}}' *ngFor="let major of VETERINARY_MAJORS_ARRAY">{{major}}</option>
+                            </datalist>
+                        </ng-container>
                       </label>
                       <div id="required" *ngIf="submitted && majorForm.errors" class="invalid-feedback">
                           Please enter your major

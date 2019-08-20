@@ -35,6 +35,12 @@ import { ReversePipe } from './services/pipes/reverse.pipe';
 import { RegisterBetaComponent } from './register-beta/register-beta.component';
 import { RegisterBetaModalComponent } from './register-beta/register-beta-modal.component';
 
+const appRoutes: Routes = [
+  { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
+  { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
+  { path: '**', redirectTo: '/register-beta' }
+];
+
 // const appRoutes: Routes = [
 //   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
 //   { path: 'users', component: HomeComponent, canActivate: [AuthGuardService] },
@@ -46,18 +52,18 @@ import { RegisterBetaModalComponent } from './register-beta/register-beta-modal.
 //   { path: '**', redirectTo: '/' }
 // ];
 
-const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [] },
-    { path: 'users', component: UsersComponent, canActivate: [] },
-  { path: 'register', component: RegisterComponent, canActivate: [] },
-  { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
-  { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
-  { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
-  { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
-  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
-  { path: 'project/:name', component: TeamPageComponent, canActivate: [] },
-  { path: '**', redirectTo: '/' }
-];
+// const appRoutes: Routes = [
+//     { path: '', component: HomeComponent, canActivate: [] },
+//     { path: 'users', component: UsersComponent, canActivate: [] },
+//   { path: 'register', component: RegisterComponent, canActivate: [] },
+//   { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
+//   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
+//   { path: 'profile/:email', component: ProfileComponent, canActivate: [] },
+//   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [] },
+//   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [] },
+//   { path: 'project/:name', component: TeamPageComponent, canActivate: [] },
+//   { path: '**', redirectTo: '/' }
+// ];
 
 @NgModule({
   declarations: [

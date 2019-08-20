@@ -175,7 +175,7 @@
                       <label> Major
                         <input placeholder="Major" list="mylist" [formControl]="majorForm" [(ngModel)]="credentials.major" class="form-control" required>
                         <datalist id="mylist">
-                            <option value='{{major}}' *ngFor="let major of MAJORS_ARRAY">{{major}}</option>
+                            <option value='{{major}}' *ngFor="let major of ENGINEERING_MAJORS_ARRAY">{{major}}</option>
                         </datalist>
                       </label>
                       <div id="required" *ngIf="submitted && majorForm.errors" class="invalid-feedback">
@@ -208,9 +208,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Confirm email</h5>
-          <button type="button" class="close" (click)="clearConfirmFields()" data-dismiss="modal" aria-label="Close">
+          <!-- <button type="button" class="close" (click)="clearConfirmFields()" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> -->
         </div>
         <div class="modal-body">
           <div *ngIf="unconfirmedEmail">

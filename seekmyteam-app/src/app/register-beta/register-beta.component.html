@@ -1,6 +1,7 @@
 <style>
   #bg {
-    background-image: url("assets/main.jpg");
+    /* background-image: url("assets/main.jpg"); */
+    background: url(https://d24imx1z1vc7kd.cloudfront.net/static-images/register-background.jpeg);
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -81,6 +82,27 @@
     position: fixed;
   }
 </style>
+<header>
+  <!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+     fbq('init', '434168340516488'); 
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+     <img height="1" width="1" 
+    src="https://www.facebook.com/tr?id=439336846668151&ev=PageView
+    &noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+</header>
 
 <!-- Wrapper Start -->
 <div class="wrapper">
@@ -90,7 +112,7 @@
     <!-- Banner Slider Start -->
     <div class="banner--slider owl-carousel" data-owl-loop="false">
       <!-- Banner Item Start -->
-      <div class="banner--item" data-bg-img="assets/main.jpg" data-overlay="0.5">
+      <div class="banner--item" data-bg-img="https://d24imx1z1vc7kd.cloudfront.net/static-images/register-background.jpeg" data-overlay="0.5">
         <div class="vc--parent">
           <div class="vc--child">
             <div class="container">
@@ -109,9 +131,9 @@
                     </div>
 
                     <div class="desc fs--16">
-                      <p> Have you always wanted to start a side project? Connect with passionate Purdue students across
-                        campus. Build projects with those in different majors.
-                        Grow your profile and skillset.</p>
+                      <p> Have you always wanted to start a side project? Connect with passionate <br>
+                        Purdue students across campus. Build projects with those in different <br>
+                        majors. Grow your profile and skillset.</p>
                     </div>
 
                     <div class="text-black">
@@ -396,7 +418,7 @@
 
               <div id="faqItem01" class="content collapse">
                 <div class="content--inner">
-                  <p>Simple! Log in with your Purdue Address and check your Purdue Email for a confirmation to register.
+                  <p>Simple! Log in with your Purdue email and check your email for a confirmation to register.
                     Happy Connecting!</p>
                 </div>
               </div>
@@ -467,7 +489,7 @@
           <!-- FAQ Item End -->
 
           <!-- FAQ Item Start -->
-          <div class="faq--item style--1 panel">
+          <!-- <div class="faq--item style--1 panel">
             <div class="title">
               <h3 class="h6 fw--700 text-darker">
                 <a href="#faqItem05" data-parent="#faqItems" data-toggle="collapse" class="collapsed">
@@ -481,7 +503,7 @@
                 <p>Most definitely! Contact us directly to be verified and receive a badge on your profile! </p>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- FAQ Item End -->
         </div>
       </div>

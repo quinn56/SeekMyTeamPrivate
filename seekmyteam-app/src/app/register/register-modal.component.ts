@@ -5,7 +5,7 @@ import { AuthGuardService } from '../services/authentication/auth-guard.service'
 import { UserUtilsService } from '../services/users/user-utils.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { majors } from '../../data/majors';
+import { engineering_majors } from '../../data/majors';
 import { AlertService } from '../services/alerts/alert.service';
 
 class MoreInfo {
@@ -54,7 +54,7 @@ export class RegisterModalComponent implements OnInit {
         { name: 'Database Management', selected: false},
     ];
 
-    MAJORS_ARRAY: string[] = majors;
+    ENGINEERING_MAJORS_ARRAY: string[] = engineering_majors;
 
     notRegistered: boolean = false;
     serverError: boolean = false;

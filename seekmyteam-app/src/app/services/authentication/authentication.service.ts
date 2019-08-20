@@ -73,8 +73,35 @@ export class AuthenticationService {
     return requestedData;
   }
 
+  private requestBetaRegistration(user: RegisterPayload): Observable<any> {
+    let base = this.http.post('/api/register/registerBeta',  user);
+
+    const requestedData = base.pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
   private requestConfirmation(user: ConfirmPayload): Observable<any> {
     let base = this.http.post('/api/register/confirm', user);
+
+    const requestedData = base.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      })
+    );
+
+    return requestedData;
+  }
+
+  private requestBetaConfirmation(user: ConfirmPayload): Observable<any> {
+    let base = this.http.post('/api/register/confirmBeta', user);
 
     const requestedData = base.pipe(
       map((data: TokenResponse) => {
@@ -108,9 +135,17 @@ export class AuthenticationService {
   public register(user: RegisterPayload): Observable<any> { 
     return this.requestRegistration(user);
   }
+
+  public registerBeta(user: RegisterPayload): Observable<any> { 
+    return this.requestBetaRegistration(user);
+  }
   
   public confirm(user: ConfirmPayload): Observable<any> { 
     return this.requestConfirmation(user);
+  }
+
+  public confirmBeta(user: ConfirmPayload): Observable<any> { 
+    return this.requestBetaConfirmation(user);
   }
 
 }
