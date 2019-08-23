@@ -37,13 +37,13 @@ import { RegisterBetaComponent } from './register-beta/register-beta.component';
 import { RegisterBetaModalComponent } from './register-beta/register-beta-modal.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [DevKeyService] },
-  { path: 'users', component: UsersComponent, canActivate: [DevKeyService] },
-  { path: 'register', component: RegisterComponent, canActivate: [DevKeyService] },
-  { path: 'profile/:email', component: ProfileComponent, canActivate: [DevKeyService] },
-  { path: 'profile/:email/posts', component: PostListComponent, canActivate: [DevKeyService] },
-  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [DevKeyService] },
-  { path: 'project/:name', component: TeamPageComponent, canActivate: [DevKeyService] },
+  // { path: '', component: HomeComponent, canActivate: [DevKeyService] },
+  // { path: 'users', component: UsersComponent, canActivate: [DevKeyService] },
+  // { path: 'register', component: RegisterComponent, canActivate: [DevKeyService] },
+  // { path: 'profile/:email', component: ProfileComponent, canActivate: [DevKeyService] },
+  // { path: 'profile/:email/posts', component: PostListComponent, canActivate: [DevKeyService] },
+  // { path: 'confirm/:email', component: ConfirmComponent, canActivate: [DevKeyService] },
+  // { path: 'project/:name', component: TeamPageComponent, canActivate: [DevKeyService] },
   { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: '**', redirectTo: '/register-beta' }

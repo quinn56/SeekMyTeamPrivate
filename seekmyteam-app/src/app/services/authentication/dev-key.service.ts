@@ -1,28 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRoute } from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '../../../environments/environment.prod';
 
 @Injectable()
 export class DevKeyService implements CanActivate {
 
-  constructor(private activated_route: ActivatedRoute, private router: Router) {}
+  constructor(private activated_route: ActivatedRouteSnapshot, private router: Router) {}
+
+  key: string;
 
   canActivate() {
-    if (!this.validateDevKey()) {
+    if (!this.activated_route.params.key)
+        return false;
+
+    this.key = this.activated_route.params.key;
+    if (this.key !== 'pqpjwbjrvbanskdckmzdsnviusgbyibrg') {
       this.router.navigateByUrl('/register-beta');
       return false;
     }
-    return true;
-  }
-
-  private validateDevKey() {
-    this.activated_route.queryParams.subscribe(params => {
-        let key = params['key'];
-
-        if (key !== environment.devkey) {
-            return false;
-        }
-    });
     return true;
   }
 }
