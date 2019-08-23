@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  cloudfront: 'https://d24imx1z1vc7kd.cloudfront.net'
+  cloudfront: 'https://d24imx1z1vc7kd.cloudfront.net',
+  devkey: 'pqpjwbjrvbanskdckmzdsnviusgbyibrg'
 };
 
 /*

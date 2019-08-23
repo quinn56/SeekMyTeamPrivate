@@ -28,6 +28,7 @@ import { UserUtilsService } from './services/users/user-utils.service';
 import { PostUtilsService } from './services/posts/post-utils.service';
 import { AlertService } from './services/alerts/alert.service';
 import { PostDateService } from './services/posts/post-date.service';
+import { DevKeyService } from './services/authentication/dev-key.service';
 
 import { FilterPipe } from './services/pipes/filter.pipe';
 import { SkillsPipe } from './services/pipes/skills.pipe';
@@ -36,6 +37,13 @@ import { RegisterBetaComponent } from './register-beta/register-beta.component';
 import { RegisterBetaModalComponent } from './register-beta/register-beta-modal.component';
 
 const appRoutes: Routes = [
+  { path: '', component: HomeComponent, canActivate: [DevKeyService] },
+  { path: 'users', component: UsersComponent, canActivate: [DevKeyService] },
+  { path: 'register', component: RegisterComponent, canActivate: [DevKeyService] },
+  { path: 'profile/:email', component: ProfileComponent, canActivate: [DevKeyService] },
+  { path: 'profile/:email/posts', component: PostListComponent, canActivate: [DevKeyService] },
+  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [DevKeyService] },
+  { path: 'project/:name', component: TeamPageComponent, canActivate: [DevKeyService] },
   { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: '**', redirectTo: '/register-beta' }
@@ -102,7 +110,8 @@ const appRoutes: Routes = [
     UserUtilsService,
     PostUtilsService,
     AlertService,
-    PostDateService
+    PostDateService,
+    DevKeyService
   ],
   bootstrap: [AppComponent]
 })
