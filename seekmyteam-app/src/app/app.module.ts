@@ -37,27 +37,29 @@ import { RegisterBetaComponent } from './register-beta/register-beta.component';
 import { RegisterBetaModalComponent } from './register-beta/register-beta-modal.component';
 
 const appRoutes: Routes = [
-  // { path: '', component: HomeComponent, canActivate: [DevKeyService] },
-  // { path: 'users', component: UsersComponent, canActivate: [DevKeyService] },
-  // { path: 'register', component: RegisterComponent, canActivate: [DevKeyService] },
-  // { path: 'profile/:email', component: ProfileComponent, canActivate: [DevKeyService] },
-  // { path: 'profile/:email/posts', component: PostListComponent, canActivate: [DevKeyService] },
-  // { path: 'confirm/:email', component: ConfirmComponent, canActivate: [DevKeyService] },
-  // { path: 'project/:name', component: TeamPageComponent, canActivate: [DevKeyService] },
+  { path: '', component: HomeComponent, canActivate: [DevKeyService] },
+  { path: 'users', component: UsersComponent, canActivate: [DevKeyService] },
+  { path: 'register', component: RegisterComponent, canActivate: [DevKeyService] },
+  { path: 'profile/:email', component: ProfileComponent, canActivate: [DevKeyService] },
+  { path: 'profile/:email/posts', component: PostListComponent, canActivate: [DevKeyService] },
+  { path: 'confirm/:email', component: ConfirmComponent, canActivate: [DevKeyService] },
+  { path: 'project/:name', component: TeamPageComponent, canActivate: [DevKeyService] },
   { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
   { path: '**', redirectTo: '/register-beta' }
 ];
 
 // const appRoutes: Routes = [
-//   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
-//   { path: 'users', component: HomeComponent, canActivate: [AuthGuardService] },
-//   { path: 'register', component: RegisterComponent, canActivate: [AuthRedirectService] },
-//   { path: 'profile/:email', component: ProfileComponent, canActivate: [AuthGuardService] },
-//   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [AuthGuardService] },
-//   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [AuthRedirectService] },
-//   { path: 'project/:name', component: TeamPageComponent, canActivate: [AuthGuardService] },
-//   { path: '**', redirectTo: '/' }
+//   { path: '', component: HomeComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'users', component: HomeComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'register', component: RegisterComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'profile/:email', component: ProfileComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'profile/:email/posts', component: PostListComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'confirm/:email', component: ConfirmComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'project/:name', component: TeamPageComponent, canActivate: [DevKeyService, AuthGuardService] },
+//   { path: 'register-beta', component: RegisterBetaComponent, canActivate: [] },
+//   { path: 'coming-soon', component: ComingSoonComponent, canActivate: [] },
+//   { path: '**', redirectTo: '/register-beta' }
 // ];
 
 // const appRoutes: Routes = [
